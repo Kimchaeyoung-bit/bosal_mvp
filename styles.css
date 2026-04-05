@@ -1,0 +1,277 @@
+/* 강남보살 — 메인 페이지 스타일 (확정 디자인 아님) */
+
+:root {
+  --bg: #faf7f2;
+  --surface: #ffffff;
+  --text: #1a1625;
+  --text-sub: #6b6577;
+  --border: #ece7e0;
+  --primary: #4a2c6d;      /* 깊은 보라 */
+  --primary-soft: #ede4f5;
+  --accent: #c9a14a;       /* 황동/골드 */
+  --accent-soft: #f8eed5;
+  --danger: #c0392b;
+  --radius: 16px;
+  --shadow: 0 2px 12px rgba(26, 22, 37, 0.06);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", "Noto Sans KR", sans-serif;
+  background: #000;
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+.app {
+  max-width: 430px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: var(--bg);
+  position: relative;
+  padding-bottom: 80px;
+}
+
+button { border: none; background: none; font: inherit; color: inherit; cursor: pointer; }
+input { font: inherit; border: none; outline: none; background: none; }
+
+/* Header */
+.header {
+  background: linear-gradient(160deg, #4a2c6d 0%, #2d1a47 100%);
+  color: #fff;
+  padding: 20px 20px 36px;
+  border-radius: 0 0 28px 28px;
+  position: relative;
+}
+.header__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+}
+.logo { display: flex; align-items: center; gap: 6px; }
+.logo__mark { color: var(--accent); font-size: 22px; }
+.logo__text { font-size: 18px; font-weight: 700; letter-spacing: -0.3px; }
+.icon-btn { color: #fff; opacity: 0.9; padding: 6px; }
+.header__title {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -0.5px;
+}
+.header__subtitle {
+  margin-top: 8px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* Search */
+.search {
+  padding: 0 20px;
+  margin-top: -20px;
+  position: relative;
+  z-index: 2;
+}
+.search__box {
+  background: var(--surface);
+  border-radius: 14px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: var(--shadow);
+  color: var(--text-sub);
+}
+.search__box input {
+  flex: 1;
+  font-size: 14px;
+  color: var(--text);
+}
+.search__box input::placeholder { color: var(--text-sub); }
+
+/* Quick cards */
+.quick {
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.quick__card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  box-shadow: var(--shadow);
+  text-align: left;
+  transition: transform 0.15s ease;
+}
+.quick__card:active { transform: scale(0.97); }
+.quick__card--primary { background: var(--primary-soft); }
+.quick__card--accent { background: var(--accent-soft); }
+.quick__icon { font-size: 24px; }
+.quick__label strong {
+  display: block;
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.quick__label span {
+  font-size: 12px;
+  color: var(--text-sub);
+}
+
+/* Section block */
+.block { padding: 8px 20px 20px; }
+.block__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+.block__head h2 {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+.block__more {
+  font-size: 13px;
+  color: var(--text-sub);
+  text-decoration: none;
+}
+
+/* Chips */
+.chips {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: none;
+}
+.chips::-webkit-scrollbar { display: none; }
+.chip {
+  padding: 8px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.chip:active { background: var(--primary-soft); border-color: var(--primary); }
+
+/* Categories grid */
+.categories {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+.category {
+  background: var(--surface);
+  border-radius: 14px;
+  padding: 14px 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  box-shadow: var(--shadow);
+}
+.category__emoji { font-size: 22px; }
+
+/* Bosal list */
+.bosal-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.bosal {
+  display: flex;
+  gap: 14px;
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 14px;
+  box-shadow: var(--shadow);
+}
+.bosal__thumb {
+  width: 88px;
+  height: 88px;
+  border-radius: 12px;
+  flex-shrink: 0;
+  position: relative;
+}
+.bosal__badge {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.bosal__info { flex: 1; min-width: 0; }
+.bosal__info h3 {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.bosal__loc {
+  font-size: 12px;
+  color: var(--text-sub);
+  margin-bottom: 8px;
+}
+.bosal__tags {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 6px;
+}
+.tag {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 8px;
+  background: var(--primary-soft);
+  color: var(--primary);
+  border-radius: 6px;
+}
+.bosal__desc {
+  font-size: 12px;
+  color: var(--text-sub);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.spacer { height: 20px; }
+
+/* Tabbar */
+.tabbar {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 430px;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  padding: 8px 0 calc(8px + env(safe-area-inset-bottom));
+  z-index: 10;
+}
+.tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: var(--text-sub);
+  padding: 6px 0;
+}
+.tab__icon { font-size: 20px; }
+.tab--active { color: var(--primary); font-weight: 600; }
