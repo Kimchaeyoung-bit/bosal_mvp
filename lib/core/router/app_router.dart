@@ -1,0 +1,101 @@
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import '../../features/home/home_screen.dart';
+import '../../features/region_tab/region_tab_screen.dart';
+import '../../features/chatbot/chatbot_screen.dart';
+import '../../features/booking/booking_screen.dart';
+import '../../features/mypage/mypage_screen.dart';
+import '../../features/region/region_selection_screen.dart';
+import '../../features/search/search_screen.dart';
+import '../../features/bosal_list/bosal_list_screen.dart';
+import '../../features/bosal_detail/bosal_detail_screen.dart';
+import '../../shared/widgets/main_scaffold.dart';
+
+final appRouter = GoRouter(
+  initialLocation: '/home',
+  routes: [
+    StatefulShellRoute.indexedStack(
+      builder: (context, state, navigationShell) {
+        return MainScaffold(navigationShell: navigationShell);
+      },
+      branches: [
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/home',
+              builder: (context, state) => const HomeScreen(),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/region-tab',
+              builder: (context, state) => const RegionTabScreen(),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/chatbot-tab',
+              builder: (context, state) => const ChatbotScreen(),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/booking-tab',
+              builder: (context, state) => const BookingScreen(),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/my-tab',
+              builder: (context, state) => const MypageScreen(),
+            ),
+          ],
+        ),
+      ],
+    ),
+    GoRoute(
+      path: '/region-select',
+      pageBuilder: (context, state) => CustomTransitionPage(
+        child: const RegionSelectionScreen(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(0, 1),
+              end: Offset.zero,
+            ).animate(CurvedAnimation(
+              parent: animation,
+              curve: Curves.easeOutCubic,
+            )),
+            child: child,
+          );
+        },
+      ),
+    ),
+    GoRoute(
+      path: '/search',
+      builder: (context, state) => const SearchScreen(),
+    ),
+    GoRoute(
+      path: '/bosal-list',
+      builder: (context, state) {
+        final categoryId = state.uri.queryParameters['category'];
+        return BosalListScreen(categoryId: categoryId);
+      },
+    ),
+    GoRoute(
+      path: '/bosal/:id',
+      builder: (context, state) {
+        final id = state.pathParameters['id']!;
+        return BosalDetailScreen(bosalId: id);
+      },
+    ),
+  ],
+);
