@@ -1,17 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
 import '../../shared/widgets/app_shadow.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/bosal_provider.dart';
 
-class BosalProfileScreen extends ConsumerWidget {
+class BosalProfileScreen extends ConsumerStatefulWidget {
   const BosalProfileScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<BosalProfileScreen> createState() => _BosalProfileScreenState();
+}
+
+class _BosalProfileScreenState extends ConsumerState<BosalProfileScreen> {
+  bool _isPublic = true;
+
+  @override
+  Widget build(BuildContext context) {
     final user = ref.watch(authProvider);
     final bosals = ref.watch(allBosalsProvider);
     final topPadding = MediaQuery.of(context).padding.top;
@@ -85,35 +93,91 @@ class BosalProfileScreen extends ConsumerWidget {
               ),
             ),
 
+            const SizedBox(height: 12),
+
+            // 공개/비공개 토글
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                decoration: BoxDecoration(
+                  color: AppColors.surface,
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: appShadow,
+                ),
+                child: Row(
+                  children: [
+                    Icon(
+                      _isPublic ? Icons.visibility_rounded : Icons.visibility_off_rounded,
+                      size: 20,
+                      color: _isPublic ? const Color(0xFF2ECC71) : AppColors.textSub,
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('프로필 공개 상태', style: AppTextStyles.bodyBold),
+                          Text(
+                            _isPublic ? '고객에게 노출 중' : '비공개 상태입니다',
+                            style: AppTextStyles.small.copyWith(
+                              color: _isPublic ? const Color(0xFF2ECC71) : AppColors.textSub,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Switch(
+                      value: _isPublic,
+                      onChanged: (v) => setState(() => _isPublic = v),
+                      activeThumbColor: AppColors.primary,
+                      activeTrackColor: AppColors.primarySoft,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
             const SizedBox(height: 16),
 
             // Editable sections
             if (myBosal != null) ...[
               _ProfileSection(
                 title: '한 줄 소개',
-                value: myBosal.description ?? '',
-                onEdit: () {},
+                value: myBosal.description ?? '소개를 입력해주세요',
+                onEdit: () => _showEditSnack(context),
               ),
               _ProfileSection(
                 title: '전문 분야',
                 value: myBosal.features.join(', '),
-                onEdit: () {},
+                onEdit: () => _showEditSnack(context),
               ),
               _ProfileSection(
                 title: '상담 스타일',
                 value: myBosal.consultStyle,
-                onEdit: () {},
+                onEdit: () => _showEditSnack(context),
               ),
               _ProfileSection(
                 title: '상담료',
-                value: '${myBosal.discountedPrice}원 (원가 ${myBosal.originalPrice}원)',
-                onEdit: () {},
+                value: '${NumberFormat('#,###').format(myBosal.discountedPrice)}원  (정가 ${NumberFormat('#,###').format(myBosal.originalPrice)}원)',
+                onEdit: () => _showEditSnack(context),
               ),
             ],
 
             const SizedBox(height: 100),
           ],
         ),
+      ),
+    );
+  }
+
+  void _showEditSnack(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: const Text('편집 기능은 준비 중입니다'),
+        backgroundColor: AppColors.primary,
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
     );
   }
