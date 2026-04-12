@@ -20,16 +20,22 @@ class BosalReviewsScreen extends ConsumerWidget {
         : null;
 
     final mockReviews = [
-      _ReviewData('김**', 5.0, '정말 정확하고 따뜻한 상담이었어요', '2일 전'),
-      _ReviewData('이**', 4.5, '현실적인 조언 감사합니다', '5일 전'),
-      _ReviewData('박**', 5.0, '연애 고민 해결에 큰 도움이 됐어요', '1주 전'),
+      _ReviewData('김**', 5.0, '정말 정확하고 따뜻한 상담이었어요. 고민이 많이 해소됐습니다.', '2일 전'),
+      _ReviewData('이**', 4.5, '현실적인 조언 감사합니다. 다음에도 또 오고 싶어요.', '5일 전'),
+      _ReviewData('박**', 5.0, '연애 고민 해결에 큰 도움이 됐어요!', '1주 전'),
       _ReviewData('최**', 4.0, '다음에도 또 방문하고 싶어요', '2주 전'),
+      _ReviewData('정**', 5.0, '정확한 사주풀이에 놀랐습니다', '3주 전'),
     ];
+
+    // 별점 분포 (5점: 3개, 4.5점: 1개, 4점: 1개)
+    final distribution = {5: 3, 4: 2, 3: 0, 2: 0, 1: 0};
+    final total = distribution.values.fold(0, (a, b) => a + b);
 
     return Scaffold(
       backgroundColor: AppColors.bg,
       body: Column(
         children: [
+          // 헤더
           Container(
             padding: EdgeInsets.fromLTRB(20, topPadding + 14, 20, 16),
             color: AppColors.surface,
@@ -44,45 +50,89 @@ class BosalReviewsScreen extends ConsumerWidget {
             ),
           ),
 
-          // Stats
+          // 평점 통계
           Container(
             padding: const EdgeInsets.all(20),
             color: AppColors.surface,
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Expanded(
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(Icons.star_rounded,
-                              color: AppColors.accent, size: 28),
-                          const SizedBox(width: 4),
-                          Text(
-                            '${myBosal?.rating ?? 0}',
-                            style: AppTextStyles.priceDiscount
-                                .copyWith(fontSize: 28),
-                          ),
-                        ],
+                // 평균 평점 크게
+                Column(
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          '${myBosal?.rating ?? 0}',
+                          style: AppTextStyles.priceDiscount
+                              .copyWith(fontSize: 36, height: 1),
+                        ),
+                        const SizedBox(width: 2),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 4),
+                          child: Text('/10',
+                              style: AppTextStyles.small.copyWith(fontSize: 13)),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 4),
+                    Row(
+                      children: List.generate(
+                        5,
+                        (i) => Icon(Icons.star_rounded,
+                            size: 16, color: AppColors.accent),
                       ),
-                      const SizedBox(height: 4),
-                      Text('평균 별점', style: AppTextStyles.small),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text('${myBosal?.reviewCount ?? 0}개 리뷰',
+                        style: AppTextStyles.small),
+                  ],
                 ),
-                Container(width: 1, height: 48, color: AppColors.border),
+                const SizedBox(width: 24),
+                Container(width: 1, height: 80, color: AppColors.border),
+                const SizedBox(width: 20),
+                // 별점 분포 바
                 Expanded(
                   child: Column(
-                    children: [
-                      Text(
-                        '${myBosal?.reviewCount ?? 0}',
-                        style:
-                            AppTextStyles.priceDiscount.copyWith(fontSize: 28),
-                      ),
-                      const SizedBox(height: 4),
-                      Text('전체 리뷰', style: AppTextStyles.small),
-                    ],
+                    children: [5, 4, 3, 2, 1].map((star) {
+                      final count = distribution[star] ?? 0;
+                      final ratio = total > 0 ? count / total : 0.0;
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 3),
+                        child: Row(
+                          children: [
+                            Text('$star', style: AppTextStyles.small.copyWith(fontSize: 11)),
+                            const SizedBox(width: 4),
+                            Icon(Icons.star_rounded,
+                                size: 11, color: AppColors.accent),
+                            const SizedBox(width: 6),
+                            Expanded(
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(4),
+                                child: LinearProgressIndicator(
+                                  value: ratio,
+                                  minHeight: 7,
+                                  backgroundColor: AppColors.bg,
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                    ratio > 0 ? AppColors.primary : AppColors.border,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 6),
+                            SizedBox(
+                              width: 16,
+                              child: Text(
+                                '$count',
+                                style: AppTextStyles.small.copyWith(fontSize: 11),
+                                textAlign: TextAlign.right,
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }).toList(),
                   ),
                 ),
               ],
@@ -91,10 +141,10 @@ class BosalReviewsScreen extends ConsumerWidget {
 
           const SizedBox(height: 8),
 
-          // Review list
+          // 리뷰 목록
           Expanded(
             child: ListView.separated(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(16),
               itemCount: mockReviews.length,
               separatorBuilder: (_, __) => const SizedBox(height: 10),
               itemBuilder: (context, index) {
@@ -112,22 +162,25 @@ class BosalReviewsScreen extends ConsumerWidget {
                       Row(
                         children: [
                           Container(
-                            width: 36,
-                            height: 36,
+                            width: 38,
+                            height: 38,
                             decoration: const BoxDecoration(
                               color: AppColors.primarySoft,
                               shape: BoxShape.circle,
                             ),
-                            child: const Icon(Icons.person_rounded,
-                                color: AppColors.primary, size: 20),
+                            child: Center(
+                              child: Text(
+                                review.name[0],
+                                style: AppTextStyles.bodyBold.copyWith(fontSize: 14),
+                              ),
+                            ),
                           ),
                           const SizedBox(width: 10),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(review.name,
-                                    style: AppTextStyles.bodyBold),
+                                Text(review.name, style: AppTextStyles.bodyBold),
                                 Row(
                                   children: [
                                     ...List.generate(
@@ -136,18 +189,19 @@ class BosalReviewsScreen extends ConsumerWidget {
                                         i < review.rating.floor()
                                             ? Icons.star_rounded
                                             : Icons.star_border_rounded,
-                                        size: 14,
+                                        size: 13,
                                         color: AppColors.accent,
                                       ),
                                     ),
                                     const SizedBox(width: 4),
-                                    Text(review.date,
+                                    Text(review.rating.toString(),
                                         style: AppTextStyles.small),
                                   ],
                                 ),
                               ],
                             ),
                           ),
+                          Text(review.date, style: AppTextStyles.small),
                         ],
                       ),
                       const SizedBox(height: 10),
