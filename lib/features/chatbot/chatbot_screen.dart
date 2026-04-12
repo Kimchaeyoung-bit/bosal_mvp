@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
 
@@ -7,39 +8,55 @@ class ChatbotScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final topPadding = MediaQuery.of(context).padding.top;
+
     return Scaffold(
       backgroundColor: AppColors.bg,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              'assets/images/mascot.png',
-              width: 140,
-              height: 140,
-              fit: BoxFit.contain,
+      body: Column(
+        children: [
+          // Header
+          Container(
+            padding: EdgeInsets.fromLTRB(8, topPadding + 8, 20, 14),
+            color: AppColors.surface,
+            child: Row(
+              children: [
+                IconButton(
+                  onPressed: () => context.pop(),
+                  icon: const Icon(Icons.close_rounded, size: 24),
+                ),
+                const SizedBox(width: 4),
+                Text('AI 챗봇 상담', style: AppTextStyles.sectionTitle),
+              ],
             ),
-            const SizedBox(height: 20),
-            Text('안녕! 나는 보보야 🌈', style: AppTextStyles.sectionTitle),
-            const SizedBox(height: 8),
-            Text(
-              '곧 상담 도우미로 찾아올게요!',
-              style: AppTextStyles.small,
-            ),
-            const SizedBox(height: 24),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-              decoration: BoxDecoration(
-                color: AppColors.accent,
-                borderRadius: BorderRadius.circular(14),
+          ),
+          Expanded(
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 80,
+                    height: 80,
+                    decoration: BoxDecoration(
+                      color: AppColors.primarySoft,
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(Icons.chat_bubble_rounded,
+                        size: 40, color: AppColors.primary),
+                  ),
+                  const SizedBox(height: 20),
+                  Text('AI 챗봇 준비중', style: AppTextStyles.sectionTitle),
+                  const SizedBox(height: 8),
+                  Text(
+                    '곧 나에게 맞는 보살을\n추천받을 수 있어요!',
+                    textAlign: TextAlign.center,
+                    style: AppTextStyles.small.copyWith(fontSize: 14),
+                  ),
+                ],
               ),
-              child: Text(
-                '준비중이에요',
-                style: AppTextStyles.bodyBold.copyWith(color: AppColors.black),
-              ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

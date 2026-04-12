@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../../features/splash/splash_screen.dart';
 import '../../features/home/home_screen.dart';
 import '../../features/map/map_screen.dart' as map_tab;
 import '../../features/region_tab/region_tab_screen.dart';
@@ -13,8 +14,12 @@ import '../../features/bosal_detail/bosal_detail_screen.dart';
 import '../../shared/widgets/main_scaffold.dart';
 
 final appRouter = GoRouter(
-  initialLocation: '/home',
+  initialLocation: '/splash',
   routes: [
+    GoRoute(
+      path: '/splash',
+      builder: (context, state) => const SplashScreen(),
+    ),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
         return MainScaffold(navigationShell: navigationShell);
@@ -39,14 +44,6 @@ final appRouter = GoRouter(
         StatefulShellBranch(
           routes: [
             GoRoute(
-              path: '/chatbot-tab',
-              builder: (context, state) => const ChatbotScreen(),
-            ),
-          ],
-        ),
-        StatefulShellBranch(
-          routes: [
-            GoRoute(
               path: '/booking-tab',
               builder: (context, state) => const BookingScreen(),
             ),
@@ -61,6 +58,24 @@ final appRouter = GoRouter(
           ],
         ),
       ],
+    ),
+    GoRoute(
+      path: '/chatbot',
+      pageBuilder: (context, state) => CustomTransitionPage(
+        child: const ChatbotScreen(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(0, 1),
+              end: Offset.zero,
+            ).animate(CurvedAnimation(
+              parent: animation,
+              curve: Curves.easeOutCubic,
+            )),
+            child: child,
+          );
+        },
+      ),
     ),
     GoRoute(
       path: '/region-select',
