@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
 import '../../providers/bosal_provider.dart';
+import '../booking/booking_sheet.dart';
 
 final _priceFormat = NumberFormat('#,###');
 
@@ -438,15 +439,7 @@ class BosalDetailScreen extends ConsumerWidget {
               child: SizedBox(
                 height: 52,
                 child: ElevatedButton(
-                  onPressed: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('${bosal.name} 예약이 신청되었습니다!'),
-                        backgroundColor: AppColors.primary,
-                        behavior: SnackBarBehavior.floating,
-                      ),
-                    );
-                  },
+                  onPressed: () => showBookingSheet(context, bosal),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
                     foregroundColor: AppColors.white,
