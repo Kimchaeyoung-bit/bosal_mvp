@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
+import '../../core/utils/auth_guard.dart';
 import '../../providers/bosal_provider.dart';
 import '../booking/booking_sheet.dart';
 
@@ -417,7 +418,12 @@ class BosalDetailScreen extends ConsumerWidget {
         child: Row(
           children: [
             GestureDetector(
-              onTap: () {},
+              onTap: () => requireAuth(context, ref,
+                  onAuthenticated: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('찜 목록에 추가되었습니다')),
+                    );
+                  }),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -439,7 +445,8 @@ class BosalDetailScreen extends ConsumerWidget {
               child: SizedBox(
                 height: 52,
                 child: ElevatedButton(
-                  onPressed: () => showBookingSheet(context, bosal),
+                  onPressed: () => requireAuth(context, ref,
+                      onAuthenticated: () => showBookingSheet(context, bosal)),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
                     foregroundColor: AppColors.white,

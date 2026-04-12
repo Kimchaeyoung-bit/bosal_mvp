@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
 import '../../shared/widgets/app_shadow.dart';
+import '../../providers/auth_provider.dart';
 
-class MypageScreen extends StatelessWidget {
+class MypageScreen extends ConsumerWidget {
   const MypageScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(authProvider);
+    final isLoggedIn = user != null;
     final topPadding = MediaQuery.of(context).padding.top;
 
     return Scaffold(
@@ -53,7 +58,6 @@ class MypageScreen extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 24),
-                  // Profile
                   Container(
                     width: 80,
                     height: 80,
@@ -69,9 +73,9 @@ class MypageScreen extends StatelessWidget {
                         color: AppColors.white, size: 40),
                   ),
                   const SizedBox(height: 14),
-                  const Text(
-                    '로그인이 필요합니다',
-                    style: TextStyle(
+                  Text(
+                    isLoggedIn ? user.displayName : '로그인이 필요합니다',
+                    style: const TextStyle(
                       color: AppColors.white,
                       fontSize: 17,
                       fontWeight: FontWeight.w700,
@@ -79,7 +83,9 @@ class MypageScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 6),
                   Text(
-                    '로그인하고 나에게 맞는 보살을 찾아보세요',
+                    isLoggedIn
+                        ? '환영합니다!'
+                        : '로그인하고 나에게 맞는 보살을 찾아보세요',
                     style: TextStyle(
                       color: AppColors.white.withValues(alpha: 0.7),
                       fontSize: 13,
@@ -90,7 +96,13 @@ class MypageScreen extends StatelessWidget {
                     width: double.infinity,
                     height: 46,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        if (isLoggedIn) {
+                          ref.read(authProvider.notifier).logout();
+                        } else {
+                          context.push<bool>('/login');
+                        }
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.white,
                         foregroundColor: AppColors.primary,
@@ -103,7 +115,7 @@ class MypageScreen extends StatelessWidget {
                           fontWeight: FontWeight.w700,
                         ),
                       ),
-                      child: const Text('로그인 / 회원가입'),
+                      child: Text(isLoggedIn ? '로그아웃' : '로그인 / 회원가입'),
                     ),
                   ),
                 ],
@@ -112,7 +124,6 @@ class MypageScreen extends StatelessWidget {
 
             const SizedBox(height: 20),
 
-            // Menu sections
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
