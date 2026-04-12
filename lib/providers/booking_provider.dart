@@ -69,7 +69,11 @@ class BookingsNotifier extends StateNotifier<List<Booking>> {
     ];
   }
 
-  void cancel(String bookingId) {
+  void confirm(String bookingId) => _updateStatus(bookingId, BookingStatus.confirmed);
+  void complete(String bookingId) => _updateStatus(bookingId, BookingStatus.completed);
+  void reject(String bookingId) => _updateStatus(bookingId, BookingStatus.cancelled);
+
+  void _updateStatus(String bookingId, BookingStatus newStatus) {
     state = state.map((b) {
       if (b.id == bookingId) {
         return Booking(
@@ -79,10 +83,12 @@ class BookingsNotifier extends StateNotifier<List<Booking>> {
           consultDate: b.consultDate,
           consultType: b.consultType,
           price: b.price,
-          status: BookingStatus.cancelled,
+          status: newStatus,
         );
       }
       return b;
     }).toList();
   }
+
+  void cancel(String bookingId) => _updateStatus(bookingId, BookingStatus.cancelled);
 }
