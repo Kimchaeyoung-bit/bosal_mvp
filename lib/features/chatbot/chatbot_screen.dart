@@ -13,11 +13,31 @@ class ChatbotScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.chat_bubble_rounded, size: 64, color: AppColors.textSub),
-            const SizedBox(height: 16),
-            Text('챗봇 준비중', style: AppTextStyles.sectionTitle),
+            Image.asset(
+              'assets/images/mascot.png',
+              width: 140,
+              height: 140,
+              fit: BoxFit.contain,
+            ),
+            const SizedBox(height: 20),
+            Text('안녕! 나는 보보야 🌈', style: AppTextStyles.sectionTitle),
             const SizedBox(height: 8),
-            Text('곧 만나요!', style: AppTextStyles.small),
+            Text(
+              '곧 상담 도우미로 찾아올게요!',
+              style: AppTextStyles.small,
+            ),
+            const SizedBox(height: 24),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              decoration: BoxDecoration(
+                color: AppColors.accent,
+                borderRadius: BorderRadius.circular(14),
+              ),
+              child: Text(
+                '준비중이에요',
+                style: AppTextStyles.bodyBold.copyWith(color: AppColors.black),
+              ),
+            ),
           ],
         ),
       ),

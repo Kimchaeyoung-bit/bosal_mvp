@@ -5,16 +5,16 @@ import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
 import '../../data/models/bosal.dart';
 import '../../providers/bosal_provider.dart';
-import '../map/widgets/bosal_map_widget.dart';
+import 'widgets/bosal_map_widget.dart';
 
-class RegionTabScreen extends ConsumerStatefulWidget {
-  const RegionTabScreen({super.key});
+class MapScreen extends ConsumerStatefulWidget {
+  const MapScreen({super.key});
 
   @override
-  ConsumerState<RegionTabScreen> createState() => _RegionTabScreenState();
+  ConsumerState<MapScreen> createState() => _MapScreenState();
 }
 
-class _RegionTabScreenState extends ConsumerState<RegionTabScreen> {
+class _MapScreenState extends ConsumerState<MapScreen> {
   Bosal? _selectedBosal;
 
   @override
@@ -38,12 +38,18 @@ class _RegionTabScreenState extends ConsumerState<RegionTabScreen> {
             },
           ),
 
-          // 상단 플로팅 헤더 (뒤로가기 없음 — 탭 화면)
+          // 상단 플로팅 헤더
           SafeArea(
             child: Padding(
               padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
               child: Row(
                 children: [
+                  // 뒤로가기 버튼
+                  _FloatingIconButton(
+                    icon: Icons.arrow_back_rounded,
+                    onTap: () => context.pop(),
+                  ),
+                  const SizedBox(width: 10),
                   // 검색바
                   Expanded(
                     child: Container(

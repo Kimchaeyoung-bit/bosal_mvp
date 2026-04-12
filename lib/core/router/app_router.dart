@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../features/home/home_screen.dart';
+import '../../features/map/map_screen.dart' as map_tab;
 import '../../features/region_tab/region_tab_screen.dart';
 import '../../features/chatbot/chatbot_screen.dart';
 import '../../features/booking/booking_screen.dart';
@@ -96,6 +97,10 @@ final appRouter = GoRouter(
         final id = state.pathParameters['id']!;
         return BosalDetailScreen(bosalId: id);
       },
+    ),
+    GoRoute(
+      path: '/map',
+      builder: (context, state) => const map_tab.MapScreen(),
     ),
   ],
 );

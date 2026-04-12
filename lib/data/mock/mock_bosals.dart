@@ -20,6 +20,8 @@ final mockBosals = [
     description: '마음의 길을 밝혀드립니다',
     experienceYears: 12,
     consultStyle: '냉철형',
+    latitude: 37.4979,
+    longitude: 127.0276,
   ),
   const Bosal(
     id: '2',
@@ -40,6 +42,8 @@ final mockBosals = [
     description: '당신의 가능성을 함께 찾아드려요',
     experienceYears: 8,
     consultStyle: '공감형',
+    latitude: 37.5045,
+    longitude: 127.0490,
   ),
   const Bosal(
     id: '3',
@@ -60,6 +64,8 @@ final mockBosals = [
     description: '돈의 흐름을 읽어드립니다',
     experienceYears: 15,
     consultStyle: '직설형',
+    latitude: 37.5196,
+    longitude: 127.0470,
   ),
   const Bosal(
     id: '4',
@@ -80,6 +86,8 @@ final mockBosals = [
     description: '사랑의 방향을 알려드려요',
     experienceYears: 6,
     consultStyle: '공감형',
+    latitude: 37.5563,
+    longitude: 126.9236,
   ),
   const Bosal(
     id: '5',
@@ -100,6 +108,8 @@ final mockBosals = [
     description: '가족의 평화를 되찾아드려요',
     experienceYears: 20,
     consultStyle: '공감형',
+    latitude: 37.4837,
+    longitude: 127.0324,
   ),
   const Bosal(
     id: '6',
@@ -120,6 +130,8 @@ final mockBosals = [
     description: '마음의 소리를 먼저 들어드립니다',
     experienceYears: 15,
     consultStyle: '공감형',
+    latitude: 37.5172,
+    longitude: 127.0286,
   ),
   const Bosal(
     id: '7',
@@ -140,5 +152,7 @@ final mockBosals = [
     description: '돌려 말하지 않습니다',
     experienceYears: 22,
     consultStyle: '직설형',
+    latitude: 37.5133,
+    longitude: 127.1000,
   ),
 ];
