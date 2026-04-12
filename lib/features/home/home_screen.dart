@@ -28,7 +28,7 @@ class HomeScreen extends ConsumerWidget {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: TopActionsRow(
-                  onNearbyTap: () => context.push('/region-select'),
+                  onNearbyTap: () => context.go('/region-tab'),
                   onBosalTap: (id) => context.push('/bosal/$id'),
                 ),
               ),
