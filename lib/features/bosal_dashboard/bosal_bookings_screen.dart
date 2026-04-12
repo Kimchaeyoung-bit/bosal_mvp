@@ -85,16 +85,20 @@ class _BosalBookingsScreenState extends ConsumerState<BosalBookingsScreen>
                   emptyText: '대기중인 예약이 없습니다',
                   showActions: true,
                   dateFormat: _dateFormat,
-                  onConfirm: (id) {},
+                  onConfirm: (id) =>
+                      ref.read(bookingsProvider.notifier).confirm(id),
                   onCancel: (id) =>
-                      ref.read(bookingsProvider.notifier).cancel(id),
+                      ref.read(bookingsProvider.notifier).reject(id),
                 ),
                 _BookingList(
                   bookings: myBookings
                       .where((b) => b.status == BookingStatus.confirmed)
                       .toList(),
                   emptyText: '확정된 예약이 없습니다',
+                  showComplete: true,
                   dateFormat: _dateFormat,
+                  onComplete: (id) =>
+                      ref.read(bookingsProvider.notifier).complete(id),
                 ),
                 _BookingList(
                   bookings: myBookings
@@ -123,17 +127,21 @@ class _BookingList extends StatelessWidget {
   final List<Booking> bookings;
   final String emptyText;
   final bool showActions;
+  final bool showComplete;
   final DateFormat dateFormat;
   final void Function(String)? onConfirm;
   final void Function(String)? onCancel;
+  final void Function(String)? onComplete;
 
   const _BookingList({
     required this.bookings,
     required this.emptyText,
     this.showActions = false,
+    this.showComplete = false,
     required this.dateFormat,
     this.onConfirm,
     this.onCancel,
+    this.onComplete,
   });
 
   @override
@@ -229,10 +237,28 @@ class _BookingList extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                        child: const Text('확정'),
+                        child: const Text('수락'),
                       ),
                     ),
                   ],
+                ),
+              ],
+              if (showComplete) ...[
+                const SizedBox(height: 12),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () => onComplete?.call(booking.id),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primary,
+                      foregroundColor: AppColors.white,
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    child: const Text('상담 완료 처리'),
+                  ),
                 ),
               ],
             ],
