@@ -6,7 +6,9 @@ import '../../core/theme/app_text_styles.dart';
 import '../../data/models/booking.dart';
 import '../../data/mock/mock_bosals.dart';
 import '../../data/models/bosal.dart';
+import '../../providers/auth_provider.dart';
 import '../../providers/booking_provider.dart';
+import '../../shared/widgets/login_required_view.dart';
 
 class BookingScreen extends ConsumerStatefulWidget {
   const BookingScreen({super.key});
@@ -20,6 +22,15 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isLoggedIn = ref.watch(isLoggedInProvider);
+
+    if (!isLoggedIn) {
+      return const Scaffold(
+        backgroundColor: AppColors.bg,
+        body: SafeArea(child: LoginRequiredView()),
+      );
+    }
+
     final bookings = ref.watch(bookingsProvider);
 
     final filtered = _selectedFilter == null

@@ -20,3 +20,19 @@ Future<void> requireAuth(
     onAuthenticated();
   }
 }
+
+void showLoginRequiredSnack(BuildContext context, {String? message}) {
+  final messenger = ScaffoldMessenger.of(context);
+  messenger.hideCurrentSnackBar();
+  messenger.showSnackBar(
+    SnackBar(
+      content: Text(message ?? '로그인이 필요합니다'),
+      behavior: SnackBarBehavior.floating,
+      action: SnackBarAction(
+        label: '로그인',
+        onPressed: () => context.push('/login'),
+      ),
+      duration: const Duration(seconds: 3),
+    ),
+  );
+}
