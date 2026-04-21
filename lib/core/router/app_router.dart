@@ -16,6 +16,7 @@ import '../../features/bosal_dashboard/bosal_dashboard_screen.dart';
 import '../../features/bosal_dashboard/bosal_bookings_screen.dart';
 import '../../features/bosal_dashboard/bosal_reviews_screen.dart';
 import '../../features/bosal_dashboard/bosal_profile_screen.dart';
+import '../../features/my_activity/my_activity_screen.dart';
 import '../../shared/widgets/main_scaffold.dart';
 import '../../shared/widgets/bosal_scaffold.dart';
 
@@ -185,6 +186,26 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/map',
       builder: (context, state) => const map_tab.MapScreen(),
+    ),
+    GoRoute(
+      path: '/my/bookings',
+      builder: (context, state) =>
+          const MyActivityScreen(type: MyActivityType.bookings),
+    ),
+    GoRoute(
+      path: '/my/favorites',
+      builder: (context, state) =>
+          const MyActivityScreen(type: MyActivityType.favorites),
+    ),
+    GoRoute(
+      path: '/my/recent',
+      builder: (context, state) =>
+          const MyActivityScreen(type: MyActivityType.recent),
+    ),
+    GoRoute(
+      path: '/my/reviews',
+      builder: (context, state) =>
+          const MyActivityScreen(type: MyActivityType.reviews),
     ),
   ],
 );

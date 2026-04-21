@@ -134,22 +134,22 @@ class MypageScreen extends ConsumerWidget {
                       _MenuItem(
                         icon: Icons.calendar_today_outlined,
                         label: '예약 내역',
-                        onTap: () {},
+                        onTap: () => context.push('/my/bookings'),
                       ),
                       _MenuItem(
                         icon: Icons.favorite_border_rounded,
                         label: '찜한 보살',
-                        onTap: () {},
+                        onTap: () => context.push('/my/favorites'),
                       ),
                       _MenuItem(
                         icon: Icons.history_rounded,
                         label: '최근 본 보살',
-                        onTap: () {},
+                        onTap: () => context.push('/my/recent'),
                       ),
                       _MenuItem(
                         icon: Icons.rate_review_outlined,
                         label: '내 후기',
-                        onTap: () {},
+                        onTap: () => context.push('/my/reviews'),
                       ),
                     ],
                   ),
