@@ -28,7 +28,7 @@ class _RegionTabScreenState extends ConsumerState<RegionTabScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final bosals = ref.watch(allBosalsProvider);
+    final bosals = ref.watch(filteredBosalsProvider);
     final bosalsWithLocation =
         bosals.where((b) => b.latitude != null && b.longitude != null).toList();
     final selectedSubRegions = ref.watch(selectedSubRegionsProvider);

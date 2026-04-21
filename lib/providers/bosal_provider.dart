@@ -3,6 +3,7 @@ import '../data/models/bosal.dart';
 import '../data/mock/mock_bosals.dart';
 import 'region_provider.dart';
 import 'category_provider.dart';
+import 'search_provider.dart';
 
 final allBosalsProvider = Provider<List<Bosal>>((ref) => mockBosals);
 
@@ -10,6 +11,7 @@ final filteredBosalsProvider = Provider<List<Bosal>>((ref) {
   final bosals = ref.watch(allBosalsProvider);
   final selectedRegions = ref.watch(selectedSubRegionsProvider);
   final selectedCategory = ref.watch(selectedCategoryProvider);
+  final query = ref.watch(searchQueryProvider).trim().toLowerCase();
 
   var filtered = bosals;
 
@@ -24,6 +26,16 @@ final filteredBosalsProvider = Provider<List<Bosal>>((ref) {
     filtered = filtered
         .where((b) => b.categoryIds.contains(selectedCategory.id))
         .toList();
+  }
+
+  if (query.isNotEmpty) {
+    filtered = filtered.where((b) {
+      if (b.name.toLowerCase().contains(query)) return true;
+      if (b.consultStyle.toLowerCase().contains(query)) return true;
+      if ((b.description ?? '').toLowerCase().contains(query)) return true;
+      if (b.features.any((f) => f.toLowerCase().contains(query))) return true;
+      return false;
+    }).toList();
   }
 
   return filtered;
