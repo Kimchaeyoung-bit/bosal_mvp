@@ -22,6 +22,7 @@ final mockBosals = [
     consultStyle: '냉철형',
     latitude: 37.4979,
     longitude: 127.0276,
+    phoneNumber: '010-1234-5678',
   ),
   const Bosal(
     id: '2',
@@ -44,6 +45,7 @@ final mockBosals = [
     consultStyle: '공감형',
     latitude: 37.5045,
     longitude: 127.0490,
+    phoneNumber: '010-2345-6789',
   ),
   const Bosal(
     id: '3',
@@ -66,6 +68,7 @@ final mockBosals = [
     consultStyle: '직설형',
     latitude: 37.5196,
     longitude: 127.0470,
+    phoneNumber: '010-3456-7890',
   ),
   const Bosal(
     id: '4',
@@ -88,6 +91,7 @@ final mockBosals = [
     consultStyle: '공감형',
     latitude: 37.5563,
     longitude: 126.9236,
+    phoneNumber: '010-4567-8901',
   ),
   const Bosal(
     id: '5',
@@ -110,6 +114,7 @@ final mockBosals = [
     consultStyle: '공감형',
     latitude: 37.4837,
     longitude: 127.0324,
+    phoneNumber: '010-5678-9012',
   ),
   const Bosal(
     id: '6',
@@ -132,6 +137,7 @@ final mockBosals = [
     consultStyle: '공감형',
     latitude: 37.5172,
     longitude: 127.0286,
+    phoneNumber: '010-6789-0123',
   ),
   const Bosal(
     id: '7',
@@ -154,5 +160,6 @@ final mockBosals = [
     consultStyle: '직설형',
     latitude: 37.5133,
     longitude: 127.1000,
+    phoneNumber: '010-7890-1234',
   ),
 ];

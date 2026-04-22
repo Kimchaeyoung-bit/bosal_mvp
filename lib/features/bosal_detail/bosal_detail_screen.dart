@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
 import '../../core/utils/auth_guard.dart';
 import '../../providers/bosal_provider.dart';
 import '../booking/booking_sheet.dart';
-
-final _priceFormat = NumberFormat('#,###');
 
 class BosalDetailScreen extends ConsumerWidget {
   final String bosalId;
@@ -210,195 +208,6 @@ class BosalDetailScreen extends ConsumerWidget {
                     ),
                   ),
 
-                  const SizedBox(height: 10),
-
-                  // Pricing card
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(20),
-                    color: AppColors.surface,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('상담료',
-                            style: AppTextStyles.bodyBold
-                                .copyWith(fontSize: 15)),
-                        const SizedBox(height: 14),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(
-                              '${bosal.discountPercent}%',
-                              style: AppTextStyles.priceDiscount.copyWith(
-                                color: AppColors.danger,
-                                fontSize: 22,
-                              ),
-                            ),
-                            const SizedBox(width: 10),
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 4),
-                              child: Text(
-                                '${_priceFormat.format(bosal.originalPrice)}원',
-                                style: AppTextStyles.priceOriginal.copyWith(
-                                  decoration: TextDecoration.lineThrough,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 2),
-                        Text(
-                          '${_priceFormat.format(bosal.discountedPrice)}원',
-                          style: AppTextStyles.priceDiscount.copyWith(fontSize: 24),
-                        ),
-                        const SizedBox(height: 14),
-                        Container(
-                          padding: const EdgeInsets.all(14),
-                          decoration: BoxDecoration(
-                            color: AppColors.danger.withValues(alpha: 0.06),
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(
-                              color: AppColors.danger.withValues(alpha: 0.2),
-                            ),
-                          ),
-                          child: Row(
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 8, vertical: 3),
-                                decoration: BoxDecoration(
-                                  color: AppColors.danger,
-                                  borderRadius: BorderRadius.circular(6),
-                                ),
-                                child: Text(
-                                  '첫방문',
-                                  style: AppTextStyles.caption.copyWith(
-                                    color: AppColors.white,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 10),
-                              Text(
-                                '${_priceFormat.format(bosal.firstVisitPrice)}원',
-                                style: AppTextStyles.priceFirstVisit,
-                              ),
-                              const Spacer(),
-                              Text('내 예약 적용가',
-                                  style: AppTextStyles.small.copyWith(
-                                      fontWeight: FontWeight.w600)),
-                              const Icon(Icons.keyboard_arrow_down_rounded,
-                                  size: 16, color: AppColors.textSub),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 12),
-                        GestureDetector(
-                          onTap: () {},
-                          child: Container(
-                            padding: const EdgeInsets.all(14),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: AppColors.border),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Row(
-                              children: [
-                                const Icon(Icons.location_on_outlined,
-                                    color: AppColors.primary, size: 18),
-                                const SizedBox(width: 8),
-                                Text('위치 보기',
-                                    style: AppTextStyles.body
-                                        .copyWith(fontWeight: FontWeight.w600)),
-                                const Spacer(),
-                                const Icon(Icons.chevron_right_rounded,
-                                    color: AppColors.textSub, size: 18),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  const SizedBox(height: 10),
-
-                  // Points & social proof
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(20),
-                    color: AppColors.surface,
-                    child: Column(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(14),
-                          decoration: BoxDecoration(
-                            gradient: const LinearGradient(
-                              begin: Alignment.centerLeft,
-                              end: Alignment.centerRight,
-                              colors: [
-                                AppColors.accentSoft,
-                                Color(0xFFFAE8C0),
-                              ],
-                            ),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Row(
-                            children: [
-                              Container(
-                                width: 32,
-                                height: 32,
-                                decoration: BoxDecoration(
-                                  color: AppColors.accent,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: const Icon(
-                                  Icons.monetization_on_rounded,
-                                  color: AppColors.white,
-                                  size: 20,
-                                ),
-                              ),
-                              const SizedBox(width: 12),
-                              Text(
-                                '포인트 최대 ${_priceFormat.format(bosal.maxPoints)}P 적립',
-                                style: AppTextStyles.body.copyWith(
-                                    fontWeight: FontWeight.w700),
-                              ),
-                              const Spacer(),
-                              const Icon(Icons.keyboard_arrow_down_rounded,
-                                  color: AppColors.textSub, size: 20),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 14),
-                        Row(
-                          children: [
-                            const Icon(Icons.favorite_rounded,
-                                color: AppColors.primary, size: 16),
-                            const SizedBox(width: 6),
-                            Text(
-                              '총 ',
-                              style: AppTextStyles.body.copyWith(
-                                color: AppColors.textSub,
-                              ),
-                            ),
-                            Text(
-                              '${bosal.consultRequests}명',
-                              style: AppTextStyles.body.copyWith(
-                                color: AppColors.primary,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                            Text(
-                              '이 상담 신청했어요.',
-                              style: AppTextStyles.body.copyWith(
-                                color: AppColors.textSub,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
 
                   const SizedBox(height: 120),
                 ],
@@ -435,12 +244,46 @@ class BosalDetailScreen extends ConsumerWidget {
               ),
             ),
             const SizedBox(width: 16),
-            Container(
-              width: 1,
-              height: 32,
-              color: AppColors.border,
-            ),
+            Container(width: 1, height: 32, color: AppColors.border),
             const SizedBox(width: 16),
+            if (bosal.phoneNumber != null) ...[
+              SizedBox(
+                height: 52,
+                child: ElevatedButton(
+                  onPressed: () => requireAuth(context, ref,
+                      onAuthenticated: () async {
+                        final uri = Uri(
+                          scheme: 'tel',
+                          path: bosal.phoneNumber!.replaceAll('-', ''),
+                        );
+                        if (await canLaunchUrl(uri)) {
+                          await launchUrl(uri);
+                        }
+                      }),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.surface,
+                    foregroundColor: AppColors.primary,
+                    elevation: 0,
+                    side: const BorderSide(color: AppColors.primary),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 18),
+                  ),
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.phone_rounded, size: 18),
+                      SizedBox(width: 6),
+                      Text('전화 상담',
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.w700)),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(width: 10),
+            ],
             Expanded(
               child: SizedBox(
                 height: 52,

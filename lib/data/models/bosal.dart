@@ -20,6 +20,7 @@ class Bosal {
   final String consultStyle;
   final double? latitude;
   final double? longitude;
+  final String? phoneNumber;
 
   const Bosal({
     required this.id,
@@ -43,5 +44,6 @@ class Bosal {
     required this.consultStyle,
     this.latitude,
     this.longitude,
+    this.phoneNumber,
   });
 }
