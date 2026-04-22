@@ -26,13 +26,13 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(searchQueryProvider.notifier).state = '';
       _focusNode.requestFocus();
     });
   }
 
   @override
   void dispose() {
-    ref.read(searchQueryProvider.notifier).state = '';
     _controller.dispose();
     _focusNode.dispose();
     super.dispose();
