@@ -8,7 +8,7 @@ class AdBannerPlaceholder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100,
+      height: 130,
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
         gradient: const LinearGradient(

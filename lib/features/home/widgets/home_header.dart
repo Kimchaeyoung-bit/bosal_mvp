@@ -74,13 +74,6 @@ class HomeHeader extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(width: 8),
-              // 우측 상단: SVG 로고
-              Image.asset(
-                'assets/images/logo_real.png',
-                width: 72,
-                height: 72,
-              ),
             ],
           ),
         ],

@@ -155,24 +155,6 @@ class MypageScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: 14),
                   _MenuSection(
-                    title: '포인트 & 혜택',
-                    items: [
-                      _MenuItem(
-                        icon: Icons.monetization_on_outlined,
-                        label: '포인트',
-                        trailing: '0P',
-                        onTap: () {},
-                      ),
-                      _MenuItem(
-                        icon: Icons.card_giftcard_rounded,
-                        label: '쿠폰함',
-                        trailing: '0장',
-                        onTap: () {},
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 14),
-                  _MenuSection(
                     title: '고객 지원',
                     items: [
                       _MenuItem(
@@ -248,13 +230,11 @@ class _MenuSection extends StatelessWidget {
 class _MenuItem extends StatelessWidget {
   final IconData icon;
   final String label;
-  final String? trailing;
   final VoidCallback onTap;
 
   const _MenuItem({
     required this.icon,
     required this.label,
-    this.trailing,
     required this.onTap,
   });
 
@@ -275,15 +255,6 @@ class _MenuItem extends StatelessWidget {
                 style: AppTextStyles.body.copyWith(fontWeight: FontWeight.w500),
               ),
             ),
-            if (trailing != null)
-              Text(
-                trailing!,
-                style: AppTextStyles.body.copyWith(
-                  color: AppColors.primary,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            const SizedBox(width: 4),
             const Icon(Icons.chevron_right_rounded,
                 size: 18, color: AppColors.textSub),
           ],
