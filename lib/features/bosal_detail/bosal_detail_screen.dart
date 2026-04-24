@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -6,6 +8,7 @@ import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
 import '../../core/utils/auth_guard.dart';
 import '../../providers/bosal_provider.dart';
+import '../../providers/data_source_providers.dart';
 import '../booking/booking_sheet.dart';
 
 class BosalDetailScreen extends ConsumerWidget {
@@ -252,6 +255,10 @@ class BosalDetailScreen extends ConsumerWidget {
                 child: ElevatedButton(
                   onPressed: () => requireAuth(context, ref,
                       onAuthenticated: () async {
+                        // fire-and-forget 전화 탭 로깅 (실패 무시)
+                        unawaited(ref
+                            .read(analyticsDataSourceProvider)
+                            .logCallTap(bosalId: bosal.id));
                         final uri = Uri(
                           scheme: 'tel',
                           path: bosal.phoneNumber!.replaceAll('-', ''),
@@ -289,7 +296,12 @@ class BosalDetailScreen extends ConsumerWidget {
                 height: 52,
                 child: ElevatedButton(
                   onPressed: () => requireAuth(context, ref,
-                      onAuthenticated: () => showBookingSheet(context, bosal)),
+                      onAuthenticated: () {
+                        unawaited(ref
+                            .read(analyticsDataSourceProvider)
+                            .logReservationButtonTap(bosalId: bosal.id));
+                        showBookingSheet(context, bosal);
+                      }),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
                     foregroundColor: AppColors.white,

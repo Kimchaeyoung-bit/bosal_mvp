@@ -1,9 +1,19 @@
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../data/models/app_user.dart';
 
+import '../data/datasources/auth_data_source.dart';
+import '../data/models/app_user.dart';
+import 'data_source_providers.dart';
+
+/// 현재 로그인한 사용자. null 이면 로그아웃 상태.
 final authProvider = StateNotifierProvider<AuthNotifier, AppUser?>((ref) {
-  return AuthNotifier();
+  final notifier = AuthNotifier(ref.watch(authDataSourceProvider));
+  // Supabase 세션 복원/외부 로그아웃 반영
+  final sub = ref
+      .watch(authDataSourceProvider)
+      .authStateChanges()
+      .listen(notifier._setFromStream);
+  ref.onDispose(sub.cancel);
+  return notifier;
 });
 
 final isLoggedInProvider = Provider<bool>((ref) {
@@ -15,39 +25,66 @@ final currentUserRoleProvider = Provider<UserRole?>((ref) {
 });
 
 class AuthNotifier extends StateNotifier<AppUser?> {
-  AuthNotifier() : super(null);
+  AuthNotifier(this._dataSource) : super(_dataSource.currentUser);
 
-  String? login(String username, String password) {
-    final testUserId = dotenv.env['TEST_USER_USERNAME'];
-    final testUserPw = dotenv.env['TEST_USER_PASSWORD'];
-    final testBosalId = dotenv.env['TEST_BOSAL_USERNAME'];
-    final testBosalPw = dotenv.env['TEST_BOSAL_PASSWORD'];
+  final AuthDataSource _dataSource;
 
-    if (username == testUserId && password == testUserPw) {
-      state = const AppUser(
-        id: 'user_1',
-        username: 'a',
-        role: UserRole.user,
-        displayName: '사용자',
+  /// 로그인. 성공 시 null, 실패 시 에러 메시지 반환.
+  Future<String?> login(String emailOrUsername, String password) async {
+    try {
+      final user = await _dataSource.signInWithPassword(
+        emailOrUsername: emailOrUsername,
+        password: password,
       );
+      state = user;
       return null;
+    } on AuthFailure catch (e) {
+      return e.message;
+    } catch (e) {
+      return '로그인에 실패했습니다';
     }
-
-    if (username == testBosalId && password == testBosalPw) {
-      state = const AppUser(
-        id: 'bosal_1',
-        username: 'b',
-        role: UserRole.bosal,
-        bosalId: '1',
-        displayName: '가가 보살',
-      );
-      return null;
-    }
-
-    return '아이디 또는 비밀번호가 올바르지 않습니다';
   }
 
-  void logout() {
+  /// 회원가입 (이메일/비밀번호).
+  Future<String?> signUp({
+    required String email,
+    required String password,
+    required String displayName,
+  }) async {
+    try {
+      final user = await _dataSource.signUp(
+        email: email,
+        password: password,
+        displayName: displayName,
+      );
+      state = user;
+      return null;
+    } on AuthFailure catch (e) {
+      return e.message;
+    } catch (e) {
+      return '회원가입에 실패했습니다';
+    }
+  }
+
+  Future<String?> claimBosalInvite(String code) async {
+    try {
+      await _dataSource.claimBosalInvite(code);
+      // refresh current user (role/bosal_id bumped)
+      state = _dataSource.currentUser;
+      return null;
+    } on AuthFailure catch (e) {
+      return e.message;
+    } catch (e) {
+      return '초대 코드 적용 실패';
+    }
+  }
+
+  Future<void> logout() async {
+    await _dataSource.signOut();
     state = null;
+  }
+
+  void _setFromStream(AppUser? u) {
+    state = u;
   }
 }

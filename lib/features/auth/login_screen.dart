@@ -26,7 +26,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     super.dispose();
   }
 
-  void _handleLogin() {
+  Future<void> _handleLogin() async {
     final username = _usernameController.text.trim();
     final password = _passwordController.text.trim();
 
@@ -35,7 +35,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       return;
     }
 
-    final error = ref.read(authProvider.notifier).login(username, password);
+    final error = await ref.read(authProvider.notifier).login(username, password);
+
+    if (!mounted) return;
 
     if (error != null) {
       setState(() => _errorMessage = error);
