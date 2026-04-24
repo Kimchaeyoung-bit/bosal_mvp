@@ -9,6 +9,7 @@ import '../../core/theme/app_text_styles.dart';
 import '../../core/utils/auth_guard.dart';
 import '../../providers/bosal_provider.dart';
 import '../../providers/data_source_providers.dart';
+import '../../providers/favorite_provider.dart';
 import '../booking/booking_sheet.dart';
 
 class BosalDetailScreen extends ConsumerWidget {
@@ -230,17 +231,44 @@ class BosalDetailScreen extends ConsumerWidget {
         child: Row(
           children: [
             GestureDetector(
-              onTap: () => requireAuth(context, ref,
-                  onAuthenticated: () {
+              onTap: () => requireAuth(
+                context,
+                ref,
+                onAuthenticated: () async {
+                  final toggle = ref.read(favoriteToggleProvider);
+                  final wasLiked =
+                      ref.read(favoritesProvider).contains(bosal.id);
+                  try {
+                    await toggle(bosal.id);
+                    if (!context.mounted) return;
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('찜 목록에 추가되었습니다')),
+                      SnackBar(
+                        content: Text(
+                          wasLiked ? '찜을 해제했어요' : '찜 목록에 추가되었습니다',
+                        ),
+                        duration: const Duration(seconds: 1),
+                      ),
                     );
-                  }),
+                  } catch (e) {
+                    if (!context.mounted) return;
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('오류: $e')),
+                    );
+                  }
+                },
+              ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Icon(Icons.favorite_border_rounded,
-                      color: AppColors.textSub, size: 22),
+                  Icon(
+                    ref.watch(favoritesProvider).contains(bosal.id)
+                        ? Icons.favorite_rounded
+                        : Icons.favorite_border_rounded,
+                    color: ref.watch(favoritesProvider).contains(bosal.id)
+                        ? AppColors.accent
+                        : AppColors.textSub,
+                    size: 22,
+                  ),
                   const SizedBox(height: 2),
                   Text('찜', style: AppTextStyles.caption),
                 ],
