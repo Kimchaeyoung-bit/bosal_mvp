@@ -9,4 +9,5 @@ final mockCategories = [
   const Category(id: 'health', name: '건강', icon: Icons.spa_rounded),
   const Category(id: 'relationship', name: '인간관계', icon: Icons.people_rounded),
   const Category(id: 'tarot', name: '타로', icon: Icons.auto_awesome_rounded),
+  const Category(id: 'business', name: '사업', icon: Icons.business_center_rounded),
 ];

@@ -8,36 +8,80 @@ class HomeHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final topPadding = MediaQuery.of(context).padding.top;
-    return Container(
-      padding: EdgeInsets.fromLTRB(20, topPadding + 14, 20, 36),
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment(-0.5, -1),
-          end: Alignment(0.5, 1),
-          colors: [AppColors.primary, AppColors.primaryDark],
-        ),
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(28),
-          bottomRight: Radius.circular(28),
-        ),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Padding(
+      padding: EdgeInsets.fromLTRB(20, topPadding + 16, 20, 14),
+      child: Stack(
+        clipBehavior: Clip.none,
         children: [
-          Text('강남보살', style: AppTextStyles.logo),
-          Container(
-            width: 36,
-            height: 36,
-            decoration: BoxDecoration(
-              color: AppColors.white.withValues(alpha: 0.15),
-              borderRadius: BorderRadius.circular(12),
+          // 부처 일러스트 (우측)
+          Positioned(
+            right: -10,
+            top: -8,
+            child: Image.asset(
+              'assets/images/logo_real.png',
+              width: 130,
+              height: 130,
+              fit: BoxFit.contain,
+              opacity: const AlwaysStoppedAnimation(0.9),
             ),
-            child: IconButton(
-              onPressed: () {},
-              padding: EdgeInsets.zero,
-              icon: const Icon(Icons.person_outline_rounded,
-                  color: AppColors.white, size: 20),
-            ),
+          ),
+          // 메인 콘텐츠
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // 좌측: 제목 + 부제목
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          '강남보살',
+                          style: AppTextStyles.headerTitle.copyWith(
+                            color: AppColors.text,
+                            fontSize: 26,
+                            letterSpacing: -0.5,
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                        const Icon(
+                          Icons.auto_awesome,
+                          size: 16,
+                          color: AppColors.accent,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 6),
+                    Row(
+                      children: [
+                        Text(
+                          '인연을 잇는 현명한 선택',
+                          style: AppTextStyles.body.copyWith(
+                            color: AppColors.textSub,
+                            fontSize: 13,
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                        const Icon(
+                          Icons.auto_awesome,
+                          size: 11,
+                          color: AppColors.accent,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 8),
+              // 우측 상단: SVG 로고
+              Image.asset(
+                'assets/images/logo_real.png',
+                width: 72,
+                height: 72,
+              ),
+            ],
           ),
         ],
       ),

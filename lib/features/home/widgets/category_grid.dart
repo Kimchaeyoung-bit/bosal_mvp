@@ -13,47 +13,51 @@ class CategoryGrid extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final categories = ref.watch(categoriesProvider);
 
-    return SizedBox(
-      height: 80,
-      child: ListView.separated(
-        scrollDirection: Axis.horizontal,
-        itemCount: categories.length,
-        separatorBuilder: (_, __) => const SizedBox(width: 16),
-        itemBuilder: (context, index) {
-          final category = categories[index];
-          return GestureDetector(
-            onTap: () => onCategoryTap(category),
-            behavior: HitTestBehavior.opaque,
-            child: SizedBox(
-              width: 56,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 52,
-                    height: 52,
-                    decoration: BoxDecoration(
-                      color: AppColors.primarySoft,
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      category.icon,
-                      size: 24,
-                      color: AppColors.primary,
-                    ),
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    category.name,
-                    style: AppTextStyles.category.copyWith(fontSize: 11),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      padding: EdgeInsets.zero,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 4,
+        mainAxisSpacing: 8,
+        crossAxisSpacing: 8,
+        childAspectRatio: 1.2,
       ),
+      itemCount: categories.length,
+      itemBuilder: (context, index) {
+        final category = categories[index];
+        return GestureDetector(
+          onTap: () => onCategoryTap(category),
+          behavior: HitTestBehavior.opaque,
+          child: Container(
+            decoration: BoxDecoration(
+              color: AppColors.surface,
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: AppColors.border, width: 1),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  category.icon,
+                  size: 22,
+                  color: AppColors.primary,
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  category.name,
+                  style: AppTextStyles.category.copyWith(
+                    fontSize: 11,
+                    color: AppColors.text,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

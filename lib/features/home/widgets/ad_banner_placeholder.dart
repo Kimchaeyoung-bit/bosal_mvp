@@ -8,55 +8,77 @@ class AdBannerPlaceholder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 110,
-      padding: const EdgeInsets.all(20),
+      height: 100,
+      clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [
-            AppColors.primarySoft,
-            Color(0xFFE0CFF0),
-          ],
+          colors: [AppColors.bannerStart, AppColors.bannerEnd],
         ),
         borderRadius: BorderRadius.circular(16),
       ),
-      child: Row(
+      child: Stack(
         children: [
-          Expanded(
+          // 우측 부처 일러스트
+          Positioned(
+            right: -10,
+            bottom: -10,
+            child: Image.asset(
+              'assets/images/logo_real.png',
+              width: 110,
+              height: 110,
+              fit: BoxFit.contain,
+              opacity: const AlwaysStoppedAnimation(0.25),
+            ),
+          ),
+          // 텍스트 콘텐츠
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 18, 100, 18),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  '오늘의 추천',
-                  style: AppTextStyles.smallBold.copyWith(
-                    color: AppColors.primary,
-                    fontSize: 12,
+                  '마음의 답을 찾고 싶을 때,',
+                  style: AppTextStyles.small.copyWith(
+                    color: AppColors.white.withValues(alpha: 0.8),
+                    fontSize: 11,
                   ),
                 ),
                 const SizedBox(height: 4),
+                Row(
+                  children: [
+                    Text(
+                      '강남보살',
+                      style: AppTextStyles.cardLabel.copyWith(
+                        color: AppColors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ),
+                    const SizedBox(width: 4),
+                    const Icon(Icons.auto_awesome,
+                        color: AppColors.white, size: 14),
+                  ],
+                ),
+                const SizedBox(height: 4),
                 Text(
-                  '광고 배너',
-                  style: AppTextStyles.cardLabel.copyWith(
-                    color: AppColors.primary,
-                    fontSize: 16,
+                  '당신의 고민, 인연이 되어 답을 드립니다.',
+                  style: AppTextStyles.small.copyWith(
+                    color: AppColors.white.withValues(alpha: 0.7),
+                    fontSize: 10,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  '지금 상담하기 →',
+                  style: AppTextStyles.smallBold.copyWith(
+                    color: AppColors.ctaPink,
+                    fontSize: 12,
                   ),
                 ),
               ],
-            ),
-          ),
-          Container(
-            width: 56,
-            height: 56,
-            decoration: BoxDecoration(
-              color: AppColors.white.withValues(alpha: 0.5),
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: const Icon(
-              Icons.auto_awesome_rounded,
-              color: AppColors.primary,
-              size: 28,
             ),
           ),
         ],
