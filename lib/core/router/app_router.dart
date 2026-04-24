@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../features/splash/splash_screen.dart';
+import '../../features/admin/admin_invites_screen.dart';
 import '../../features/auth/login_screen.dart';
+import '../../features/auth/signup_screen.dart';
+import '../../features/bosal_onboarding/bosal_onboarding_screen.dart';
 import '../../features/home/home_screen.dart';
 import '../../features/map/map_screen.dart' as map_tab;
 import '../../features/region_tab/region_tab_screen.dart';
@@ -206,6 +209,34 @@ final appRouter = GoRouter(
       path: '/my/reviews',
       builder: (context, state) =>
           const MyActivityScreen(type: MyActivityType.reviews),
+    ),
+
+    // 회원가입 / 보살 온보딩 / 관리자
+    GoRoute(
+      path: '/signup',
+      pageBuilder: (context, state) => CustomTransitionPage(
+        child: const SignUpScreen(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(0, 1),
+              end: Offset.zero,
+            ).animate(CurvedAnimation(
+              parent: animation,
+              curve: Curves.easeOutCubic,
+            )),
+            child: child,
+          );
+        },
+      ),
+    ),
+    GoRoute(
+      path: '/bosal-onboarding',
+      builder: (context, state) => const BosalOnboardingScreen(),
+    ),
+    GoRoute(
+      path: '/admin/invites',
+      builder: (context, state) => const AdminInvitesScreen(),
     ),
   ],
 );

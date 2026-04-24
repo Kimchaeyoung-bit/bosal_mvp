@@ -103,14 +103,15 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
               const SizedBox(height: 48),
 
-              // Username field
-              Text('아이디', style: AppTextStyles.bodyBold),
+              // Email / username
+              Text('이메일', style: AppTextStyles.bodyBold),
               const SizedBox(height: 8),
               TextField(
                 controller: _usernameController,
+                keyboardType: TextInputType.emailAddress,
                 style: AppTextStyles.body,
                 decoration: InputDecoration(
-                  hintText: '아이디를 입력하세요',
+                  hintText: 'example@email.com',
                   hintStyle: AppTextStyles.body.copyWith(color: AppColors.textSub),
                   filled: true,
                   fillColor: AppColors.surface,
@@ -227,7 +228,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     Text('계정이 없으신가요? ',
                         style: AppTextStyles.small.copyWith(fontSize: 13)),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () => context.push('/signup'),
                       child: Text(
                         '회원가입',
                         style: AppTextStyles.small.copyWith(

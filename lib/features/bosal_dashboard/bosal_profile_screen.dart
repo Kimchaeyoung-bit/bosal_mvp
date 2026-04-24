@@ -145,22 +145,22 @@ class _BosalProfileScreenState extends ConsumerState<BosalProfileScreen> {
               _ProfileSection(
                 title: '한 줄 소개',
                 value: myBosal.description ?? '소개를 입력해주세요',
-                onEdit: () => _showEditSnack(context),
+                onEdit: () => context.push('/bosal-onboarding'),
               ),
               _ProfileSection(
                 title: '전문 분야',
                 value: myBosal.features.join(', '),
-                onEdit: () => _showEditSnack(context),
+                onEdit: () => context.push('/bosal-onboarding'),
               ),
               _ProfileSection(
                 title: '상담 스타일',
                 value: myBosal.consultStyle,
-                onEdit: () => _showEditSnack(context),
+                onEdit: () => context.push('/bosal-onboarding'),
               ),
               _ProfileSection(
                 title: '상담료',
                 value: '${NumberFormat('#,###').format(myBosal.discountedPrice)}원  (정가 ${NumberFormat('#,###').format(myBosal.originalPrice)}원)',
-                onEdit: () => _showEditSnack(context),
+                onEdit: () => context.push('/bosal-onboarding'),
               ),
             ],
 
@@ -171,16 +171,6 @@ class _BosalProfileScreenState extends ConsumerState<BosalProfileScreen> {
     );
   }
 
-  void _showEditSnack(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: const Text('편집 기능은 준비 중입니다'),
-        backgroundColor: AppColors.primary,
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      ),
-    );
-  }
 }
 
 class _ProfileSection extends StatelessWidget {

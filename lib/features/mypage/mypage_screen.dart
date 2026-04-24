@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
 import '../../shared/widgets/app_shadow.dart';
+import '../../data/models/app_user.dart';
 import '../../providers/auth_provider.dart';
 
 class MypageScreen extends ConsumerWidget {
@@ -154,6 +155,37 @@ class MypageScreen extends ConsumerWidget {
                     ],
                   ),
                   const SizedBox(height: 14),
+                  if (user?.role == UserRole.admin) ...[
+                    _MenuSection(
+                      title: '관리자',
+                      items: [
+                        _MenuItem(
+                          icon: Icons.admin_panel_settings_outlined,
+                          label: '보살 초대 코드',
+                          onTap: () => context.push('/admin/invites'),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 14),
+                  ],
+                  if (user?.role == UserRole.bosal) ...[
+                    _MenuSection(
+                      title: '보살 관리',
+                      items: [
+                        _MenuItem(
+                          icon: Icons.edit_note_rounded,
+                          label: '프로필 편집',
+                          onTap: () => context.push('/bosal-onboarding'),
+                        ),
+                        _MenuItem(
+                          icon: Icons.dashboard_outlined,
+                          label: '대시보드',
+                          onTap: () => context.go('/bosal-home'),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 14),
+                  ],
                   _MenuSection(
                     title: '고객 지원',
                     items: [
