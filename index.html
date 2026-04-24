@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>강남보살 — 나에게 맞는 보살 찾기</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- 상단 헤더 -->
+    <header class="header">
+      <div class="header__top">
+        <div class="logo">
+          <span class="logo__mark">✦</span>
+          <span class="logo__text">강남보살</span>
+        </div>
+        <button class="icon-btn" aria-label="알림">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        </button>
+      </div>
+      <h1 class="header__title">
+        오늘, 마음을 기댈 곳이<br/>필요하신가요?
+      </h1>
+      <p class="header__subtitle">검증된 보살을 지역별로 만나보세요</p>
+    </header>
+
+    <!-- 검색바 -->
+    <section class="search">
+      <div class="search__box">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" placeholder="지역, 전문 분야로 검색" />
+      </div>
+    </section>
+
+    <!-- 빠른 진입 액션 -->
+    <section class="quick">
+      <button class="quick__card quick__card--primary">
+        <div class="quick__icon">📍</div>
+        <div class="quick__label">
+          <strong>지역으로 찾기</strong>
+          <span>내 주변 보살 보기</span>
+        </div>
+      </button>
+      <button class="quick__card quick__card--accent">
+        <div class="quick__icon">💬</div>
+        <div class="quick__label">
+          <strong>챗봇 추천</strong>
+          <span>고민 입력 후 매칭</span>
+        </div>
+      </button>
+    </section>
+
+    <!-- 인기 지역 -->
+    <section class="block">
+      <div class="block__head">
+        <h2>인기 지역</h2>
+        <a href="#" class="block__more">전체보기 ›</a>
+      </div>
+      <div class="chips">
+        <button class="chip">강남</button>
+        <button class="chip">홍대</button>
+        <button class="chip">건대</button>
+        <button class="chip">신촌</button>
+        <button class="chip">성수</button>
+        <button class="chip">잠실</button>
+      </div>
+    </section>
+
+    <!-- 상담 분야 -->
+    <section class="block">
+      <div class="block__head">
+        <h2>어떤 고민이 있으신가요?</h2>
+      </div>
+      <div class="categories">
+        <button class="category"><span class="category__emoji">💕</span><span>연애</span></button>
+        <button class="category"><span class="category__emoji">💼</span><span>진로</span></button>
+        <button class="category"><span class="category__emoji">💰</span><span>재물</span></button>
+        <button class="category"><span class="category__emoji">🤝</span><span>인간관계</span></button>
+        <button class="category"><span class="category__emoji">🏠</span><span>가정</span></button>
+        <button class="category"><span class="category__emoji">🌿</span><span>건강</span></button>
+        <button class="category"><span class="category__emoji">✨</span><span>신년운세</span></button>
+        <button class="category"><span class="category__emoji">🔮</span><span>기타</span></button>
+      </div>
+    </section>
+
+    <!-- 추천 보살 -->
+    <section class="block">
+      <div class="block__head">
+        <h2>이번 주 추천 보살</h2>
+        <a href="#" class="block__more">더보기 ›</a>
+      </div>
+      <div class="bosal-list">
+        <article class="bosal">
+          <div class="bosal__thumb" style="background:linear-gradient(135deg,#6b4e96,#3a2759);">
+            <span class="bosal__badge">인증</span>
+          </div>
+          <div class="bosal__info">
+            <h3>달빛보살</h3>
+            <p class="bosal__loc">서울 강남 · 경력 15년</p>
+            <div class="bosal__tags">
+              <span class="tag">연애</span>
+              <span class="tag">공감형</span>
+            </div>
+            <p class="bosal__desc">"마음의 소리를 먼저 들어드립니다"</p>
+          </div>
+        </article>
+
+        <article class="bosal">
+          <div class="bosal__thumb" style="background:linear-gradient(135deg,#8b5a3c,#3d2818);">
+            <span class="bosal__badge">인증</span>
+          </div>
+          <div class="bosal__info">
+            <h3>청산도령</h3>
+            <p class="bosal__loc">서울 종로 · 경력 22년</p>
+            <div class="bosal__tags">
+              <span class="tag">진로</span>
+              <span class="tag">직설형</span>
+            </div>
+            <p class="bosal__desc">"돌려 말하지 않습니다"</p>
+          </div>
+        </article>
+
+        <article class="bosal">
+          <div class="bosal__thumb" style="background:linear-gradient(135deg,#c77d52,#6b3b1f);">
+            <span class="bosal__badge">인증</span>
+          </div>
+          <div class="bosal__info">
+            <h3>백련보살</h3>
+            <p class="bosal__loc">서울 성수 · 경력 9년</p>
+            <div class="bosal__tags">
+              <span class="tag">재물</span>
+              <span class="tag">현실조언</span>
+            </div>
+            <p class="bosal__desc">"실질적인 방향을 제시해드려요"</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <div class="spacer"></div>
+
+    <!-- 하단 탭 -->
+    <nav class="tabbar">
+      <button class="tab tab--active">
+        <span class="tab__icon">🏠</span>
+        <span>홈</span>
+      </button>
+      <button class="tab">
+        <span class="tab__icon">🗺️</span>
+        <span>지역</span>
+      </button>
+      <button class="tab">
+        <span class="tab__icon">💬</span>
+        <span>챗봇</span>
+      </button>
+      <button class="tab">
+        <span class="tab__icon">📅</span>
+        <span>예약</span>
+      </button>
+      <button class="tab">
+        <span class="tab__icon">👤</span>
+        <span>마이</span>
+      </button>
+    </nav>
+  </div>
+</body>
+</html>
