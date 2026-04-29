@@ -19,9 +19,9 @@ class CategoryGrid extends ConsumerWidget {
       padding: EdgeInsets.zero,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 4,
-        mainAxisSpacing: 8,
-        crossAxisSpacing: 8,
-        childAspectRatio: 1.2,
+        mainAxisSpacing: 14,
+        crossAxisSpacing: 14,
+        childAspectRatio: 1.0,
       ),
       itemCount: categories.length,
       itemBuilder: (context, index) {
@@ -40,14 +40,14 @@ class CategoryGrid extends ConsumerWidget {
               children: [
                 Icon(
                   category.icon,
-                  size: 22,
+                  size: 18,
                   color: AppColors.primary,
                 ),
-                const SizedBox(height: 6),
+                const SizedBox(height: 4),
                 Text(
                   category.name,
                   style: AppTextStyles.category.copyWith(
-                    fontSize: 11,
+                    fontSize: 10,
                     color: AppColors.text,
                   ),
                   overflow: TextOverflow.ellipsis,

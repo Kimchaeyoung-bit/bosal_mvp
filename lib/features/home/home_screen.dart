@@ -31,7 +31,7 @@ class HomeScreen extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const HomeHeader(),
-              const SizedBox(height: 16),
+              const SizedBox(height: 48),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: TopActionsRow(
@@ -50,11 +50,11 @@ class HomeScreen extends ConsumerWidget {
               const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Text('관심 카테고리', style: AppTextStyles.sectionTitle),
+                child: Text('관심 카테고리', style: AppTextStyles.sectionTitle.copyWith(fontSize: 14)),
               ),
               const SizedBox(height: 10),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 52),
                 child: CategoryGrid(
                   onCategoryTap: (category) {
                     ref.read(selectedCategoryProvider.notifier).state = category;

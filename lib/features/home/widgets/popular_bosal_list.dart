@@ -32,7 +32,7 @@ class PopularBosalList extends ConsumerWidget {
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.06),
+                    color: Colors.black.withValues(alpha:0.06),
                     blurRadius: 12,
                     offset: const Offset(0, 4),
                   ),
@@ -45,7 +45,7 @@ class PopularBosalList extends ConsumerWidget {
                     height: 120,
                     decoration: BoxDecoration(
                       color: index.isEven
-                          ? AppColors.accent.withOpacity(0.15)
+                          ? AppColors.accent.withValues(alpha:0.15)
                           : AppColors.primarySoft,
                       borderRadius: const BorderRadius.vertical(
                         top: Radius.circular(20),
@@ -67,7 +67,7 @@ class PopularBosalList extends ConsumerWidget {
                                   color: (index.isEven
                                           ? AppColors.accent
                                           : AppColors.primary)
-                                      .withOpacity(0.3),
+                                      .withValues(alpha:0.3),
                                   blurRadius: 12,
                                   offset: const Offset(0, 4),
                                 ),

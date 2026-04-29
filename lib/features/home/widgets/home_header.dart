@@ -15,14 +15,14 @@ class HomeHeader extends StatelessWidget {
         children: [
           // 부처 일러스트 (우측)
           Positioned(
-            right: -10,
+            right: 30,
             top: -16,
             child: Transform.scale(
               scaleX: -1,
               child: Image.asset(
                 'assets/images/logo_real.png',
-                width: 115,
-                height: 115,
+                width: 135,
+                height: 135,
                 fit: BoxFit.contain,
                 opacity: const AlwaysStoppedAnimation(0.9),
               ),

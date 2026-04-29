@@ -194,7 +194,7 @@ class _NearbySection extends StatelessWidget {
       onTap: onTap,
       behavior: HitTestBehavior.opaque,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           // 지도 아이콘
