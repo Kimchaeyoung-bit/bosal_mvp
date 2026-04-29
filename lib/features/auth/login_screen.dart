@@ -57,17 +57,28 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     final topPadding = MediaQuery.of(context).padding.top;
 
     return Scaffold(
-      backgroundColor: AppColors.bg,
-      body: SingleChildScrollView(
+      backgroundColor: Colors.transparent,
+      body: Container(
+        constraints: const BoxConstraints.expand(),
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/home.png'),
+            fit: BoxFit.fill,
+          ),
+        ),
+        child: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.fromLTRB(24, topPadding + 20, 24, 40),
+          padding: EdgeInsets.fromLTRB(24, topPadding + 30, 24, 40),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Back button
-              GestureDetector(
-                onTap: () => context.pop(false),
-                child: const Icon(Icons.close_rounded, size: 28),
+              Align(
+                alignment: Alignment.centerRight,
+                child: GestureDetector(
+                  onTap: () => context.pop(false),
+                  child: const Icon(Icons.close_rounded, size: 28, color: AppColors.text),
+                ),
               ),
 
               const SizedBox(height: 40),
@@ -77,11 +88,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 child: Column(
                   children: [
                     ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(22),
                       child: Image.asset(
-                        'assets/images/logo.png',
-                        width: 80,
-                        height: 80,
+                        'assets/images/logo_real.png',
+                        width: 90,
+                        height: 90,
                         fit: BoxFit.contain,
                       ),
                     ),
@@ -111,7 +122,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   hintText: '아이디를 입력하세요',
                   hintStyle: AppTextStyles.body.copyWith(color: AppColors.textSub),
                   filled: true,
-                  fillColor: AppColors.surface,
+                  fillColor: AppColors.surface.withValues(alpha: 0.85),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(14),
                     borderSide: const BorderSide(color: AppColors.border),
@@ -143,7 +154,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   hintText: '비밀번호를 입력하세요',
                   hintStyle: AppTextStyles.body.copyWith(color: AppColors.textSub),
                   filled: true,
-                  fillColor: AppColors.surface,
+                  fillColor: AppColors.surface.withValues(alpha: 0.85),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(14),
                     borderSide: const BorderSide(color: AppColors.border),
@@ -194,24 +205,35 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               const SizedBox(height: 28),
 
               // Login button
-              SizedBox(
-                width: double.infinity,
-                height: 54,
-                child: ElevatedButton(
-                  onPressed: _handleLogin,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                    foregroundColor: AppColors.white,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14),
+              GestureDetector(
+                onTap: _handleLogin,
+                child: Container(
+                  width: double.infinity,
+                  height: 54,
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [AppColors.primary, AppColors.primaryDark],
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
                     ),
-                    textStyle: const TextStyle(
+                    borderRadius: BorderRadius.circular(14),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.primary.withValues(alpha: 0.35),
+                        blurRadius: 12,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  alignment: Alignment.center,
+                  child: const Text(
+                    '로그인',
+                    style: TextStyle(
+                      color: AppColors.white,
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-                  child: const Text('로그인'),
                 ),
               ),
 
@@ -240,6 +262,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               ),
             ],
           ),
+        ),
         ),
       ),
     );

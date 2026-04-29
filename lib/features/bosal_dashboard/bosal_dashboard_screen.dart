@@ -37,27 +37,28 @@ class BosalDashboardScreen extends ConsumerWidget {
     final monthlyRevenue = completedBookings.fold<int>(0, (sum, b) => sum + b.price);
 
     return Scaffold(
-      backgroundColor: AppColors.bg,
-      body: SingleChildScrollView(
+      backgroundColor: Colors.transparent,
+      body: Container(
+        constraints: const BoxConstraints.expand(),
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/home.png'),
+            fit: BoxFit.fill,
+          ),
+        ),
+        child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // ── 헤더 ────────────────────────────────────────────────
-            Container(
+            Padding(
               padding: EdgeInsets.fromLTRB(20, topPadding + 14, 20, 24),
-              decoration: const BoxDecoration(
-                color: AppColors.primary,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(28),
-                  bottomRight: Radius.circular(28),
-                ),
-              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('보살 대시보드',
                       style: AppTextStyles.logo.copyWith(
-                          color: AppColors.white.withValues(alpha: 0.6),
+                          color: AppColors.textSub,
                           fontSize: 13)),
                   const SizedBox(height: 16),
                   Row(
@@ -66,14 +67,14 @@ class BosalDashboardScreen extends ConsumerWidget {
                         width: 56,
                         height: 56,
                         decoration: BoxDecoration(
-                          color: AppColors.white.withValues(alpha: 0.15),
+                          color: AppColors.primary.withValues(alpha: 0.12),
                           shape: BoxShape.circle,
                         ),
                         child: Center(
                           child: Text(
                             (myBosal?.name ?? '보')[0],
                             style: AppTextStyles.sectionTitle
-                                .copyWith(color: AppColors.white, fontSize: 20),
+                                .copyWith(color: AppColors.primary, fontSize: 20),
                           ),
                         ),
                       ),
@@ -85,7 +86,7 @@ class BosalDashboardScreen extends ConsumerWidget {
                             Text(
                               '안녕하세요, ${myBosal?.name ?? user?.displayName ?? ''}',
                               style: AppTextStyles.cardTitle.copyWith(
-                                  color: AppColors.white, fontSize: 17),
+                                  color: AppColors.text, fontSize: 17),
                             ),
                             const SizedBox(height: 4),
                             if (myBosal != null)
@@ -97,8 +98,7 @@ class BosalDashboardScreen extends ConsumerWidget {
                                   Text(
                                     '${myBosal.rating}  ·  경력 ${myBosal.experienceYears}년',
                                     style: AppTextStyles.small.copyWith(
-                                        color: AppColors.white
-                                            .withValues(alpha: 0.7)),
+                                        color: AppColors.textSub),
                                   ),
                                 ],
                               ),
@@ -206,6 +206,7 @@ class BosalDashboardScreen extends ConsumerWidget {
           ],
         ),
       ),
+      ),
     );
   }
 }
@@ -262,7 +263,7 @@ class _EmptyCard extends StatelessWidget {
         width: double.infinity,
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: AppColors.surface,
+          color: AppColors.surface.withValues(alpha: 0.75),
           borderRadius: BorderRadius.circular(16),
           boxShadow: appShadow,
         ),
@@ -297,7 +298,7 @@ class _QuickActionCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: AppColors.surface.withValues(alpha: 0.75),
         borderRadius: BorderRadius.circular(16),
         boxShadow: appShadow,
         border: Border.all(color: const Color(0xFFFF8C00).withValues(alpha: 0.2)),
@@ -392,7 +393,7 @@ class _ConfirmedCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: AppColors.surface.withValues(alpha: 0.75),
         borderRadius: BorderRadius.circular(16),
         boxShadow: appShadow,
         border: Border.all(
@@ -468,7 +469,7 @@ class _ReviewPreviewCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: AppColors.surface.withValues(alpha: 0.75),
         borderRadius: BorderRadius.circular(14),
         boxShadow: appShadow,
       ),
@@ -549,7 +550,7 @@ class _StatCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(14),
         decoration: BoxDecoration(
-          color: AppColors.surface,
+          color: AppColors.surface.withValues(alpha: 0.75),
           borderRadius: BorderRadius.circular(16),
           boxShadow: appShadow,
         ),

@@ -56,14 +56,22 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
     final topPadding = MediaQuery.of(context).padding.top;
 
     return Scaffold(
-      backgroundColor: AppColors.bg,
-      body: Column(
+      backgroundColor: Colors.transparent,
+      body: Container(
+        constraints: const BoxConstraints.expand(),
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/home.png'),
+            fit: BoxFit.fill,
+          ),
+        ),
+        child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Search header
           Container(
             padding: EdgeInsets.fromLTRB(8, topPadding + 8, 16, 14),
-            color: AppColors.surface,
+            color: AppColors.surface.withValues(alpha: 0.9),
             child: Row(
               children: [
                 IconButton(
@@ -205,7 +213,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 14, vertical: 8),
                             decoration: BoxDecoration(
-                              color: AppColors.surface,
+                              color: AppColors.surface.withValues(alpha: 0.75),
                               borderRadius: BorderRadius.circular(999),
                               border: Border.all(color: AppColors.border),
                             ),
@@ -234,16 +242,17 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                   Text('관심 카테고리',
                       style:
                           AppTextStyles.sectionTitle.copyWith(fontSize: 15)),
-                  const SizedBox(height: 14),
+                  const SizedBox(height: 4),
                   GridView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 4,
-                      mainAxisSpacing: 16,
-                      crossAxisSpacing: 8,
-                      childAspectRatio: 0.95,
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 10,
+                      childAspectRatio: 1.0,
                     ),
                     itemCount: categories.length,
                     itemBuilder: (context, index) {
@@ -255,24 +264,29 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                           context.push('/bosal-list?category=${cat.id}');
                         },
                         behavior: HitTestBehavior.opaque,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: 56,
-                              height: 56,
-                              decoration: BoxDecoration(
-                                color: AppColors.primarySoft,
-                                borderRadius: BorderRadius.circular(18),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: AppColors.surface.withValues(alpha: 0.75),
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(color: AppColors.border, width: 1),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(cat.icon,
+                                  size: 18, color: AppColors.primary),
+                              const SizedBox(height: 4),
+                              Text(
+                                cat.name,
+                                style: AppTextStyles.category.copyWith(
+                                  fontSize: 10,
+                                  color: AppColors.text,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.center,
                               ),
-                              child: Icon(cat.icon,
-                                  size: 28, color: AppColors.primary),
-                            ),
-                            const SizedBox(height: 8),
-                            Text(cat.name,
-                                style: AppTextStyles.category
-                                    .copyWith(fontSize: 12)),
-                          ],
+                            ],
+                          ),
                         ),
                       );
                     },
@@ -295,7 +309,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                           margin: const EdgeInsets.only(bottom: 10),
                           padding: const EdgeInsets.all(14),
                           decoration: BoxDecoration(
-                            color: AppColors.surface,
+                            color: AppColors.surface.withValues(alpha: 0.75),
                             borderRadius: BorderRadius.circular(16),
                             boxShadow: appShadow,
                           ),
@@ -348,6 +362,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
             ),
           ),
         ],
+      ),
       ),
     );
   }
