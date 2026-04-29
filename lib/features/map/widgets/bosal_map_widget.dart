@@ -34,7 +34,6 @@ class BosalMapWidget extends StatelessWidget {
           urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
           userAgentPackageName: 'com.example.gangnam_bosal',
         ),
-        const ColoredBox(color: Color(0x40B39DDB)),
         MarkerLayer(
           markers: bosals.map((bosal) {
             final isSelected = selectedBosal?.id == bosal.id;
@@ -84,8 +83,8 @@ class _AvatarMarker extends StatelessWidget {
             boxShadow: [
               BoxShadow(
                 color: isSelected
-                    ? AppColors.accent.withOpacity(0.45)
-                    : Colors.black.withOpacity(0.15),
+                    ? AppColors.accent.withValues(alpha:0.45)
+                    : Colors.black.withValues(alpha:0.15),
                 blurRadius: isSelected ? 14 : 6,
                 offset: const Offset(0, 3),
               ),

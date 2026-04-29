@@ -60,7 +60,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                         borderRadius: BorderRadius.circular(24),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
+                            color: Colors.black.withValues(alpha:0.1),
                             blurRadius: 12,
                             offset: const Offset(0, 4),
                           ),
@@ -79,12 +79,6 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                         ],
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 10),
-                  // 필터 버튼
-                  _FloatingIconButton(
-                    icon: Icons.tune_rounded,
-                    onTap: () {},
                   ),
                 ],
               ),
@@ -105,7 +99,7 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
-                        color: AppColors.primary.withOpacity(0.3),
+                        color: AppColors.primary.withValues(alpha:0.3),
                         blurRadius: 8,
                         offset: const Offset(0, 3),
                       ),
@@ -147,11 +141,11 @@ class _MapScreenState extends ConsumerState<MapScreen> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   decoration: BoxDecoration(
-                    color: AppColors.surface.withOpacity(0.9),
+                    color: AppColors.surface.withValues(alpha:0.9),
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.08),
+                        color: Colors.black.withValues(alpha:0.08),
                         blurRadius: 8,
                       ),
                     ],
@@ -188,7 +182,7 @@ class _FloatingIconButton extends StatelessWidget {
           shape: BoxShape.circle,
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
+              color: Colors.black.withValues(alpha:0.1),
               blurRadius: 12,
               offset: const Offset(0, 4),
             ),
@@ -222,7 +216,7 @@ class _BosalDetailCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(24),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.13),
+              color: Colors.black.withValues(alpha:0.13),
               blurRadius: 24,
               offset: const Offset(0, 8),
             ),
