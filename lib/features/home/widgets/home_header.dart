@@ -16,13 +16,16 @@ class HomeHeader extends StatelessWidget {
           // 부처 일러스트 (우측)
           Positioned(
             right: -10,
-            top: -8,
-            child: Image.asset(
-              'assets/images/logo_real.png',
-              width: 130,
-              height: 130,
-              fit: BoxFit.contain,
-              opacity: const AlwaysStoppedAnimation(0.9),
+            top: -16,
+            child: Transform.scale(
+              scaleX: -1,
+              child: Image.asset(
+                'assets/images/logo_real.png',
+                width: 115,
+                height: 115,
+                fit: BoxFit.contain,
+                opacity: const AlwaysStoppedAnimation(0.9),
+              ),
             ),
           ),
           // 메인 콘텐츠
@@ -45,31 +48,15 @@ class HomeHeader extends StatelessWidget {
                             letterSpacing: -0.5,
                           ),
                         ),
-                        const SizedBox(width: 4),
-                        const Icon(
-                          Icons.auto_awesome,
-                          size: 16,
-                          color: AppColors.accent,
-                        ),
                       ],
                     ),
                     const SizedBox(height: 6),
-                    Row(
-                      children: [
-                        Text(
-                          '인연을 잇는 현명한 선택',
-                          style: AppTextStyles.body.copyWith(
-                            color: AppColors.textSub,
-                            fontSize: 13,
-                          ),
-                        ),
-                        const SizedBox(width: 4),
-                        const Icon(
-                          Icons.auto_awesome,
-                          size: 11,
-                          color: AppColors.accent,
-                        ),
-                      ],
+                    Text(
+                      '인연을 잇는 현명한 선택',
+                      style: AppTextStyles.body.copyWith(
+                        color: AppColors.textSub,
+                        fontSize: 13,
+                      ),
                     ),
                   ],
                 ),

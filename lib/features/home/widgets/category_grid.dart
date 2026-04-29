@@ -31,7 +31,7 @@ class CategoryGrid extends ConsumerWidget {
           behavior: HitTestBehavior.opaque,
           child: Container(
             decoration: BoxDecoration(
-              color: AppColors.surface,
+              color: AppColors.surface.withValues(alpha: 0.75),
               borderRadius: BorderRadius.circular(16),
               border: Border.all(color: AppColors.border, width: 1),
             ),

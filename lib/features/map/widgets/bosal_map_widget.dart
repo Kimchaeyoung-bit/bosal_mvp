@@ -34,6 +34,7 @@ class BosalMapWidget extends StatelessWidget {
           urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
           userAgentPackageName: 'com.example.gangnam_bosal',
         ),
+        const ColoredBox(color: Color(0x40B39DDB)),
         MarkerLayer(
           markers: bosals.map((bosal) {
             final isSelected = selectedBosal?.id == bosal.id;

@@ -21,9 +21,9 @@ class TopActionsRow extends ConsumerWidget {
     final topBosals = bosals.take(3).toList();
 
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: AppColors.surface.withValues(alpha: 0.75),
         borderRadius: BorderRadius.circular(20),
         boxShadow: appShadow,
       ),
@@ -213,7 +213,7 @@ class _NearbySection extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           Text(
-            '내 주변\n보살들',
+            '내 주변 보살들',
             style: AppTextStyles.cardLabel.copyWith(
               fontSize: 13,
               height: 1.4,
@@ -227,23 +227,6 @@ class _NearbySection extends StatelessWidget {
               fontSize: 10,
               color: AppColors.textSub,
               height: 1.4,
-            ),
-          ),
-          const SizedBox(height: 10),
-          Align(
-            alignment: Alignment.centerRight,
-            child: Container(
-              width: 28,
-              height: 28,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColors.primary,
-              ),
-              child: const Icon(
-                Icons.arrow_forward_rounded,
-                color: AppColors.white,
-                size: 16,
-              ),
             ),
           ),
         ],
