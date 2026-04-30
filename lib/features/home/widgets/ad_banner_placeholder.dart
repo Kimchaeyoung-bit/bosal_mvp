@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 
@@ -51,10 +52,10 @@ class AdBannerPlaceholder extends StatelessWidget {
                   children: [
                     Text(
                       '강남보살',
-                      style: AppTextStyles.cardLabel.copyWith(
+                      style: GoogleFonts.sunflower(
                         color: AppColors.white,
                         fontSize: 20,
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
                     const SizedBox(width: 4),
