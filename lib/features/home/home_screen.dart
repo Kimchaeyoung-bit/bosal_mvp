@@ -31,20 +31,20 @@ class HomeScreen extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const HomeHeader(),
-              const SizedBox(height: 48),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: TopActionsRow(
-                  onNearbyTap: () => context.go('/region-tab'),
-                  onBosalTap: (id) => context.push('/bosal/$id'),
-                ),
-              ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: _RegionSearchCard(
                   onRegionTap: () => context.push('/region-select'),
                   onSearchTap: () => context.push('/search'),
+                ),
+              ),
+              const SizedBox(height: 12),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: TopActionsRow(
+                  onNearbyTap: () => context.go('/region-tab'),
+                  onBosalTap: (id) => context.push('/bosal/$id'),
                 ),
               ),
               const SizedBox(height: 20),
