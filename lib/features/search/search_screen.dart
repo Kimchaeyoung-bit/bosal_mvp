@@ -246,13 +246,13 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                   GridView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    padding: const EdgeInsets.symmetric(horizontal: 36),
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 4,
-                      mainAxisSpacing: 10,
-                      crossAxisSpacing: 10,
-                      childAspectRatio: 1.0,
+                      mainAxisSpacing: 8,
+                      crossAxisSpacing: 8,
+                      childAspectRatio: 0.9,
                     ),
                     itemCount: categories.length,
                     itemBuilder: (context, index) {
@@ -266,20 +266,20 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                         behavior: HitTestBehavior.opaque,
                         child: Container(
                           decoration: BoxDecoration(
-                            color: AppColors.surface.withValues(alpha: 0.75),
-                            borderRadius: BorderRadius.circular(16),
-                            border: Border.all(color: AppColors.border, width: 1),
+                            color: AppColors.surface.withValues(alpha: 0.55),
+                            borderRadius: BorderRadius.circular(18),
+                            boxShadow: appShadow,
                           ),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(cat.icon,
-                                  size: 18, color: AppColors.primary),
-                              const SizedBox(height: 4),
+                                  size: 22, color: AppColors.text),
+                              const SizedBox(height: 6),
                               Text(
                                 cat.name,
                                 style: AppTextStyles.category.copyWith(
-                                  fontSize: 10,
+                                  fontSize: 11,
                                   color: AppColors.text,
                                 ),
                                 overflow: TextOverflow.ellipsis,

@@ -4,6 +4,7 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../data/models/category.dart';
 import '../../../providers/category_provider.dart';
+import '../../../shared/widgets/app_shadow.dart';
 
 class CategoryGrid extends ConsumerWidget {
   final void Function(Category category) onCategoryTap;
@@ -16,12 +17,12 @@ class CategoryGrid extends ConsumerWidget {
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      padding: EdgeInsets.zero,
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 4,
-        mainAxisSpacing: 14,
-        crossAxisSpacing: 14,
-        childAspectRatio: 1.0,
+        mainAxisSpacing: 10,
+        crossAxisSpacing: 10,
+        childAspectRatio: 0.9,
       ),
       itemCount: categories.length,
       itemBuilder: (context, index) {
@@ -31,23 +32,23 @@ class CategoryGrid extends ConsumerWidget {
           behavior: HitTestBehavior.opaque,
           child: Container(
             decoration: BoxDecoration(
-              color: AppColors.surface.withValues(alpha: 0.75),
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: AppColors.border, width: 1),
+              color: AppColors.surface.withValues(alpha: 0.55),
+              borderRadius: BorderRadius.circular(18),
+              boxShadow: appShadow,
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(
                   category.icon,
-                  size: 18,
-                  color: AppColors.primary,
+                  size: 22,
+                  color: AppColors.text,
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(height: 6),
                 Text(
                   category.name,
                   style: AppTextStyles.category.copyWith(
-                    fontSize: 10,
+                    fontSize: 11,
                     color: AppColors.text,
                   ),
                   overflow: TextOverflow.ellipsis,
