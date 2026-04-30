@@ -254,8 +254,38 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                       crossAxisSpacing: 8,
                       childAspectRatio: 0.9,
                     ),
-                    itemCount: categories.length,
+                    itemCount: categories.length > 7 ? 8 : categories.length,
                     itemBuilder: (context, index) {
+                      if (index == 7) {
+                        return GestureDetector(
+                          onTap: () => context.push('/other-categories'),
+                          behavior: HitTestBehavior.opaque,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: AppColors.surface.withValues(alpha: 0.55),
+                              borderRadius: BorderRadius.circular(18),
+                              boxShadow: appShadow,
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(Icons.more_horiz_rounded,
+                                    size: 22, color: AppColors.text),
+                                const SizedBox(height: 6),
+                                Text(
+                                  '기타',
+                                  style: AppTextStyles.category.copyWith(
+                                    fontSize: 11,
+                                    color: AppColors.text,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      }
                       final cat = categories[index];
                       return GestureDetector(
                         onTap: () {
@@ -492,3 +522,4 @@ class _SearchResults extends ConsumerWidget {
     );
   }
 }
+
