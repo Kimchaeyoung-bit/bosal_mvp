@@ -39,8 +39,8 @@ class BosalMapWidget extends StatelessWidget {
             final isSelected = selectedBosal?.id == bosal.id;
             return Marker(
               point: LatLng(bosal.latitude!, bosal.longitude!),
-              width: 64,
-              height: 80,
+              width: 48,
+              height: 62,
               child: GestureDetector(
                 onTap: () => onMarkerTap(bosal),
                 child: _AvatarMarker(bosal: bosal, isSelected: isSelected),
@@ -71,8 +71,8 @@ class _AvatarMarker extends StatelessWidget {
       children: [
         AnimatedContainer(
           duration: const Duration(milliseconds: 200),
-          width: isSelected ? 56 : 48,
-          height: isSelected ? 56 : 48,
+          width: isSelected ? 40 : 34,
+          height: isSelected ? 40 : 34,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: isSelected ? AppColors.accent : AppColors.surface,

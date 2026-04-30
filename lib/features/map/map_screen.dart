@@ -5,6 +5,7 @@ import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
 import '../../data/models/bosal.dart';
 import '../../providers/bosal_provider.dart';
+import '../../shared/widgets/app_shadow.dart';
 import 'widgets/bosal_map_widget.dart';
 
 class MapScreen extends ConsumerStatefulWidget {
@@ -44,27 +45,19 @@ class _MapScreenState extends ConsumerState<MapScreen> {
               padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
               child: Row(
                 children: [
-                  // 뒤로가기 버튼
                   _FloatingIconButton(
                     icon: Icons.arrow_back_rounded,
                     onTap: () => context.pop(),
                   ),
                   const SizedBox(width: 10),
-                  // 검색바
                   Expanded(
                     child: Container(
                       height: 48,
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       decoration: BoxDecoration(
-                        color: AppColors.surface,
+                        color: AppColors.surface.withValues(alpha: 0.92),
                         borderRadius: BorderRadius.circular(24),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha:0.1),
-                            blurRadius: 12,
-                            offset: const Offset(0, 4),
-                          ),
-                        ],
+                        boxShadow: appShadow,
                       ),
                       child: Row(
                         children: [
@@ -90,17 +83,20 @@ class _MapScreenState extends ConsumerState<MapScreen> {
             child: Align(
               alignment: Alignment.topCenter,
               child: Padding(
-                padding: const EdgeInsets.only(top: 76),
+                padding: const EdgeInsets.only(top: 72),
                 child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
                   decoration: BoxDecoration(
-                    color: AppColors.primary,
+                    gradient: const LinearGradient(
+                      colors: [AppColors.primary, AppColors.primaryDark],
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                    ),
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
-                        color: AppColors.primary.withValues(alpha:0.3),
-                        blurRadius: 8,
+                        color: AppColors.primary.withValues(alpha: 0.35),
+                        blurRadius: 10,
                         offset: const Offset(0, 3),
                       ),
                     ],
@@ -138,22 +134,15 @@ class _MapScreenState extends ConsumerState<MapScreen> {
               bottom: 32,
               child: Center(
                 child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 9),
                   decoration: BoxDecoration(
-                    color: AppColors.surface.withValues(alpha:0.9),
+                    color: AppColors.surface.withValues(alpha: 0.88),
                     borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha:0.08),
-                        blurRadius: 8,
-                      ),
-                    ],
+                    boxShadow: appShadow,
                   ),
                   child: Text(
                     '마커를 눌러 보살 정보를 확인하세요',
-                    style:
-                        AppTextStyles.caption.copyWith(color: AppColors.textSub),
+                    style: AppTextStyles.caption.copyWith(color: AppColors.textSub),
                   ),
                 ),
               ),
@@ -178,15 +167,9 @@ class _FloatingIconButton extends StatelessWidget {
         width: 48,
         height: 48,
         decoration: BoxDecoration(
-          color: AppColors.surface,
+          color: AppColors.surface.withValues(alpha: 0.92),
           shape: BoxShape.circle,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha:0.1),
-              blurRadius: 12,
-              offset: const Offset(0, 4),
-            ),
-          ],
+          boxShadow: appShadow,
         ),
         child: Icon(icon, color: AppColors.text, size: 22),
       ),
@@ -212,11 +195,11 @@ class _BosalDetailCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: AppColors.surface,
+          color: AppColors.surface.withValues(alpha: 0.95),
           borderRadius: BorderRadius.circular(24),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha:0.13),
+              color: Colors.black.withValues(alpha: 0.12),
               blurRadius: 24,
               offset: const Offset(0, 8),
             ),
@@ -227,10 +210,9 @@ class _BosalDetailCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                // 아바타
                 Container(
-                  width: 56,
-                  height: 56,
+                  width: 52,
+                  height: 52,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: AppColors.primarySoft,
@@ -280,15 +262,11 @@ class _BosalDetailCard extends StatelessWidget {
                                 .copyWith(color: AppColors.accent),
                           ),
                           const SizedBox(width: 6),
-                          Text(
-                            '리뷰 ${bosal.reviewCount}',
-                            style: AppTextStyles.small,
-                          ),
+                          Text('리뷰 ${bosal.reviewCount}',
+                              style: AppTextStyles.small),
                           const SizedBox(width: 6),
-                          Text(
-                            '경력 ${bosal.experienceYears}년',
-                            style: AppTextStyles.small,
-                          ),
+                          Text('경력 ${bosal.experienceYears}년',
+                              style: AppTextStyles.small),
                         ],
                       ),
                     ],
@@ -301,8 +279,7 @@ class _BosalDetailCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 14),
-            // 특징 태그들
+            const SizedBox(height: 12),
             Wrap(
               spacing: 6,
               children: bosal.features
@@ -312,61 +289,52 @@ class _BosalDetailCard extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 10, vertical: 5),
                       decoration: BoxDecoration(
-                        color: AppColors.accentSoft,
+                        color: AppColors.primarySoft,
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Text(
                         f,
                         style: AppTextStyles.caption
-                            .copyWith(color: AppColors.accent),
+                            .copyWith(color: AppColors.primary),
                       ),
                     ),
                   )
                   .toList(),
             ),
-            const SizedBox(height: 16),
-            // 가격 + 예약 버튼
-            Row(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('첫방문가', style: AppTextStyles.small),
-                    Text(
-                      '${_formatPrice(bosal.firstVisitPrice)}원',
-                      style: AppTextStyles.priceFirstVisit,
+            const SizedBox(height: 14),
+            Align(
+              alignment: Alignment.centerRight,
+              child: GestureDetector(
+                onTap: onTap,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 24, vertical: 11),
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [AppColors.primary, AppColors.primaryDark],
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
                     ),
-                  ],
-                ),
-                const Spacer(),
-                GestureDetector(
-                  onTap: onTap,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 24, vertical: 12),
-                    decoration: BoxDecoration(
-                      color: AppColors.primary,
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Text(
-                      '상세 보기',
-                      style: AppTextStyles.bodyBold
-                          .copyWith(color: AppColors.white),
-                    ),
+                    borderRadius: BorderRadius.circular(14),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.primary.withValues(alpha: 0.35),
+                        blurRadius: 10,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: Text(
+                    '상세 보기',
+                    style: AppTextStyles.bodyBold
+                        .copyWith(color: AppColors.white),
                   ),
                 ),
-              ],
+              ),
             ),
           ],
         ),
       ),
     );
-  }
-
-  String _formatPrice(int price) {
-    return price.toString().replaceAllMapped(
-          RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-          (m) => '${m[1]},',
-        );
   }
 }
