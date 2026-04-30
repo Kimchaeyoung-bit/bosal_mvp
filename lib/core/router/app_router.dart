@@ -11,6 +11,7 @@ import '../../features/mypage/mypage_screen.dart';
 import '../../features/region/region_selection_screen.dart';
 import '../../features/search/search_screen.dart';
 import '../../features/bosal_list/bosal_list_screen.dart';
+import '../../features/bosal_list/other_category_screen.dart';
 import '../../features/bosal_detail/bosal_detail_screen.dart';
 import '../../features/bosal_dashboard/bosal_dashboard_screen.dart';
 import '../../features/bosal_dashboard/bosal_bookings_screen.dart';
@@ -175,6 +176,10 @@ final appRouter = GoRouter(
         final categoryId = state.uri.queryParameters['category'];
         return BosalListScreen(categoryId: categoryId);
       },
+    ),
+    GoRoute(
+      path: '/other-categories',
+      builder: (context, state) => const OtherCategoryScreen(),
     ),
     GoRoute(
       path: '/bosal/:id',
