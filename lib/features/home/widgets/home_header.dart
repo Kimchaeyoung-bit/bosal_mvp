@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 
@@ -8,39 +9,58 @@ class HomeHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final topPadding = MediaQuery.of(context).padding.top;
-    return Container(
-      padding: EdgeInsets.fromLTRB(20, topPadding + 12, 20, 20),
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment(-0.5, -1),
-          end: Alignment(0.5, 1),
-          colors: [AppColors.primary, AppColors.primaryDark],
-        ),
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(28),
-          bottomRight: Radius.circular(28),
-        ),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Padding(
+      padding: EdgeInsets.fromLTRB(20, topPadding + 16, 20, 14),
+      child: Stack(
+        clipBehavior: Clip.none,
         children: [
-          Row(
+          // 부처 일러스트 (우측)
+          Positioned(
+            right: 30,
+            top: -16,
+            child: Transform.scale(
+              scaleX: -1,
+              child: Image.asset(
+                'assets/images/logo_real.png',
+                width: 135,
+                height: 135,
+                fit: BoxFit.contain,
+                opacity: const AlwaysStoppedAnimation(0.9),
+              ),
+            ),
+          ),
+          // 메인 콘텐츠
+          Padding(
+            padding: const EdgeInsets.only(left: 12, top: 24),
+            child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                '✦',
-                style: TextStyle(
-                  color: AppColors.accent,
-                  fontSize: 22,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '강남보살',
+                      style: GoogleFonts.sunflower(
+                        color: AppColors.text,
+                        fontSize: 32,
+                        fontWeight: FontWeight.w700,
+                        letterSpacing: -0.5,
+                      ),
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      '인연을 잇는 현명한 선택',
+                      style: GoogleFonts.sunflower(
+                        color: AppColors.textSub,
+                        fontSize: 13,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              const SizedBox(width: 6),
-              Text('강남보살', style: AppTextStyles.logo),
             ],
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.person_outline_rounded,
-                color: AppColors.white, size: 24),
+            ),
           ),
         ],
       ),
