@@ -19,6 +19,7 @@ import '../../features/bosal_dashboard/bosal_reviews_screen.dart';
 import '../../features/bosal_dashboard/bosal_profile_screen.dart';
 import '../../features/my_activity/my_activity_screen.dart';
 import '../../features/notifications/notifications_screen.dart';
+import '../../features/fortune/fortune_screen.dart';
 import '../../shared/widgets/main_scaffold.dart';
 import '../../shared/widgets/bosal_scaffold.dart';
 
@@ -219,6 +220,10 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/notifications',
       builder: (context, state) => const NotificationsScreen(),
+    ),
+    GoRoute(
+      path: '/fortune',
+      builder: (context, state) => const FortuneScreen(),
     ),
   ],
 );
