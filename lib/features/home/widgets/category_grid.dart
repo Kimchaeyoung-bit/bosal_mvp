@@ -7,7 +7,7 @@ import '../../../data/models/category.dart';
 import '../../../providers/category_provider.dart';
 import '../../../shared/widgets/app_shadow.dart';
 
-const _kMainCount = 7;
+const _kMainCount = 9;
 
 class CategoryGrid extends ConsumerWidget {
   final void Function(Category category) onCategoryTap;
@@ -22,12 +22,12 @@ class CategoryGrid extends ConsumerWidget {
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      padding: EdgeInsets.zero,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 4,
-        mainAxisSpacing: 10,
-        crossAxisSpacing: 10,
-        childAspectRatio: 0.9,
+        crossAxisCount: 5,
+        mainAxisSpacing: 4,
+        crossAxisSpacing: 3,
+        childAspectRatio: 1.1,
       ),
       itemCount: _kMainCount + 1,
       itemBuilder: (context, index) {
@@ -62,21 +62,17 @@ class _CategoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        color: AppColors.surface.withValues(alpha: 0.55),
-        borderRadius: BorderRadius.circular(18),
-        boxShadow: appShadow,
-      ),
+      decoration: const BoxDecoration(),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(icon, size: 22, color: AppColors.text),
+          Icon(icon, size: 22, color: AppColors.textSub),
           const SizedBox(height: 6),
           Text(
             name,
-            style: AppTextStyles.category.copyWith(
+            style: AppTextStyles.body.copyWith(
               fontSize: 11,
-              color: AppColors.text,
+              color: AppColors.textSub,
             ),
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
