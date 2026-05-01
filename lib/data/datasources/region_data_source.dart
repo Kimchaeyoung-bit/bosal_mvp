@@ -20,7 +20,10 @@ class SupabaseRegionDataSource implements RegionDataSource {
   Future<List<Region>> list() async {
     final rows = await _client
         .from('regions')
-        .select('code,name,sort_order,sub_regions(code,name,sort_order)')
+        .select(
+          'code,name,sort_order,'
+          'sub_regions(code,name,sort_order,latitude,longitude)',
+        )
         .order('sort_order');
     return rows.cast<Map<String, dynamic>>().map(Region.fromMap).toList();
   }

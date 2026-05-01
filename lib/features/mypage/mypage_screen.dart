@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
-import '../../shared/widgets/app_shadow.dart';
 import '../../data/models/app_user.dart';
+import '../../shared/widgets/app_shadow.dart';
 import '../../providers/auth_provider.dart';
 
 class MypageScreen extends ConsumerWidget {
@@ -17,43 +17,40 @@ class MypageScreen extends ConsumerWidget {
     final topPadding = MediaQuery.of(context).padding.top;
 
     return Scaffold(
-      backgroundColor: AppColors.bg,
-      body: SingleChildScrollView(
+      backgroundColor: Colors.transparent,
+      body: Container(
+        constraints: const BoxConstraints.expand(),
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/home.png'),
+            fit: BoxFit.fill,
+          ),
+        ),
+        child: SingleChildScrollView(
         child: Column(
           children: [
             // Header
-            Container(
-              width: double.infinity,
+            Padding(
               padding: EdgeInsets.fromLTRB(20, topPadding + 14, 20, 24),
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment(-0.5, -1),
-                  end: Alignment(0.5, 1),
-                  colors: [AppColors.primary, AppColors.primaryDark],
-                ),
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(28),
-                  bottomRight: Radius.circular(28),
-                ),
-              ),
               child: Column(
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('마이페이지', style: AppTextStyles.logo),
+                      Text('마이페이지',
+                          style: AppTextStyles.logo.copyWith(color: AppColors.text)),
                       Container(
                         width: 36,
                         height: 36,
                         decoration: BoxDecoration(
-                          color: AppColors.white.withValues(alpha: 0.15),
+                          color: AppColors.primary.withValues(alpha: 0.10),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: IconButton(
                           onPressed: () {},
                           padding: EdgeInsets.zero,
                           icon: const Icon(Icons.settings_outlined,
-                              color: AppColors.white, size: 20),
+                              color: AppColors.primary, size: 20),
                         ),
                       ),
                     ],
@@ -63,23 +60,22 @@ class MypageScreen extends ConsumerWidget {
                     width: 80,
                     height: 80,
                     decoration: BoxDecoration(
-                      color: AppColors.white.withValues(alpha: 0.2),
+                      color: AppColors.primary.withValues(alpha: 0.12),
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: AppColors.white.withValues(alpha: 0.3),
+                        color: AppColors.border,
                         width: 2,
                       ),
                     ),
                     child: const Icon(Icons.person_rounded,
-                        color: AppColors.white, size: 40),
+                        color: AppColors.primary, size: 40),
                   ),
                   const SizedBox(height: 14),
                   Text(
                     isLoggedIn ? user.displayName : '로그인이 필요합니다',
-                    style: const TextStyle(
-                      color: AppColors.white,
+                    style: AppTextStyles.cardTitle.copyWith(
+                      color: AppColors.text,
                       fontSize: 17,
-                      fontWeight: FontWeight.w700,
                     ),
                   ),
                   const SizedBox(height: 6),
@@ -87,36 +83,36 @@ class MypageScreen extends ConsumerWidget {
                     isLoggedIn
                         ? '환영합니다!'
                         : '로그인하고 나에게 맞는 보살을 찾아보세요',
-                    style: TextStyle(
-                      color: AppColors.white.withValues(alpha: 0.7),
+                    style: AppTextStyles.small.copyWith(
+                      color: AppColors.textSub,
                       fontSize: 13,
                     ),
                   ),
                   const SizedBox(height: 16),
-                  SizedBox(
-                    width: double.infinity,
-                    height: 46,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        if (isLoggedIn) {
-                          ref.read(authProvider.notifier).logout();
-                        } else {
-                          context.push<bool>('/login');
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.white,
-                        foregroundColor: AppColors.primary,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        textStyle: const TextStyle(
+                  GestureDetector(
+                    onTap: () {
+                      if (isLoggedIn) {
+                        ref.read(authProvider.notifier).logout();
+                      } else {
+                        context.push<bool>('/login');
+                      }
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      height: 46,
+                      decoration: BoxDecoration(
+                        color: AppColors.surface.withValues(alpha: 0.75),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(color: AppColors.border),
+                      ),
+                      alignment: Alignment.center,
+                      child: Text(
+                        isLoggedIn ? '로그아웃' : '로그인 / 회원가입',
+                        style: AppTextStyles.bodyBold.copyWith(
+                          color: AppColors.primary,
                           fontSize: 15,
-                          fontWeight: FontWeight.w700,
                         ),
                       ),
-                      child: Text(isLoggedIn ? '로그아웃' : '로그인 / 회원가입'),
                     ),
                   ),
                 ],
@@ -154,38 +150,43 @@ class MypageScreen extends ConsumerWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 14),
+                  if (user?.role == UserRole.bosal) ...[
+                    const SizedBox(height: 14),
+                    _MenuSection(
+                      title: '보살 도구',
+                      items: [
+                        _MenuItem(
+                          icon: Icons.dashboard_outlined,
+                          label: '보살 대시보드',
+                          onTap: () => context.go('/bosal-home'),
+                        ),
+                        _MenuItem(
+                          icon: Icons.edit_note_rounded,
+                          label: '보살 프로필 편집',
+                          onTap: () => context.push('/bosal-onboarding'),
+                        ),
+                      ],
+                    ),
+                  ],
                   if (user?.role == UserRole.admin) ...[
+                    const SizedBox(height: 14),
                     _MenuSection(
                       title: '관리자',
                       items: [
                         _MenuItem(
                           icon: Icons.admin_panel_settings_outlined,
-                          label: '보살 초대 코드',
+                          label: '보살 초대 코드 관리',
                           onTap: () => context.push('/admin/invites'),
                         ),
-                      ],
-                    ),
-                    const SizedBox(height: 14),
-                  ],
-                  if (user?.role == UserRole.bosal) ...[
-                    _MenuSection(
-                      title: '보살 관리',
-                      items: [
                         _MenuItem(
-                          icon: Icons.edit_note_rounded,
-                          label: '프로필 편집',
-                          onTap: () => context.push('/bosal-onboarding'),
-                        ),
-                        _MenuItem(
-                          icon: Icons.dashboard_outlined,
-                          label: '대시보드',
-                          onTap: () => context.go('/bosal-home'),
+                          icon: Icons.bar_chart_rounded,
+                          label: '보살 분석 대시보드',
+                          onTap: () => context.push('/admin/analytics'),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 14),
                   ],
+                  const SizedBox(height: 14),
                   _MenuSection(
                     title: '고객 지원',
                     items: [
@@ -220,6 +221,7 @@ class MypageScreen extends ConsumerWidget {
             const SizedBox(height: 100),
           ],
         ),
+        ),
       ),
     );
   }
@@ -235,7 +237,7 @@ class _MenuSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: AppColors.surface.withValues(alpha: 0.75),
         borderRadius: BorderRadius.circular(16),
         boxShadow: appShadow,
       ),

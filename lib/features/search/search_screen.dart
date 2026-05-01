@@ -8,6 +8,7 @@ import '../../providers/search_provider.dart';
 import '../../providers/region_provider.dart';
 import '../../providers/category_provider.dart';
 import '../../providers/bosal_provider.dart';
+import '../home/widgets/category_grid.dart';
 import '../../data/models/bosal.dart';
 import '../../features/home/widgets/ad_banner_placeholder.dart';
 
@@ -47,7 +48,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
   Widget build(BuildContext context) {
     final recentSearches = ref.watch(recentSearchesProvider);
     final selectedRegions = ref.watch(selectedSubRegionsProvider);
-    final categories = ref.watch(categoriesProvider);
+
     final recentlyViewed = ref.watch(recentlyViewedBosalsProvider);
     final query = ref.watch(searchQueryProvider);
     final isSearching = query.isNotEmpty;
@@ -56,14 +57,22 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
     final topPadding = MediaQuery.of(context).padding.top;
 
     return Scaffold(
-      backgroundColor: AppColors.bg,
-      body: Column(
+      backgroundColor: Colors.transparent,
+      body: Container(
+        constraints: const BoxConstraints.expand(),
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/home.png'),
+            fit: BoxFit.fill,
+          ),
+        ),
+        child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Search header
           Container(
             padding: EdgeInsets.fromLTRB(8, topPadding + 8, 16, 14),
-            color: AppColors.surface,
+            color: AppColors.surface.withValues(alpha: 0.9),
             child: Row(
               children: [
                 IconButton(
@@ -205,7 +214,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 14, vertical: 8),
                             decoration: BoxDecoration(
-                              color: AppColors.surface,
+                              color: AppColors.surface.withValues(alpha: 0.75),
                               borderRadius: BorderRadius.circular(999),
                               border: Border.all(color: AppColors.border),
                             ),
@@ -231,51 +240,27 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                   ],
 
                   // Categories
-                  Text('관심 카테고리',
-                      style:
-                          AppTextStyles.sectionTitle.copyWith(fontSize: 15)),
-                  const SizedBox(height: 14),
-                  GridView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 4,
-                      mainAxisSpacing: 16,
-                      crossAxisSpacing: 8,
-                      childAspectRatio: 0.95,
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
+                    decoration: BoxDecoration(
+                      color: AppColors.surface.withValues(alpha: 0.75),
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: appShadow,
                     ),
-                    itemCount: categories.length,
-                    itemBuilder: (context, index) {
-                      final cat = categories[index];
-                      return GestureDetector(
-                        onTap: () {
-                          ref.read(selectedCategoryProvider.notifier).state =
-                              cat;
-                          context.push('/bosal-list?category=${cat.id}');
-                        },
-                        behavior: HitTestBehavior.opaque,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: 56,
-                              height: 56,
-                              decoration: BoxDecoration(
-                                color: AppColors.primarySoft,
-                                borderRadius: BorderRadius.circular(18),
-                              ),
-                              child: Icon(cat.icon,
-                                  size: 28, color: AppColors.primary),
-                            ),
-                            const SizedBox(height: 8),
-                            Text(cat.name,
-                                style: AppTextStyles.category
-                                    .copyWith(fontSize: 12)),
-                          ],
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('관심 카테고리',
+                            style: AppTextStyles.sectionTitle.copyWith(fontSize: 14)),
+                        const SizedBox(height: 10),
+                        CategoryGrid(
+                          onCategoryTap: (cat) {
+                            ref.read(selectedCategoryProvider.notifier).state = cat;
+                            context.push('/bosal-list?category=${cat.id}');
+                          },
                         ),
-                      );
-                    },
+                      ],
+                    ),
                   ),
 
                   const SizedBox(height: 28),
@@ -295,7 +280,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                           margin: const EdgeInsets.only(bottom: 10),
                           padding: const EdgeInsets.all(14),
                           decoration: BoxDecoration(
-                            color: AppColors.surface,
+                            color: AppColors.surface.withValues(alpha: 0.75),
                             borderRadius: BorderRadius.circular(16),
                             boxShadow: appShadow,
                           ),
@@ -348,6 +333,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
             ),
           ),
         ],
+      ),
       ),
     );
   }
@@ -477,3 +463,4 @@ class _SearchResults extends ConsumerWidget {
     );
   }
 }
+

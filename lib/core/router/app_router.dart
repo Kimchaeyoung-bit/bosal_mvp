@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../features/splash/splash_screen.dart';
-import '../../features/admin/admin_invites_screen.dart';
 import '../../features/auth/login_screen.dart';
-import '../../features/auth/signup_screen.dart';
-import '../../features/bosal_onboarding/bosal_onboarding_screen.dart';
 import '../../features/home/home_screen.dart';
 import '../../features/map/map_screen.dart' as map_tab;
 import '../../features/region_tab/region_tab_screen.dart';
@@ -14,12 +11,20 @@ import '../../features/mypage/mypage_screen.dart';
 import '../../features/region/region_selection_screen.dart';
 import '../../features/search/search_screen.dart';
 import '../../features/bosal_list/bosal_list_screen.dart';
+import '../../features/bosal_list/other_category_screen.dart';
 import '../../features/bosal_detail/bosal_detail_screen.dart';
 import '../../features/bosal_dashboard/bosal_dashboard_screen.dart';
 import '../../features/bosal_dashboard/bosal_bookings_screen.dart';
 import '../../features/bosal_dashboard/bosal_reviews_screen.dart';
 import '../../features/bosal_dashboard/bosal_profile_screen.dart';
 import '../../features/my_activity/my_activity_screen.dart';
+import '../../features/notifications/notifications_screen.dart';
+import '../../features/fortune/fortune_screen.dart';
+import '../../features/auth/signup_screen.dart';
+import '../../features/admin/admin_invites_screen.dart';
+import '../../features/admin/admin_analytics_screen.dart';
+import '../../features/bosal_onboarding/bosal_onboarding_screen.dart';
+import '../../features/review/review_compose_screen.dart';
 import '../../shared/widgets/main_scaffold.dart';
 import '../../shared/widgets/bosal_scaffold.dart';
 
@@ -153,7 +158,10 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/region-select',
       pageBuilder: (context, state) => CustomTransitionPage(
-        child: const RegionSelectionScreen(),
+        child: RegionSelectionScreen(
+          goToMapOnConfirm:
+              state.uri.queryParameters['redirect'] == 'map',
+        ),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return SlideTransition(
             position: Tween<Offset>(
@@ -178,6 +186,10 @@ final appRouter = GoRouter(
         final categoryId = state.uri.queryParameters['category'];
         return BosalListScreen(categoryId: categoryId);
       },
+    ),
+    GoRoute(
+      path: '/other-categories',
+      builder: (context, state) => const OtherCategoryScreen(),
     ),
     GoRoute(
       path: '/bosal/:id',
@@ -210,8 +222,16 @@ final appRouter = GoRouter(
       builder: (context, state) =>
           const MyActivityScreen(type: MyActivityType.reviews),
     ),
+    GoRoute(
+      path: '/notifications',
+      builder: (context, state) => const NotificationsScreen(),
+    ),
+    GoRoute(
+      path: '/fortune',
+      builder: (context, state) => const FortuneScreen(),
+    ),
 
-    // 회원가입 / 보살 온보딩 / 관리자
+    // 가입 / 온보딩 / 관리자
     GoRoute(
       path: '/signup',
       pageBuilder: (context, state) => CustomTransitionPage(
@@ -237,6 +257,27 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/admin/invites',
       builder: (context, state) => const AdminInvitesScreen(),
+    ),
+    GoRoute(
+      path: '/admin/analytics',
+      builder: (context, state) => const AdminAnalyticsScreen(),
+    ),
+    GoRoute(
+      path: '/review/compose',
+      builder: (context, state) {
+        final qs = state.uri.queryParameters;
+        final bosalId = qs['bosalId'];
+        if (bosalId == null || bosalId.isEmpty) {
+          return const Scaffold(
+            body: Center(child: Text('보살 정보가 없습니다')),
+          );
+        }
+        return ReviewComposeScreen(
+          bosalId: bosalId,
+          reservationId: qs['reservationId'],
+          bosalName: qs['bosalName'],
+        );
+      },
     ),
   ],
 );

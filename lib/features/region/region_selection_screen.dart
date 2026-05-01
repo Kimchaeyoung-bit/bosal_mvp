@@ -6,7 +6,8 @@ import '../../core/theme/app_text_styles.dart';
 import '../../providers/region_provider.dart';
 
 class RegionSelectionScreen extends ConsumerStatefulWidget {
-  const RegionSelectionScreen({super.key});
+  final bool goToMapOnConfirm;
+  const RegionSelectionScreen({super.key, this.goToMapOnConfirm = false});
 
   @override
   ConsumerState<RegionSelectionScreen> createState() =>
@@ -20,8 +21,18 @@ class _RegionSelectionScreenState extends ConsumerState<RegionSelectionScreen> {
   Widget build(BuildContext context) {
     final regions = ref.watch(regionsProvider);
     final selectedSubRegions = ref.watch(selectedSubRegionsProvider);
-    final currentRegion = regions.firstWhere((r) => r.id == _selectedRegionId);
     final topPadding = MediaQuery.of(context).padding.top;
+
+    if (regions.isEmpty) {
+      return const Scaffold(
+        backgroundColor: AppColors.surface,
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+    final currentRegion = regions.firstWhere(
+      (r) => r.id == _selectedRegionId,
+      orElse: () => regions.first,
+    );
 
     return Scaffold(
       backgroundColor: AppColors.surface,
@@ -321,7 +332,13 @@ class _RegionSelectionScreenState extends ConsumerState<RegionSelectionScreen> {
               child: ElevatedButton(
                 onPressed: selectedSubRegions.isEmpty
                     ? null
-                    : () => context.pop(),
+                    : () {
+                        if (widget.goToMapOnConfirm) {
+                          context.pushReplacement('/map');
+                        } else {
+                          context.pop();
+                        }
+                      },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
                   foregroundColor: AppColors.white,

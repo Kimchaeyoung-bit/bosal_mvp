@@ -48,8 +48,16 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
         bookings.where((b) => b.status == BookingStatus.cancelled).length;
 
     return Scaffold(
-      backgroundColor: AppColors.bg,
-      body: SafeArea(
+      backgroundColor: Colors.transparent,
+      body: Container(
+        constraints: const BoxConstraints.expand(),
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/home.png'),
+            fit: BoxFit.fill,
+          ),
+        ),
+        child: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -137,6 +145,7 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
             ),
           ],
         ),
+        ),
       ),
     );
   }
@@ -192,7 +201,7 @@ class _FilterChip extends StatelessWidget {
         duration: const Duration(milliseconds: 150),
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
         decoration: BoxDecoration(
-          color: isSelected ? color : AppColors.surface,
+          color: isSelected ? color : AppColors.surface.withValues(alpha: 0.75),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
             color: isSelected ? color : AppColors.border,
@@ -254,7 +263,7 @@ class _BookingCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: AppColors.surface,
+        color: AppColors.surface.withValues(alpha: 0.75),
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
@@ -496,7 +505,7 @@ class _ActionButton extends StatelessWidget {
         height: 44,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: isOutlined ? AppColors.surface : color,
+          color: isOutlined ? AppColors.surface.withValues(alpha: 0.75) : color,
           borderRadius: BorderRadius.circular(12),
           border: isOutlined ? Border.all(color: color) : null,
         ),

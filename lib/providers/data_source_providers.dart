@@ -9,8 +9,10 @@ import '../data/datasources/banner_ad_data_source.dart';
 import '../data/datasources/bosal_data_source.dart';
 import '../data/datasources/category_data_source.dart';
 import '../data/datasources/favorite_data_source.dart';
+import '../data/datasources/notification_data_source.dart';
 import '../data/datasources/region_data_source.dart';
 import '../data/datasources/reservation_data_source.dart';
+import '../data/datasources/review_data_source.dart';
 
 /// `.env`에 설정된 `DATA_SOURCE` 값. 기본값 `supabase`.
 enum DataSourceMode { mock, supabase }
@@ -77,4 +79,16 @@ final adminDataSourceProvider = Provider<AdminDataSource>((ref) {
   return ref.watch(dataSourceModeProvider) == DataSourceMode.supabase
       ? SupabaseAdminDataSource(supabase)
       : MockAdminDataSource();
+});
+
+final notificationDataSourceProvider = Provider<NotificationDataSource>((ref) {
+  return ref.watch(dataSourceModeProvider) == DataSourceMode.supabase
+      ? SupabaseNotificationDataSource(supabase)
+      : MockNotificationDataSource();
+});
+
+final reviewDataSourceProvider = Provider<ReviewDataSource>((ref) {
+  return ref.watch(dataSourceModeProvider) == DataSourceMode.supabase
+      ? SupabaseReviewDataSource(supabase)
+      : MockReviewDataSource();
 });

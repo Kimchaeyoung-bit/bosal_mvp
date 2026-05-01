@@ -29,13 +29,20 @@ class _BosalProfileScreenState extends ConsumerState<BosalProfileScreen> {
         : null;
 
     return Scaffold(
-      backgroundColor: AppColors.bg,
-      body: SingleChildScrollView(
+      backgroundColor: Colors.transparent,
+      body: Container(
+        constraints: const BoxConstraints.expand(),
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/home.png'),
+            fit: BoxFit.fill,
+          ),
+        ),
+        child: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
+            Padding(
               padding: EdgeInsets.fromLTRB(20, topPadding + 14, 20, 16),
-              color: AppColors.surface,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -64,7 +71,7 @@ class _BosalProfileScreenState extends ConsumerState<BosalProfileScreen> {
                 width: double.infinity,
                 padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
-                  color: AppColors.surface,
+                  color: AppColors.surface.withValues(alpha: 0.75),
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: appShadow,
                 ),
@@ -101,7 +108,7 @@ class _BosalProfileScreenState extends ConsumerState<BosalProfileScreen> {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 decoration: BoxDecoration(
-                  color: AppColors.surface,
+                  color: AppColors.surface.withValues(alpha: 0.75),
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: appShadow,
                 ),
@@ -145,32 +152,43 @@ class _BosalProfileScreenState extends ConsumerState<BosalProfileScreen> {
               _ProfileSection(
                 title: '한 줄 소개',
                 value: myBosal.description ?? '소개를 입력해주세요',
-                onEdit: () => context.push('/bosal-onboarding'),
+                onEdit: () => _showEditSnack(context),
               ),
               _ProfileSection(
                 title: '전문 분야',
                 value: myBosal.features.join(', '),
-                onEdit: () => context.push('/bosal-onboarding'),
+                onEdit: () => _showEditSnack(context),
               ),
               _ProfileSection(
                 title: '상담 스타일',
                 value: myBosal.consultStyle,
-                onEdit: () => context.push('/bosal-onboarding'),
+                onEdit: () => _showEditSnack(context),
               ),
               _ProfileSection(
                 title: '상담료',
                 value: '${NumberFormat('#,###').format(myBosal.discountedPrice)}원  (정가 ${NumberFormat('#,###').format(myBosal.originalPrice)}원)',
-                onEdit: () => context.push('/bosal-onboarding'),
+                onEdit: () => _showEditSnack(context),
               ),
             ],
 
             const SizedBox(height: 100),
           ],
         ),
+        ),
       ),
     );
   }
 
+  void _showEditSnack(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: const Text('편집 기능은 준비 중입니다'),
+        backgroundColor: AppColors.primary,
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      ),
+    );
+  }
 }
 
 class _ProfileSection extends StatelessWidget {
@@ -192,7 +210,7 @@ class _ProfileSection extends StatelessWidget {
         width: double.infinity,
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: AppColors.surface,
+          color: AppColors.surface.withValues(alpha: 0.75),
           borderRadius: BorderRadius.circular(16),
           boxShadow: appShadow,
         ),

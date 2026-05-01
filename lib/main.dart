@@ -9,9 +9,5 @@ Future<void> main() async {
   await dotenv.load(fileName: '.env');
   await initSupabase();
 
-  runApp(
-    const ProviderScope(
-      child: GangnamBosalApp(),
-    ),
-  );
+  runApp(const ProviderScope(child: GangnamBosalApp()));
 }

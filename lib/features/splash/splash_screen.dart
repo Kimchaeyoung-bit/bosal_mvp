@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../core/theme/app_colors.dart';
-import '../../core/theme/app_text_styles.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -130,16 +130,16 @@ class _SplashScreenState extends State<SplashScreen>
                         children: [
                           Text(
                             '강남보살',
-                            style: AppTextStyles.largeName.copyWith(
+                            style: GoogleFonts.doHyeon(
                               color: AppColors.primary,
-                              fontSize: 26,
+                              fontSize: 36,
                               letterSpacing: -0.5,
                             ),
                           ),
                           const SizedBox(height: 6),
                           Text(
                             '나에게 맞는 보살 찾기',
-                            style: AppTextStyles.small.copyWith(
+                            style: GoogleFonts.sunflower(
                               fontSize: 14,
                               color: AppColors.textSub,
                             ),

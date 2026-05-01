@@ -376,12 +376,6 @@ class _SelectedBosalBanner extends StatelessWidget {
                         bosal.rating.toStringAsFixed(1),
                         style: AppTextStyles.smallBold,
                       ),
-                      const SizedBox(width: 8),
-                      Text(
-                        '첫방문 ${_fmt(bosal.firstVisitPrice)}원',
-                        style: AppTextStyles.smallBold
-                            .copyWith(color: AppColors.primary),
-                      ),
                     ],
                   ),
                 ],
@@ -398,10 +392,6 @@ class _SelectedBosalBanner extends StatelessWidget {
     );
   }
 
-  String _fmt(int price) => price
-      .toString()
-      .replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-          (m) => '${m[1]},');
 }
 
 // ─── 보살 리스트 타일 ────────────────────────────────────────────────────────
@@ -555,13 +545,6 @@ class _BosalListTile extends StatelessWidget {
                         size: 16, color: AppColors.primary),
                   ),
                 ),
-                const SizedBox(height: 10),
-                Text('첫방문', style: AppTextStyles.small),
-                Text(
-                  '${_fmt(bosal.firstVisitPrice)}원',
-                  style: AppTextStyles.smallBold
-                      .copyWith(color: AppColors.primary, fontSize: 13),
-                ),
               ],
             ),
           ],
@@ -570,8 +553,4 @@ class _BosalListTile extends StatelessWidget {
     );
   }
 
-  String _fmt(int price) => price
-      .toString()
-      .replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-          (m) => '${m[1]},');
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 
@@ -34,10 +35,11 @@ class AdBannerPlaceholder extends StatelessWidget {
           ),
           // 텍스트 콘텐츠
           Padding(
-            padding: const EdgeInsets.fromLTRB(20, 18, 100, 18),
+            padding: const EdgeInsets.fromLTRB(20, 16, 100, 16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
                   '마음의 답을 찾고 싶을 때,',
@@ -51,10 +53,9 @@ class AdBannerPlaceholder extends StatelessWidget {
                   children: [
                     Text(
                       '강남보살',
-                      style: AppTextStyles.cardLabel.copyWith(
+                      style: GoogleFonts.doHyeon(
                         color: AppColors.white,
                         fontSize: 20,
-                        fontWeight: FontWeight.w800,
                       ),
                     ),
                     const SizedBox(width: 4),
