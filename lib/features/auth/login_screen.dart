@@ -100,9 +100,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     const SizedBox(height: 16),
                     Text(
                       '강남보살',
-                      style: GoogleFonts.sunflower(
+                      style: GoogleFonts.doHyeon(
                         fontSize: 24,
-                        fontWeight: FontWeight.w700,
                       ),
                     ),
                     const SizedBox(height: 6),

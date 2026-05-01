@@ -52,10 +52,9 @@ class AdBannerPlaceholder extends StatelessWidget {
                   children: [
                     Text(
                       '강남보살',
-                      style: GoogleFonts.sunflower(
+                      style: GoogleFonts.doHyeon(
                         color: AppColors.white,
                         fontSize: 20,
-                        fontWeight: FontWeight.w700,
                       ),
                     ),
                     const SizedBox(width: 4),

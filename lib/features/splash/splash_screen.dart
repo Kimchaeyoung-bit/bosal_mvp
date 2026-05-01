@@ -130,10 +130,9 @@ class _SplashScreenState extends State<SplashScreen>
                         children: [
                           Text(
                             '강남보살',
-                            style: GoogleFonts.sunflower(
+                            style: GoogleFonts.doHyeon(
                               color: AppColors.primary,
                               fontSize: 36,
-                              fontWeight: FontWeight.w700,
                               letterSpacing: -0.5,
                             ),
                           ),
