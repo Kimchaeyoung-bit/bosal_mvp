@@ -18,6 +18,7 @@ import '../../features/bosal_dashboard/bosal_bookings_screen.dart';
 import '../../features/bosal_dashboard/bosal_reviews_screen.dart';
 import '../../features/bosal_dashboard/bosal_profile_screen.dart';
 import '../../features/my_activity/my_activity_screen.dart';
+import '../../features/notifications/notifications_screen.dart';
 import '../../shared/widgets/main_scaffold.dart';
 import '../../shared/widgets/bosal_scaffold.dart';
 
@@ -151,7 +152,10 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/region-select',
       pageBuilder: (context, state) => CustomTransitionPage(
-        child: const RegionSelectionScreen(),
+        child: RegionSelectionScreen(
+          goToMapOnConfirm:
+              state.uri.queryParameters['redirect'] == 'map',
+        ),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return SlideTransition(
             position: Tween<Offset>(
@@ -211,6 +215,10 @@ final appRouter = GoRouter(
       path: '/my/reviews',
       builder: (context, state) =>
           const MyActivityScreen(type: MyActivityType.reviews),
+    ),
+    GoRoute(
+      path: '/notifications',
+      builder: (context, state) => const NotificationsScreen(),
     ),
   ],
 );
