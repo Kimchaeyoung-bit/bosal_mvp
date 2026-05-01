@@ -28,7 +28,7 @@ class _OtherCategoryScreenState extends ConsumerState<OtherCategoryScreen> {
   @override
   Widget build(BuildContext context) {
     final allCategories = ref.watch(categoriesProvider);
-    final otherCategories = allCategories.skip(7).toList();
+    final otherCategories = allCategories.skip(9).toList();
     final selectedCategory = ref.watch(selectedCategoryProvider);
     final bosals = ref.watch(filteredBosalsProvider);
 

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:latlong2/latlong.dart' hide Path;
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
 import '../../data/models/bosal.dart';
 import '../../providers/bosal_provider.dart';
+import '../../providers/region_provider.dart';
 import '../../shared/widgets/app_shadow.dart';
 import 'widgets/bosal_map_widget.dart';
 
@@ -24,6 +26,15 @@ class _MapScreenState extends ConsumerState<MapScreen> {
     final bosalsWithLocation =
         bosals.where((b) => b.latitude != null && b.longitude != null).toList();
 
+    final selectedRegions = ref.watch(selectedSubRegionsProvider);
+    LatLng? regionCenter;
+    if (selectedRegions.isNotEmpty) {
+      final first = selectedRegions.first;
+      if (first.latitude != null && first.longitude != null) {
+        regionCenter = LatLng(first.latitude!, first.longitude!);
+      }
+    }
+
     return Scaffold(
       backgroundColor: AppColors.bg,
       body: Stack(
@@ -32,6 +43,8 @@ class _MapScreenState extends ConsumerState<MapScreen> {
           BosalMapWidget(
             bosals: bosalsWithLocation,
             selectedBosal: _selectedBosal,
+            initialCenter: regionCenter,
+            initialZoom: regionCenter != null ? 14.0 : null,
             onMarkerTap: (bosal) {
               setState(() {
                 _selectedBosal = _selectedBosal?.id == bosal.id ? null : bosal;

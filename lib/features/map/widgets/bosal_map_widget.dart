@@ -14,20 +14,24 @@ class BosalMapWidget extends StatelessWidget {
   final List<Bosal> bosals;
   final Bosal? selectedBosal;
   final void Function(Bosal) onMarkerTap;
+  final LatLng? initialCenter;
+  final double? initialZoom;
 
   const BosalMapWidget({
     super.key,
     required this.bosals,
     required this.selectedBosal,
     required this.onMarkerTap,
+    this.initialCenter,
+    this.initialZoom,
   });
 
   @override
   Widget build(BuildContext context) {
     return FlutterMap(
-      options: const MapOptions(
-        initialCenter: LatLng(37.5040, 127.0245),
-        initialZoom: 12.5,
+      options: MapOptions(
+        initialCenter: initialCenter ?? const LatLng(37.5040, 127.0245),
+        initialZoom: initialZoom ?? 12.5,
       ),
       children: [
         TileLayer(
@@ -35,12 +39,14 @@ class BosalMapWidget extends StatelessWidget {
           userAgentPackageName: 'com.example.gangnam_bosal',
         ),
         MarkerLayer(
-          markers: bosals.map((bosal) {
+          markers: bosals
+              .where((b) => b.latitude != null && b.longitude != null)
+              .map((bosal) {
             final isSelected = selectedBosal?.id == bosal.id;
             return Marker(
               point: LatLng(bosal.latitude!, bosal.longitude!),
-              width: 48,
-              height: 62,
+              width: 52,
+              height: 66,
               child: GestureDetector(
                 onTap: () => onMarkerTap(bosal),
                 child: _AvatarMarker(bosal: bosal, isSelected: isSelected),
@@ -59,44 +65,45 @@ class _AvatarMarker extends StatelessWidget {
 
   const _AvatarMarker({required this.bosal, required this.isSelected});
 
-  String get _initials {
-    final parts = bosal.name.replaceAll(' 보살', '').replaceAll(' 도령', '');
-    return parts.isNotEmpty ? parts[0] : '보';
-  }
+  String get _avatarUrl =>
+      'https://i.pravatar.cc/100?u=bosal_${bosal.id}';
 
   @override
   Widget build(BuildContext context) {
+    final size = isSelected ? 44.0 : 36.0;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         AnimatedContainer(
           duration: const Duration(milliseconds: 200),
-          width: isSelected ? 40 : 34,
-          height: isSelected ? 40 : 34,
+          width: size,
+          height: size,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: isSelected ? AppColors.accent : AppColors.surface,
             border: Border.all(
-              color: isSelected ? AppColors.accent : AppColors.border,
+              color: isSelected ? AppColors.primary : AppColors.border,
               width: isSelected ? 3 : 2,
             ),
             boxShadow: [
               BoxShadow(
                 color: isSelected
-                    ? AppColors.accent.withValues(alpha:0.45)
-                    : Colors.black.withValues(alpha:0.15),
+                    ? AppColors.primary.withValues(alpha: 0.45)
+                    : Colors.black.withValues(alpha: 0.18),
                 blurRadius: isSelected ? 14 : 6,
                 offset: const Offset(0, 3),
               ),
             ],
           ),
-          child: Center(
-            child: Text(
-              _initials,
-              style: AppTextStyles.bodyBold.copyWith(
-                color: isSelected ? AppColors.black : AppColors.text,
-                fontSize: isSelected ? 20 : 17,
-              ),
+          child: ClipOval(
+            child: Image.network(
+              _avatarUrl,
+              width: size,
+              height: size,
+              fit: BoxFit.cover,
+              loadingBuilder: (context, child, progress) =>
+                  progress == null ? child : _InitialsFallback(bosal: bosal, isSelected: isSelected, size: size),
+              errorBuilder: (context, error, stackTrace) =>
+                  _InitialsFallback(bosal: bosal, isSelected: isSelected, size: size),
             ),
           ),
         ),
@@ -108,6 +115,41 @@ class _AvatarMarker extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class _InitialsFallback extends StatelessWidget {
+  final Bosal bosal;
+  final bool isSelected;
+  final double size;
+
+  const _InitialsFallback({
+    required this.bosal,
+    required this.isSelected,
+    required this.size,
+  });
+
+  String get _initials {
+    final parts = bosal.name.replaceAll(' 보살', '').replaceAll(' 도령', '');
+    return parts.isNotEmpty ? parts[0] : '보';
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: size,
+      height: size,
+      color: isSelected ? AppColors.primarySoft : AppColors.surface,
+      child: Center(
+        child: Text(
+          _initials,
+          style: AppTextStyles.bodyBold.copyWith(
+            color: isSelected ? AppColors.primary : AppColors.text,
+            fontSize: isSelected ? 20 : 16,
+          ),
+        ),
+      ),
     );
   }
 }

@@ -8,6 +8,7 @@ import '../../providers/search_provider.dart';
 import '../../providers/region_provider.dart';
 import '../../providers/category_provider.dart';
 import '../../providers/bosal_provider.dart';
+import '../home/widgets/category_grid.dart';
 import '../../data/models/bosal.dart';
 import '../../features/home/widgets/ad_banner_placeholder.dart';
 
@@ -47,7 +48,7 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
   Widget build(BuildContext context) {
     final recentSearches = ref.watch(recentSearchesProvider);
     final selectedRegions = ref.watch(selectedSubRegionsProvider);
-    final categories = ref.watch(categoriesProvider);
+
     final recentlyViewed = ref.watch(recentlyViewedBosalsProvider);
     final query = ref.watch(searchQueryProvider);
     final isSearching = query.isNotEmpty;
@@ -239,87 +240,27 @@ class _SearchScreenState extends ConsumerState<SearchScreen> {
                   ],
 
                   // Categories
-                  Text('관심 카테고리',
-                      style:
-                          AppTextStyles.sectionTitle.copyWith(fontSize: 15)),
-                  const SizedBox(height: 4),
-                  GridView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    padding: const EdgeInsets.symmetric(horizontal: 36),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 4,
-                      mainAxisSpacing: 8,
-                      crossAxisSpacing: 8,
-                      childAspectRatio: 0.9,
+                  Container(
+                    padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
+                    decoration: BoxDecoration(
+                      color: AppColors.surface.withValues(alpha: 0.75),
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: appShadow,
                     ),
-                    itemCount: categories.length > 7 ? 8 : categories.length,
-                    itemBuilder: (context, index) {
-                      if (index == 7) {
-                        return GestureDetector(
-                          onTap: () => context.push('/other-categories'),
-                          behavior: HitTestBehavior.opaque,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: AppColors.surface.withValues(alpha: 0.55),
-                              borderRadius: BorderRadius.circular(18),
-                              boxShadow: appShadow,
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(Icons.more_horiz_rounded,
-                                    size: 22, color: AppColors.text),
-                                const SizedBox(height: 6),
-                                Text(
-                                  '기타',
-                                  style: AppTextStyles.category.copyWith(
-                                    fontSize: 11,
-                                    color: AppColors.text,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.center,
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      }
-                      final cat = categories[index];
-                      return GestureDetector(
-                        onTap: () {
-                          ref.read(selectedCategoryProvider.notifier).state =
-                              cat;
-                          context.push('/bosal-list?category=${cat.id}');
-                        },
-                        behavior: HitTestBehavior.opaque,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: AppColors.surface.withValues(alpha: 0.55),
-                            borderRadius: BorderRadius.circular(18),
-                            boxShadow: appShadow,
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(cat.icon,
-                                  size: 22, color: AppColors.text),
-                              const SizedBox(height: 6),
-                              Text(
-                                cat.name,
-                                style: AppTextStyles.category.copyWith(
-                                  fontSize: 11,
-                                  color: AppColors.text,
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('관심 카테고리',
+                            style: AppTextStyles.sectionTitle.copyWith(fontSize: 14)),
+                        const SizedBox(height: 10),
+                        CategoryGrid(
+                          onCategoryTap: (cat) {
+                            ref.read(selectedCategoryProvider.notifier).state = cat;
+                            context.push('/bosal-list?category=${cat.id}');
+                          },
                         ),
-                      );
-                    },
+                      ],
+                    ),
                   ),
 
                   const SizedBox(height: 28),
