@@ -21,8 +21,6 @@ import '../../features/my_activity/my_activity_screen.dart';
 import '../../features/notifications/notifications_screen.dart';
 import '../../features/fortune/fortune_screen.dart';
 import '../../features/auth/signup_screen.dart';
-import '../../features/admin/admin_invites_screen.dart';
-import '../../features/admin/admin_analytics_screen.dart';
 import '../../features/bosal_onboarding/bosal_onboarding_screen.dart';
 import '../../features/review/review_compose_screen.dart';
 import '../../shared/widgets/main_scaffold.dart';
@@ -253,14 +251,6 @@ final appRouter = GoRouter(
     GoRoute(
       path: '/bosal-onboarding',
       builder: (context, state) => const BosalOnboardingScreen(),
-    ),
-    GoRoute(
-      path: '/admin/invites',
-      builder: (context, state) => const AdminInvitesScreen(),
-    ),
-    GoRoute(
-      path: '/admin/analytics',
-      builder: (context, state) => const AdminAnalyticsScreen(),
     ),
     GoRoute(
       path: '/review/compose',

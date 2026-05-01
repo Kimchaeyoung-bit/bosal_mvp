@@ -168,24 +168,6 @@ class MypageScreen extends ConsumerWidget {
                       ],
                     ),
                   ],
-                  if (user?.role == UserRole.admin) ...[
-                    const SizedBox(height: 14),
-                    _MenuSection(
-                      title: '관리자',
-                      items: [
-                        _MenuItem(
-                          icon: Icons.admin_panel_settings_outlined,
-                          label: '보살 초대 코드 관리',
-                          onTap: () => context.push('/admin/invites'),
-                        ),
-                        _MenuItem(
-                          icon: Icons.bar_chart_rounded,
-                          label: '보살 분석 대시보드',
-                          onTap: () => context.push('/admin/analytics'),
-                        ),
-                      ],
-                    ),
-                  ],
                   const SizedBox(height: 14),
                   _MenuSection(
                     title: '고객 지원',

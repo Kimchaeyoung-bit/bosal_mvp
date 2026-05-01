@@ -2,7 +2,6 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/supabase/supabase_client.dart';
-import '../data/datasources/admin_data_source.dart';
 import '../data/datasources/analytics_data_source.dart';
 import '../data/datasources/auth_data_source.dart';
 import '../data/datasources/banner_ad_data_source.dart';
@@ -73,12 +72,6 @@ final authDataSourceProvider = Provider<AuthDataSource>((ref) {
   return ref.watch(dataSourceModeProvider) == DataSourceMode.supabase
       ? SupabaseAuthDataSource(supabase)
       : MockAuthDataSource();
-});
-
-final adminDataSourceProvider = Provider<AdminDataSource>((ref) {
-  return ref.watch(dataSourceModeProvider) == DataSourceMode.supabase
-      ? SupabaseAdminDataSource(supabase)
-      : MockAdminDataSource();
 });
 
 final notificationDataSourceProvider = Provider<NotificationDataSource>((ref) {
