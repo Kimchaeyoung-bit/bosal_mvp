@@ -176,7 +176,7 @@ final mockBosals = [
     maxPoints: 12000,
     consultRequests: 27,
     regionId: 'seoul',
-    subRegionIds: ['apgujeong'],
+    subRegionIds: ['cheongdam'],
     categoryIds: ['relationship', 'health'],
     description: '인연의 실타래를 풀어드립니다',
     experienceYears: 9,
