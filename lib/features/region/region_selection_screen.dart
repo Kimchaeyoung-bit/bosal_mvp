@@ -6,7 +6,8 @@ import '../../core/theme/app_text_styles.dart';
 import '../../providers/region_provider.dart';
 
 class RegionSelectionScreen extends ConsumerStatefulWidget {
-  const RegionSelectionScreen({super.key});
+  final bool goToMapOnConfirm;
+  const RegionSelectionScreen({super.key, this.goToMapOnConfirm = false});
 
   @override
   ConsumerState<RegionSelectionScreen> createState() =>
@@ -321,7 +322,13 @@ class _RegionSelectionScreenState extends ConsumerState<RegionSelectionScreen> {
               child: ElevatedButton(
                 onPressed: selectedSubRegions.isEmpty
                     ? null
-                    : () => context.pop(),
+                    : () {
+                        if (widget.goToMapOnConfirm) {
+                          context.pushReplacement('/map');
+                        } else {
+                          context.pop();
+                        }
+                      },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
                   foregroundColor: AppColors.white,
