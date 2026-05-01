@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
 import '../../providers/auth_provider.dart';
@@ -104,25 +105,15 @@ class _GreetingHeader extends ConsumerWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 20),
-                child: Image.asset(
-                  'assets/images/logo_real.png',
-                  width: 130,
-                  height: 130,
-                  fit: BoxFit.contain,
-                  opacity: const AlwaysStoppedAnimation(0.9),
-                ),
-              ),
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 20, 60, 20),
+                  padding: const EdgeInsets.fromLTRB(40, 62, 0, 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        '${user?.displayName ?? ''}님, 안녕하세요!',
-                        style: AppTextStyles.sectionTitle.copyWith(fontSize: 18),
+                        user != null ? '${user.displayName}, 안녕하세요!' : '안녕하세요!',
+                        style: AppTextStyles.sectionTitle.copyWith(fontSize: 14),
                         textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: 6),
@@ -131,11 +122,54 @@ class _GreetingHeader extends ConsumerWidget {
                         style: AppTextStyles.body.copyWith(color: AppColors.textSub),
                         textAlign: TextAlign.center,
                       ),
+                      const SizedBox(height: 28),
+                      GestureDetector(
+                        onTap: () => context.push('/fortune'),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withValues(alpha: 0.12),
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(color: Colors.white.withValues(alpha: 0.4)),
+                          ),
+                          child: Text(
+                            '오늘의 운세보기',
+                            style: AppTextStyles.body.copyWith(
+                              color: AppColors.primary,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 13,
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.only(right: 30, top: 30),
+                child: Image.asset(
+                  'assets/images/logo_real.png',
+                  width: 130,
+                  height: 130,
+                  fit: BoxFit.contain,
+                  opacity: const AlwaysStoppedAnimation(0.9),
+                ),
+              ),
             ],
+          ),
+        ),
+        // 강남보살 텍스트: 좌측 상단
+        Positioned(
+          top: topPadding + 8,
+          left: 26,
+          child: Text(
+            '강남보살',
+            style: GoogleFonts.doHyeon(
+              fontSize: 22,
+              color: AppColors.primary,
+              letterSpacing: 1.5,
+            ),
           ),
         ),
         // 벨 아이콘: 상태바 바로 아래 우측 최상단
