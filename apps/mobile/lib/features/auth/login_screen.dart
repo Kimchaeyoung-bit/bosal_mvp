@@ -264,6 +264,20 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   ],
                 ),
               ),
+              const SizedBox(height: 8),
+              Center(
+                child: GestureDetector(
+                  onTap: () => context.push('/auth/password-reset'),
+                  child: Text(
+                    '비밀번호를 잊으셨나요?',
+                    style: AppTextStyles.small.copyWith(
+                      fontSize: 13,
+                      color: AppColors.textSub,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),

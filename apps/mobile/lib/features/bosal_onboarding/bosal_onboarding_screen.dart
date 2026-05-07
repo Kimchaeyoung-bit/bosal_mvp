@@ -13,6 +13,7 @@ import '../../providers/category_provider.dart';
 import '../../providers/data_source_providers.dart';
 import '../../providers/region_provider.dart';
 import 'widgets/operating_hours_editor.dart';
+import 'widgets/profile_image_picker.dart';
 
 /// 보살 온보딩·프로필 편집 화면.
 ///
@@ -61,6 +62,7 @@ class _BosalOnboardingScreenState extends ConsumerState<BosalOnboardingScreen> {
   bool _saving = false;
   String? _error;
   String? _bosalId;
+  String? _profileImageUrl;
 
   @override
   void initState() {
@@ -112,6 +114,7 @@ class _BosalOnboardingScreenState extends ConsumerState<BosalOnboardingScreen> {
       return;
     }
 
+    _profileImageUrl = bosal.profileImageUrl;
     _nameCtrl.text = bosal.name;
     _oneLinerCtrl.text = bosal.oneLiner ?? '';
     _descriptionCtrl.text = bosal.description ?? '';
@@ -284,6 +287,15 @@ class _BosalOnboardingScreenState extends ConsumerState<BosalOnboardingScreen> {
               child: ListView(
                 padding: const EdgeInsets.fromLTRB(20, 8, 20, 120),
                 children: [
+                  if (_bosalId != null)
+                    _section('프로필 사진', [
+                      ProfileImagePicker(
+                        bosalId: _bosalId!,
+                        currentUrl: _profileImageUrl,
+                        onUploaded: (url) =>
+                            setState(() => _profileImageUrl = url),
+                      ),
+                    ]),
                   _section('기본 정보', [
                     _label('보살 이름 *'),
                     _text(_nameCtrl, hint: '예: 가가 보살'),

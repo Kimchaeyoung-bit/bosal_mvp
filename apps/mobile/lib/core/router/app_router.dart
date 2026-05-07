@@ -28,6 +28,7 @@ import '../../features/bosal_onboarding/bosal_onboarding_screen.dart';
 import '../../features/review/review_compose_screen.dart';
 import '../../features/legal/legal_document_screen.dart';
 import '../../features/auth/account_delete_screen.dart';
+import '../../features/auth/password_reset_screen.dart';
 import '../../shared/widgets/main_scaffold.dart';
 import '../../shared/widgets/bosal_scaffold.dart';
 
@@ -328,6 +329,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
     GoRoute(
       path: '/account/delete',
       builder: (context, state) => const AccountDeleteScreen(),
+    ),
+    GoRoute(
+      path: '/auth/password-reset',
+      builder: (context, state) => const PasswordResetScreen(),
     ),
     GoRoute(
       path: '/review/compose',

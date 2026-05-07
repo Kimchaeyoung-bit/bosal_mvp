@@ -42,7 +42,7 @@
 - [x] **AdminShell** 공용 nav 레이아웃 (대시보드/보살/초대/사용자/신고/공지)
 - [ ] **P3-9** Vercel 배포 + Password Protection (외부 사용자 작업)
 
-### Phase 4 — 어드민 공지 + 분석 확장 + In-App 알림
+### Phase 4 — 어드민 공지 + 분석 확장 + In-App 알림 (commit `b2156d8`)
 - [x] **P4-1** `20260424002600_broadcast_notification.sql` — admin 공지 일괄 발송 RPC
 - [x] **P4-2** 분석 확장 — `20260424002700_view_events_and_analytics.sql`:
   · `bosal_view_events` 테이블 + RLS + 5초 rate-limit 트리거
@@ -50,7 +50,13 @@
   · `admin_list_bosal_analytics` 재정의 — view_*4개 + favorite_count 추가
 - [x] **P4-2** 모바일 `analytics_data_source.logBosalView` 추가 + 보살 상세 진입 시 발화
 - [x] **P4-2** 어드민 대시보드 — 조회/찜 KPI 카드 + 정렬 칩 + 테이블 컬럼 + 보살 상세 사이드바 분석 카드
-- [ ] **P4-3** 위치 권한 안내 화면 (`features/onboarding/location_permission_screen.dart`) — P5에서 처리
+- [⏸] **P4-3** 위치 권한 안내 화면 — 실제 위치 사용 기능 도입 시 함께 추가 (현재 region_tab은 보살 좌표만 표시, 사용자 위치 미사용)
+
+### Phase 5 — 신뢰성
+- [x] **P5-1** 비밀번호 재설정 — `PasswordResetScreen` (`/auth/password-reset`) + `resetPasswordForEmail` 호출 + 로그인 화면 진입 링크
+- [x] **P5-2** 보살 프로필 사진 업로드 — `image_picker` 의존성 + `ProfileImagePicker` 위젯 + Storage `bosal-images` upsert + `bosal_images` 테이블 갱신 + onboarding 화면 통합
+- [x] **P5-3** 세션 만료 — 기존 `authProvider` stream + GoRouter redirect 가드로 자동 처리됨 (별도 작업 불필요)
+- [x] **P5-4** Sentry — `sentry_flutter` 의존성 + main `SentryFlutter.init` (DSN 미설정 시 비활성) + `.env`/`.env.example`에 `SENTRY_DSN` 추가
 
 ### Phase 5 — 신뢰성
 - [ ] **P5-1** 비밀번호 재설정 화면 (`resetPasswordForEmail`)

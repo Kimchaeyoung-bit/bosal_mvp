@@ -22,6 +22,8 @@ dependencies:
   supabase_flutter: ^2.8.0
   flutter_markdown: ^0.7.4+1
   collection: ^1.18.0
+  sentry_flutter: ^8.10.1
+  image_picker: ^1.1.2
 
 dev_dependencies:
   flutter_test:
