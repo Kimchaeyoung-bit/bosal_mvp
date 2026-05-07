@@ -58,6 +58,10 @@
 - [x] **P5-3** 세션 만료 — 기존 `authProvider` stream + GoRouter redirect 가드로 자동 처리됨 (별도 작업 불필요)
 - [x] **P5-4** Sentry — `sentry_flutter` 의존성 + main `SentryFlutter.init` (DSN 미설정 시 비활성) + `.env`/`.env.example`에 `SENTRY_DSN` 추가
 
+### Phase 7 — E2E 검증 가이드
+- [x] [`docs/E2E_VERIFICATION.md`](docs/E2E_VERIFICATION.md) — 사이드별 골든 패스 / 보안 검증 / 분석 흐름 / G5 게이트 체크리스트
+- [⏳] **P7** 마이그레이션 push + 사이드 3개 골든 패스 실주행 (사용자 + 시뮬레이터)
+
 ### Phase 6 — 출시 자산 (코드 자동화 설정 완료, 자산은 사용자 작업)
 - [x] pubspec에 `flutter_launcher_icons` / `flutter_native_splash` 설정 등록 — `assets/launcher/icon-1024.png` + `splash.png` 만 두면 `dart run` 한 번으로 적용
 - [x] [`docs/RELEASE_CHECKLIST.md`](docs/RELEASE_CHECKLIST.md) — 전 출시 절차 (아이콘·스플·스토어 메타·Privacy form·키스토어·심사 데모 계정·Vercel 어드민 배포·사전 점검 체크리스트)
