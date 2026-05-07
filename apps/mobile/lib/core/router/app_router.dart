@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../data/models/app_user.dart';
+import '../../providers/auth_provider.dart';
 import '../../features/splash/splash_screen.dart';
 import '../../features/auth/login_screen.dart';
 import '../../features/home/home_screen.dart';
@@ -26,9 +29,63 @@ import '../../features/review/review_compose_screen.dart';
 import '../../shared/widgets/main_scaffold.dart';
 import '../../shared/widgets/bosal_scaffold.dart';
 
-final appRouter = GoRouter(
-  initialLocation: '/splash',
-  routes: [
+/// 인증 가드가 적용된 GoRouter.
+///
+/// `authProvider` 변경 시 자동 재평가되도록 Provider로 노출. `app.dart`에서
+/// `ref.watch(appRouterProvider)`로 소비. 화면별 자체 가드는 보조 안전장치로
+/// 유지하고 있으니 이 redirect는 가장 바깥쪽 첫 단계 방어선이다.
+final appRouterProvider = Provider<GoRouter>((ref) {
+  final user = ref.watch(authProvider);
+
+  return GoRouter(
+    initialLocation: '/splash',
+    redirect: (context, state) {
+      final loc = state.matchedLocation;
+
+      // 1) 보살 전용 탭(`/bosal-home`, `/bosal-bookings`, `/bosal-reviews`,
+      //    `/bosal-profile`)은 role=bosal 만 진입 가능.
+      //    `/bosal/:id`는 보살 *상세*라 누구나 OK → 정확히 매칭 분기.
+      const bosalOnlyPrefixes = [
+        '/bosal-home',
+        '/bosal-bookings',
+        '/bosal-reviews',
+        '/bosal-profile',
+      ];
+      if (bosalOnlyPrefixes.any(loc.startsWith)) {
+        if (user == null) return '/login';
+        if (user.role != UserRole.bosal) return '/home';
+      }
+
+      // 2) 보살 온보딩은 bosalId 미연결 시 차단 (claim 직후만 진입).
+      if (loc == '/bosal-onboarding') {
+        if (user == null) return '/login';
+        if (user.bosalId == null) return '/home';
+      }
+
+      // 3) 인증 필요 라우트: 마이 활동·예약·후기 작성·알림.
+      const authRequired = [
+        '/my-tab',
+        '/my/bookings',
+        '/my/favorites',
+        '/my/recent',
+        '/my/reviews',
+        '/booking-tab',
+        '/review/compose',
+        '/notifications',
+      ];
+      if (authRequired.any((p) => loc == p || loc.startsWith('$p/')) &&
+          user == null) {
+        return '/login';
+      }
+
+      // 4) 이미 로그인한 사용자가 /login·/signup 으로 가면 홈으로.
+      if ((loc == '/login' || loc == '/signup') && user != null) {
+        return user.role == UserRole.bosal ? '/bosal-home' : '/home';
+      }
+
+      return null;
+    },
+    routes: [
     GoRoute(
       path: '/splash',
       builder: (context, state) => const SplashScreen(),
@@ -270,4 +327,5 @@ final appRouter = GoRouter(
       },
     ),
   ],
-);
+  );
+});

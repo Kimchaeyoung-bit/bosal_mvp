@@ -4,6 +4,7 @@ import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
 import '../../data/models/bosal.dart';
 import '../../providers/booking_provider.dart';
+import '../../providers/data_source_providers.dart';
 
 // 시간대 옵션
 class _TimeSlot {
@@ -22,7 +23,10 @@ final _timeSlots = [
   _TimeSlot('오후 8:00', 800, 20, 0),
 ];
 
-void showBookingSheet(BuildContext context, Bosal bosal) {
+void showBookingSheet(BuildContext context, WidgetRef ref, Bosal bosal) {
+  // 분석 이벤트 — 예약 시트 진입 시 발화 (실제 예약 생성 전 단계)
+  // ignore: unawaited_futures
+  ref.read(analyticsDataSourceProvider).logReservationButtonTap(bosalId: bosal.id);
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
@@ -249,7 +253,7 @@ class _BookingSheetState extends ConsumerState<_BookingSheet> {
           bosalId: widget.bosal.id,
           consultDate: consultDate,
           consultType: '대면 상담',
-          price: widget.bosal.firstVisitPrice,
+          price: _selectedSlot!.price,
         );
 
     Navigator.pop(context);

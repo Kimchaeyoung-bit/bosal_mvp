@@ -4,10 +4,10 @@ import 'package:go_router/go_router.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
 import '../../data/models/booking.dart';
-import '../../data/mock/mock_bosals.dart';
 import '../../data/models/bosal.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/booking_provider.dart';
+import '../../providers/bosal_provider.dart';
 import '../../shared/widgets/login_required_view.dart';
 
 class BookingScreen extends ConsumerStatefulWidget {
@@ -32,6 +32,7 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
     }
 
     final bookings = ref.watch(bookingsProvider);
+    final allBosals = ref.watch(allBosalsProvider);
 
     final filtered = _selectedFilter == null
         ? bookings
@@ -130,10 +131,16 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
                       separatorBuilder: (_, __) => const SizedBox(height: 12),
                       itemBuilder: (context, index) {
                         final booking = filtered[index];
-                        final bosal = mockBosals.firstWhere(
-                          (b) => b.id == booking.bosalId,
-                          orElse: () => mockBosals.first,
-                        );
+                        final bosal = allBosals
+                            .where((b) => b.id == booking.bosalId)
+                            .firstOrNull;
+                        if (bosal == null) {
+                          // 보살 정보 미동기화 — 라이트 카드만 표시
+                          return _BookingCardSkeleton(
+                            booking: booking,
+                            onCancel: () => _showCancelDialog(booking),
+                          );
+                        }
                         return _BookingCard(
                           booking: booking,
                           bosal: bosal,
@@ -569,6 +576,57 @@ class _EmptyState extends StatelessWidget {
               ),
             ),
           ],
+        ],
+      ),
+    );
+  }
+}
+
+/// 보살 정보가 아직 로드되지 않은 경우의 fallback 카드.
+/// (Supabase 로딩 중이거나 보살이 삭제된 예약 표시용)
+class _BookingCardSkeleton extends StatelessWidget {
+  final Booking booking;
+  final VoidCallback onCancel;
+
+  const _BookingCardSkeleton({required this.booking, required this.onCancel});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: AppColors.surface,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppColors.border),
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 48,
+            height: 48,
+            decoration: const BoxDecoration(
+              color: AppColors.bg,
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(Icons.person_off_outlined,
+                size: 22, color: AppColors.textSub),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('보살 정보를 불러올 수 없습니다',
+                    style: AppTextStyles.bodyBold),
+                const SizedBox(height: 4),
+                Text('${booking.consultType} · ${booking.price}원',
+                    style: AppTextStyles.small),
+              ],
+            ),
+          ),
+          if (booking.status == BookingStatus.pending ||
+              booking.status == BookingStatus.confirmed)
+            TextButton(onPressed: onCancel, child: const Text('취소')),
         ],
       ),
     );

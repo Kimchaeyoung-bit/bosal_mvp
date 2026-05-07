@@ -6,6 +6,7 @@ import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
 import '../../core/utils/auth_guard.dart';
 import '../../providers/bosal_provider.dart';
+import '../../providers/data_source_providers.dart';
 import '../../shared/widgets/app_shadow.dart';
 import '../booking/booking_sheet.dart';
 
@@ -292,6 +293,11 @@ class BosalDetailScreen extends ConsumerWidget {
                 child: GestureDetector(
                   onTap: () => requireAuth(context, ref,
                       onAuthenticated: () async {
+                        // 분석 이벤트 — fire-and-forget (실패해도 통화 진행)
+                        // ignore: unawaited_futures
+                        ref
+                            .read(analyticsDataSourceProvider)
+                            .logCallTap(bosalId: bosal.id);
                         final uri = Uri(
                           scheme: 'tel',
                           path: bosal.phoneNumber!.replaceAll('-', ''),
@@ -329,7 +335,8 @@ class BosalDetailScreen extends ConsumerWidget {
             Expanded(
               child: GestureDetector(
                 onTap: () => requireAuth(context, ref,
-                    onAuthenticated: () => showBookingSheet(context, bosal)),
+                    onAuthenticated: () =>
+                        showBookingSheet(context, ref, bosal)),
                 child: Container(
                   height: 52,
                   decoration: BoxDecoration(

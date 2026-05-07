@@ -73,10 +73,22 @@ class _ReviewComposeScreenState extends ConsumerState<ReviewComposeScreen> {
     if (s.contains('only users with a completed reservation')) {
       return '상담 완료 후에만 후기를 작성할 수 있습니다.';
     }
-    if (s.contains('duplicate key') || s.contains('unique')) {
+    if (s.contains('duplicate key') ||
+        s.contains('unique') ||
+        s.contains('reviews_reservation_id_key')) {
       return '이미 후기를 작성하셨습니다.';
     }
-    return '후기 등록에 실패했습니다.\n$s';
+    if (s.contains('not authenticated') || s.contains('JWT')) {
+      return '로그인이 만료되었습니다. 다시 로그인해주세요.';
+    }
+    if (s.contains('rating') && s.contains('check')) {
+      return '평점은 1점에서 10점 사이여야 합니다.';
+    }
+    if (s.contains('SocketException') || s.contains('Network')) {
+      return '네트워크 연결을 확인해주세요.';
+    }
+    // raw exception 노출 차단
+    return '후기 등록에 실패했습니다. 잠시 후 다시 시도해주세요.';
   }
 
   @override

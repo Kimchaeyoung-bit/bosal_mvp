@@ -36,16 +36,15 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       return;
     }
 
-    final error =
+    final result =
         await ref.read(authProvider.notifier).login(username, password);
 
     if (!mounted) return;
-    if (error != null) {
-      setState(() => _errorMessage = error);
+    if (result.error != null) {
+      setState(() => _errorMessage = result.error);
       return;
     }
-
-    final user = ref.read(authProvider);
+    final user = result.user;
     if (user == null) return;
 
     if (user.role == UserRole.bosal) {

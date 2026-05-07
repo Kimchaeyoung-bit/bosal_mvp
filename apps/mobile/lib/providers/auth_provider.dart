@@ -29,19 +29,23 @@ class AuthNotifier extends StateNotifier<AppUser?> {
 
   final AuthDataSource _dataSource;
 
-  /// 로그인. 성공 시 null, 실패 시 에러 메시지 반환.
-  Future<String?> login(String emailOrUsername, String password) async {
+  /// 로그인. 성공 시 (null, user) / 실패 시 (errorMsg, null).
+  /// 호출자는 user 결과로 분기 (state race 회피).
+  Future<({String? error, AppUser? user})> login(
+    String emailOrUsername,
+    String password,
+  ) async {
     try {
       final user = await _dataSource.signInWithPassword(
         emailOrUsername: emailOrUsername,
         password: password,
       );
       state = user;
-      return null;
+      return (error: null, user: user);
     } on AuthFailure catch (e) {
-      return e.message;
+      return (error: e.message, user: null);
     } catch (e) {
-      return '로그인에 실패했습니다';
+      return (error: '로그인에 실패했습니다', user: null);
     }
   }
 

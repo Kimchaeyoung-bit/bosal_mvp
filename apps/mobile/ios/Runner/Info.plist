@@ -7,7 +7,12 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Gangnam Bosal</string>
+	<string>강남보살</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>ko</string>
+		<string>en</string>
+	</array>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -65,6 +70,21 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<!-- 권한 사용 목적 (App Store 심사 필수) -->
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>내 주변 보살을 찾기 위해 위치 정보를 사용합니다.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>보살 프로필 사진 등록을 위해 카메라를 사용합니다.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>보살 프로필 이미지 첨부를 위해 사진 라이브러리에 접근합니다.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>이미지를 사진 라이브러리에 저장합니다.</string>
+	<!-- tel:, https: 외부 URL 스킴 화이트리스트 -->
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>tel</string>
+		<string>https</string>
 	</array>
 </dict>
 </plist>
