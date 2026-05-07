@@ -58,32 +58,29 @@
 - [x] **P5-3** 세션 만료 — 기존 `authProvider` stream + GoRouter redirect 가드로 자동 처리됨 (별도 작업 불필요)
 - [x] **P5-4** Sentry — `sentry_flutter` 의존성 + main `SentryFlutter.init` (DSN 미설정 시 비활성) + `.env`/`.env.example`에 `SENTRY_DSN` 추가
 
-### Phase 7 — E2E 검증 가이드
-- [x] [`docs/E2E_VERIFICATION.md`](docs/E2E_VERIFICATION.md) — 사이드별 골든 패스 / 보안 검증 / 분석 흐름 / G5 게이트 체크리스트
-- [⏳] **P7** 마이그레이션 push + 사이드 3개 골든 패스 실주행 (사용자 + 시뮬레이터)
-
-### Phase 6 — 출시 자산 (코드 자동화 설정 완료, 자산은 사용자 작업)
+### Phase 6 — 출시 자산 (commit `2542415`, 코드 자동화 완료)
 - [x] pubspec에 `flutter_launcher_icons` / `flutter_native_splash` 설정 등록 — `assets/launcher/icon-1024.png` + `splash.png` 만 두면 `dart run` 한 번으로 적용
-- [x] [`docs/RELEASE_CHECKLIST.md`](docs/RELEASE_CHECKLIST.md) — 전 출시 절차 (아이콘·스플·스토어 메타·Privacy form·키스토어·심사 데모 계정·Vercel 어드민 배포·사전 점검 체크리스트)
-- [⏳] **P6-1** 디자인팀에서 final 아이콘·스플 자산 수신 후 명령 실행 (사용자)
-- [⏳] **P6-2** App Store Connect / Play Console 메타 입력 (사용자)
-- [⏳] **P6-3** Privacy Nutrition Label / Data Safety Form 제출 (사용자)
-- [⏳] **P6-4** TestFlight + Internal Testing 첫 빌드 업로드 (사용자)
+- [x] [`docs/RELEASE_CHECKLIST.md`](docs/RELEASE_CHECKLIST.md) — 전 출시 절차
 
-### Phase 5 — 신뢰성
-- [ ] **P5-1** 비밀번호 재설정 화면 (`resetPasswordForEmail`)
-- [ ] **P5-2** 사진 업로드 UI (보살 프로필 → Storage `bosal-images`)
-- [ ] **P5-3** 세션 만료 / 자동 로그아웃 (`onAuthStateChange` 전역 구독)
-- [ ] **P5-4** Sentry 통합 (`sentry_flutter` + DSN)
+### Phase 7 — E2E 검증 가이드 (commit `c83092e`)
+- [x] [`docs/E2E_VERIFICATION.md`](docs/E2E_VERIFICATION.md) — 사이드별 골든 패스 / 보안 검증 / 분석 흐름 / G5 게이트 체크리스트
 
-### Phase 6 — 출시 자산
-- [ ] **P6-1** 앱 아이콘 final 1024×1024 + 스플래시 (`flutter_launcher_icons`, `flutter_native_splash`)
-- [ ] **P6-2** App Store Connect / Play Console 메타 (이름·설명·키워드·스크린샷)
-- [ ] **P6-3** Privacy Nutrition Label / Data Safety Form
-- [ ] **P6-4** TestFlight + Internal Testing 배포
+---
 
-### Phase 7 — 검증
-- [ ] **P7** E2E 골든 패스 (사용자·보살·관리자 3 사이드)
+## 🟡 진행 중 (In Progress)
+
+(시나리오 A 코드 측 작업 모두 완료. 외부 작업 대기 중.)
+
+---
+
+## 🔴 외부 작업 대기 (사용자)
+
+- [ ] **P3-9** Vercel 어드민 배포 + Password Protection
+- [ ] **P6-1** 디자인팀에서 final 아이콘·스플 자산 수신 후 `dart run flutter_launcher_icons` / `flutter_native_splash:create`
+- [ ] **P6-2** App Store Connect / Play Console 메타 입력
+- [ ] **P6-3** Privacy Nutrition Label / Data Safety Form 제출
+- [ ] **P6-4** TestFlight + Internal Testing 첫 빌드 업로드
+- [ ] **P7** 마이그레이션 push (`supabase db push`) + admin role 부여 + 시뮬레이터에서 사이드 3개 골든 패스 실주행
 
 ---
 

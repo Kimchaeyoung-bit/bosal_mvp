@@ -70,6 +70,7 @@ app.*.map.json
 # ==========================================================
 backend/supabase/.temp/
 backend/supabase/.branches/
+backend/supabase/backups/
 
 # ==========================================================
 # Node.js / Next.js (apps/admin_web)
