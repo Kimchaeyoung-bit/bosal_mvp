@@ -52,11 +52,19 @@
 - [x] **P4-2** 어드민 대시보드 — 조회/찜 KPI 카드 + 정렬 칩 + 테이블 컬럼 + 보살 상세 사이드바 분석 카드
 - [⏸] **P4-3** 위치 권한 안내 화면 — 실제 위치 사용 기능 도입 시 함께 추가 (현재 region_tab은 보살 좌표만 표시, 사용자 위치 미사용)
 
-### Phase 5 — 신뢰성
+### Phase 5 — 신뢰성 (commit `fbdb90d`)
 - [x] **P5-1** 비밀번호 재설정 — `PasswordResetScreen` (`/auth/password-reset`) + `resetPasswordForEmail` 호출 + 로그인 화면 진입 링크
 - [x] **P5-2** 보살 프로필 사진 업로드 — `image_picker` 의존성 + `ProfileImagePicker` 위젯 + Storage `bosal-images` upsert + `bosal_images` 테이블 갱신 + onboarding 화면 통합
 - [x] **P5-3** 세션 만료 — 기존 `authProvider` stream + GoRouter redirect 가드로 자동 처리됨 (별도 작업 불필요)
 - [x] **P5-4** Sentry — `sentry_flutter` 의존성 + main `SentryFlutter.init` (DSN 미설정 시 비활성) + `.env`/`.env.example`에 `SENTRY_DSN` 추가
+
+### Phase 6 — 출시 자산 (코드 자동화 설정 완료, 자산은 사용자 작업)
+- [x] pubspec에 `flutter_launcher_icons` / `flutter_native_splash` 설정 등록 — `assets/launcher/icon-1024.png` + `splash.png` 만 두면 `dart run` 한 번으로 적용
+- [x] [`docs/RELEASE_CHECKLIST.md`](docs/RELEASE_CHECKLIST.md) — 전 출시 절차 (아이콘·스플·스토어 메타·Privacy form·키스토어·심사 데모 계정·Vercel 어드민 배포·사전 점검 체크리스트)
+- [⏳] **P6-1** 디자인팀에서 final 아이콘·스플 자산 수신 후 명령 실행 (사용자)
+- [⏳] **P6-2** App Store Connect / Play Console 메타 입력 (사용자)
+- [⏳] **P6-3** Privacy Nutrition Label / Data Safety Form 제출 (사용자)
+- [⏳] **P6-4** TestFlight + Internal Testing 첫 빌드 업로드 (사용자)
 
 ### Phase 5 — 신뢰성
 - [ ] **P5-1** 비밀번호 재설정 화면 (`resetPasswordForEmail`)
