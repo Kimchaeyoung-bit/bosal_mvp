@@ -44,6 +44,9 @@ class BosalDetailScreen extends ConsumerWidget {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(recentlyViewedProvider.notifier).add(bosalId);
+      // 분석 — 5초 rate-limit (DB 트리거)이라 매 프레임 호출돼도 안전
+      // ignore: unawaited_futures
+      ref.read(analyticsDataSourceProvider).logBosalView(bosalId: bosalId);
     });
 
     return Scaffold(
