@@ -7,6 +7,7 @@ import '../../core/theme/app_text_styles.dart';
 import '../../core/utils/auth_guard.dart';
 import '../../providers/bosal_provider.dart';
 import '../../providers/data_source_providers.dart';
+import '../report/report_dialog.dart';
 import '../../shared/widgets/app_shadow.dart';
 import '../booking/booking_sheet.dart';
 
@@ -67,10 +68,42 @@ class BosalDetailScreen extends ConsumerWidget {
                     icon: const Icon(Icons.arrow_back_rounded,
                         color: AppColors.text),
                   ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.share_rounded,
-                        size: 22, color: AppColors.text),
+                  PopupMenuButton<String>(
+                    icon: const Icon(Icons.more_horiz_rounded,
+                        size: 24, color: AppColors.text),
+                    onSelected: (v) {
+                      switch (v) {
+                        case 'report':
+                          showReportDialog(context, ref,
+                              kind: ReportTargetKind.bosal,
+                              targetId: bosal.id);
+                        case 'share':
+                          // TODO: share 기능 (P5+ 또는 시나리오 B)
+                          break;
+                      }
+                    },
+                    itemBuilder: (_) => const [
+                      PopupMenuItem(
+                        value: 'share',
+                        child: ListTile(
+                          leading: Icon(Icons.share_rounded, size: 20),
+                          title: Text('공유'),
+                          contentPadding: EdgeInsets.zero,
+                          dense: true,
+                        ),
+                      ),
+                      PopupMenuItem(
+                        value: 'report',
+                        child: ListTile(
+                          leading: Icon(Icons.flag_outlined,
+                              size: 20, color: AppColors.danger),
+                          title: Text('신고',
+                              style: TextStyle(color: AppColors.danger)),
+                          contentPadding: EdgeInsets.zero,
+                          dense: true,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

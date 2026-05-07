@@ -7,6 +7,7 @@ import '../../shared/widgets/app_shadow.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/bosal_provider.dart';
 import '../../providers/review_provider.dart';
+import '../report/report_dialog.dart';
 
 class BosalReviewsScreen extends ConsumerWidget {
   const BosalReviewsScreen({super.key});
@@ -275,12 +276,12 @@ class _ReviewList extends ConsumerWidget {
   }
 }
 
-class _ReviewCard extends StatelessWidget {
+class _ReviewCard extends ConsumerWidget {
   final Review review;
   const _ReviewCard({required this.review});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final maskedName = _maskName(review.userDisplayName ?? '회원');
     final stars = (review.rating / 2).round().clamp(1, 5);
 
@@ -338,6 +339,36 @@ class _ReviewCard extends StatelessWidget {
               ),
               Text(_relativeDate(review.createdAt),
                   style: AppTextStyles.small),
+              const SizedBox(width: 4),
+              SizedBox(
+                width: 28,
+                height: 28,
+                child: PopupMenuButton<String>(
+                  padding: EdgeInsets.zero,
+                  iconSize: 18,
+                  tooltip: '메뉴',
+                  onSelected: (v) {
+                    if (v == 'report') {
+                      showReportDialog(context, ref,
+                          kind: ReportTargetKind.review,
+                          targetId: review.id);
+                    }
+                  },
+                  itemBuilder: (_) => const [
+                    PopupMenuItem(
+                      value: 'report',
+                      child: ListTile(
+                        leading: Icon(Icons.flag_outlined,
+                            size: 18, color: AppColors.danger),
+                        title: Text('신고',
+                            style: TextStyle(color: AppColors.danger)),
+                        contentPadding: EdgeInsets.zero,
+                        dense: true,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
           if ((review.body ?? '').isNotEmpty) ...[

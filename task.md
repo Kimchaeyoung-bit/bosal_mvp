@@ -1,0 +1,106 @@
+# 강남보살 — 작업 트래커
+
+마스터 플랜: [`~/.claude/plans/jiggly-gliding-clock.md`](file:///Users/mook/.claude/plans/jiggly-gliding-clock.md)
+
+업데이트 규칙: 작업이 끝날 때마다 항상 본 파일을 갱신 (CLAUDE.md 지시).
+
+---
+
+## 🟢 완료 (Done)
+
+### Phase 0 — 사전 준비
+- [x] `feat/mvp-launch` 브랜치 분기 (commit `72dd025` baseline)
+- [x] 미커밋 문서·시드 baseline commit
+
+### Phase 1 — 모바일 BLOCKER + HIGH 묶음 (commit `50f47d1`)
+- [x] **P1-1** iOS Info.plist 권한 description (위치/카메라/사진/한국어 앱 이름/tel·https 스킴)
+- [x] **P1-1** Android Manifest 권한 (INTERNET·위치·미디어·알림·카메라) + tel/https/http intent
+- [x] **P1-2** GoRouter `appRouterProvider` + redirect 가드 (보살 라우트·인증 필요·로그인 후 차단)
+- [x] **P1-3** booking_screen mockBosals.first crash → `allBosalsProvider` + `_BookingCardSkeleton` fallback
+- [x] **P1-4** 분석 이벤트 발화 — `logCallTap` (전화 버튼) + `logReservationButtonTap` (예약 시트 진입)
+- [x] **P1-5** `AuthNotifier.login` → `({error, user})` record 반환 (state race 회피)
+- [x] **P1-5** booking_sheet 시간대별 가격 적용 (`_selectedSlot.price`)
+- [x] **P1-5** review_compose 에러 메시지 친화 분기 (raw exception 차단)
+- [x] **P1-6** `20260424002300_notifications_rls_hardening.sql` — self update 정책 → admin-only
+
+### Phase 2 — 약관·탈퇴·신고
+- [x] **P2-1** 약관·개인정보 화면 — `flutter_markdown` + placeholder `terms.md`/`privacy.md` + `LegalDocumentScreen` + 라우트 (`/legal/terms`, `/legal/privacy`) + mypage 메뉴 + signup 동의 체크박스(필수 2개)
+- [x] **P2-2** 회원 탈퇴 — `20260424002400_account_deletion.sql` (`delete_my_account` RPC, anonymize + auth ban) + `AccountDeleteScreen` (`/account/delete`) + mypage 메뉴
+- [x] **P2-3** 신고 시스템 — `20260424002500_reports.sql` (테이블 + RLS + 후기 자동 비공개 트리거 + `resolve_report` admin RPC) + `showReportDialog` + 보살 상세 PopupMenu + 보살 대시보드 후기 카드 PopupMenu
+- [x] CLAUDE.md 작성 — task.md 갱신 규칙
+- [x] task.md 작성 — 작업 트래커
+
+---
+
+## 🟡 진행 중 (In Progress)
+
+(없음 — P3 시작 준비)
+
+---
+
+## 🔴 할 일 (Todo)
+
+### Phase 3 — 어드민 웹 (`apps/admin_web/` Next.js 14)
+- [ ] **P3-1** create-next-app + Tailwind + shadcn-ui scaffold
+- [ ] **P3-2** Supabase Auth + admin role 가드 middleware
+- [ ] **P3-3** 대시보드 — `admin_list_bosal_analytics` RPC 시각화 (KPI + 보살별 테이블 + 24h/7d/30d 토글)
+- [ ] **P3-4** 보살 관리 — 목록·검색·상세·신규 등록·편집·publish 토글
+- [ ] **P3-5** 초대 코드 관리 (`v_active_bosal_invites` + `create_bosal_invite`)
+- [ ] **P3-6** 사용자 관리 (role 변경)
+- [ ] **P3-7** 신고 큐
+- [ ] **P3-8** 공지 발송 페이지 (P4-1 후)
+- [ ] **P3-9** Vercel 배포 + Password Protection
+
+### Phase 4 — 어드민 공지 + In-App 알림 강화
+- [ ] **P4-1** `broadcast_notification` RPC 마이그레이션
+- [ ] **P4-2** In-app 알림 UX 점검 (Realtime 재구독 / 미읽음 카운터 강조)
+- [ ] **P4-3** 위치 권한 안내 화면 (`features/onboarding/location_permission_screen.dart`)
+
+### Phase 5 — 신뢰성
+- [ ] **P5-1** 비밀번호 재설정 화면 (`resetPasswordForEmail`)
+- [ ] **P5-2** 사진 업로드 UI (보살 프로필 → Storage `bosal-images`)
+- [ ] **P5-3** 세션 만료 / 자동 로그아웃 (`onAuthStateChange` 전역 구독)
+- [ ] **P5-4** Sentry 통합 (`sentry_flutter` + DSN)
+
+### Phase 6 — 출시 자산
+- [ ] **P6-1** 앱 아이콘 final 1024×1024 + 스플래시 (`flutter_launcher_icons`, `flutter_native_splash`)
+- [ ] **P6-2** App Store Connect / Play Console 메타 (이름·설명·키워드·스크린샷)
+- [ ] **P6-3** Privacy Nutrition Label / Data Safety Form
+- [ ] **P6-4** TestFlight + Internal Testing 배포
+
+### Phase 7 — 검증
+- [ ] **P7** E2E 골든 패스 (사용자·보살·관리자 3 사이드)
+
+---
+
+## 🟣 사용자 결정 대기 / 외부 준비
+
+| ID | 항목 | 상태 |
+|---|---|---|
+| D1 | 어드민 웹 위치 | ✅ A monorepo 확정 |
+| D3 | MVP 푸시 포함 | ✅ 미포함 (시나리오 C로) |
+| D2 | 지도 포함 | 기본값 포함 진행 |
+| D4 | 약관·개인정보 본문 | placeholder MD 두고 사내 작성 병행 |
+| D5 | 회원 탈퇴 정책 | 기본값 anonymize 진행 |
+| D6 | 인묵·채영 시드 | 기본값 dev only 분기 (P8) |
+| D7 | 결제 MVP | 기본값 미포함 |
+| D8 | 신고 정책 | 기본값 즉시 비공개 + 검토 후 복구 |
+
+| 외부 | 필요 시점 | 상태 |
+|---|---|---|
+| 시뮬레이터 부트 (P1 smoke test) | 즉시 | ⏳ 대기 |
+| Vercel 계정 + GitHub 연결 | Day 4 (P3-9) | ⏳ |
+| App Store Connect / Play Console | Day 5 (P6-2) | ⏳ |
+| 앱 아이콘 final 디자인 | Day 5 (P6-1) | ⏳ |
+| 약관/개인정보 본문 | Day 5 (P6 직전) | ⏳ |
+| Supabase admin 비번 (`bill@wadidu.com`) | Day 3 (P3-2) | ⏳ |
+
+---
+
+## 🔮 시나리오 C (정식 출시 후)
+
+- 푸시 알림 (FCM/APNs) — P11-PUSH (1주)
+- CI/CD (GitHub Actions)
+- Production Supabase 분리
+- 공유 타입 패키지
+- i18n / a11y / 단위 테스트 / 다크모드

@@ -185,8 +185,19 @@ class MypageScreen extends ConsumerWidget {
                       _MenuItem(
                         icon: Icons.description_outlined,
                         label: '이용약관',
-                        onTap: () {},
+                        onTap: () => context.push('/legal/terms'),
                       ),
+                      _MenuItem(
+                        icon: Icons.privacy_tip_outlined,
+                        label: '개인정보처리방침',
+                        onTap: () => context.push('/legal/privacy'),
+                      ),
+                      if (isLoggedIn)
+                        _MenuItem(
+                          icon: Icons.person_remove_outlined,
+                          label: '회원 탈퇴',
+                          onTap: () => context.push('/account/delete'),
+                        ),
                     ],
                   ),
                 ],

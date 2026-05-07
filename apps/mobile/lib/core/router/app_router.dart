@@ -26,6 +26,8 @@ import '../../features/fortune/fortune_screen.dart';
 import '../../features/auth/signup_screen.dart';
 import '../../features/bosal_onboarding/bosal_onboarding_screen.dart';
 import '../../features/review/review_compose_screen.dart';
+import '../../features/legal/legal_document_screen.dart';
+import '../../features/auth/account_delete_screen.dart';
 import '../../shared/widgets/main_scaffold.dart';
 import '../../shared/widgets/bosal_scaffold.dart';
 
@@ -308,6 +310,24 @@ final appRouterProvider = Provider<GoRouter>((ref) {
     GoRoute(
       path: '/bosal-onboarding',
       builder: (context, state) => const BosalOnboardingScreen(),
+    ),
+    GoRoute(
+      path: '/legal/terms',
+      builder: (context, state) => const LegalDocumentScreen(
+        title: '이용약관',
+        assetPath: 'assets/legal/terms.md',
+      ),
+    ),
+    GoRoute(
+      path: '/legal/privacy',
+      builder: (context, state) => const LegalDocumentScreen(
+        title: '개인정보처리방침',
+        assetPath: 'assets/legal/privacy.md',
+      ),
+    ),
+    GoRoute(
+      path: '/account/delete',
+      builder: (context, state) => const AccountDeleteScreen(),
     ),
     GoRoute(
       path: '/review/compose',

@@ -24,6 +24,8 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   bool _submitting = false;
   String? _error;
   String? _info;
+  bool _agreeTerms = false;
+  bool _agreePrivacy = false;
 
   @override
   void dispose() {
@@ -50,6 +52,10 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
     }
     if (pw.length < 6) {
       setState(() => _error = '비밀번호는 6자 이상이어야 합니다');
+      return;
+    }
+    if (!_agreeTerms || !_agreePrivacy) {
+      setState(() => _error = '이용약관과 개인정보처리방침에 모두 동의해주세요');
       return;
     }
 
@@ -208,7 +214,24 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                 ),
               ],
 
-              const SizedBox(height: 24),
+              const SizedBox(height: 20),
+
+              // 약관·개인정보 동의 (가입 필수)
+              _ConsentRow(
+                checked: _agreeTerms,
+                onChanged: (v) => setState(() => _agreeTerms = v ?? false),
+                label: '이용약관에 동의합니다',
+                onLinkTap: () => context.push('/legal/terms'),
+              ),
+              const SizedBox(height: 6),
+              _ConsentRow(
+                checked: _agreePrivacy,
+                onChanged: (v) => setState(() => _agreePrivacy = v ?? false),
+                label: '개인정보처리방침에 동의합니다',
+                onLinkTap: () => context.push('/legal/privacy'),
+              ),
+
+              const SizedBox(height: 20),
 
               SizedBox(
                 width: double.infinity,
@@ -311,4 +334,63 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
         ),
         onChanged: (_) => setState(() => _error = null),
       );
+}
+
+class _ConsentRow extends StatelessWidget {
+  final bool checked;
+  final ValueChanged<bool?> onChanged;
+  final String label;
+  final VoidCallback onLinkTap;
+
+  const _ConsentRow({
+    required this.checked,
+    required this.onChanged,
+    required this.label,
+    required this.onLinkTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        SizedBox(
+          width: 28,
+          height: 28,
+          child: Checkbox(
+            value: checked,
+            onChanged: onChanged,
+            visualDensity: VisualDensity.compact,
+            activeColor: AppColors.primary,
+          ),
+        ),
+        const SizedBox(width: 6),
+        Expanded(
+          child: GestureDetector(
+            onTap: () => onChanged(!checked),
+            behavior: HitTestBehavior.opaque,
+            child: Text(
+              label,
+              style: AppTextStyles.body.copyWith(fontSize: 14),
+            ),
+          ),
+        ),
+        TextButton(
+          onPressed: onLinkTap,
+          style: TextButton.styleFrom(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            minimumSize: const Size(0, 32),
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          ),
+          child: Text(
+            '보기',
+            style: AppTextStyles.small.copyWith(
+              color: AppColors.primary,
+              fontWeight: FontWeight.w700,
+              fontSize: 13,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 }
