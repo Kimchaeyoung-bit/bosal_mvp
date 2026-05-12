@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
+import '../../core/utils/auth_guard.dart';
 import '../../data/models/app_user.dart';
 import '../../providers/auth_provider.dart';
 
@@ -50,7 +51,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     if (user.role == UserRole.bosal) {
       context.go('/bosal-home');
     } else {
-      context.pop(true);
+      dismissAuthScreen(context, popResult: true);
     }
   }
 
@@ -78,7 +79,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               Align(
                 alignment: Alignment.centerRight,
                 child: GestureDetector(
-                  onTap: () => context.pop(false),
+                  onTap: () => dismissAuthScreen(context, popResult: false),
                   child: const Icon(Icons.close_rounded, size: 28, color: AppColors.text),
                 ),
               ),

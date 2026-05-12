@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
+import '../../core/utils/auth_guard.dart';
 import '../../data/models/app_user.dart';
 import '../../providers/auth_provider.dart';
 
@@ -112,7 +113,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               GestureDetector(
-                onTap: () => context.pop(),
+                onTap: () => dismissAuthScreen(context),
                 child: const Icon(Icons.close_rounded, size: 28),
               ),
               const SizedBox(height: 32),
@@ -271,7 +272,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                     Text('이미 계정이 있으신가요? ',
                         style: AppTextStyles.small.copyWith(fontSize: 13)),
                     GestureDetector(
-                      onTap: () => context.pop(),
+                      onTap: () => dismissAuthScreen(context),
                       child: Text(
                         '로그인',
                         style: AppTextStyles.small.copyWith(

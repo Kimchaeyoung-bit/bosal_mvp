@@ -5,6 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../core/supabase/supabase_client.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
+import '../../core/utils/auth_guard.dart';
 
 /// 비밀번호 재설정 — 이메일 입력 → Supabase Auth `resetPasswordForEmail`.
 ///
@@ -79,7 +80,7 @@ class _PasswordResetScreenState extends State<PasswordResetScreen> {
         elevation: 0,
         scrolledUnderElevation: 0,
         leading: IconButton(
-          onPressed: () => context.pop(),
+          onPressed: () => dismissAuthScreen(context),
           icon: const Icon(Icons.arrow_back_rounded),
         ),
         title: const Text('비밀번호 찾기'),
