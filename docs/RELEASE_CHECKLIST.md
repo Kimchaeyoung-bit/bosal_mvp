@@ -86,9 +86,9 @@ storeFile=/Users/<you>/upload-keystore.jks
 
 ### 심사용 데모 계정
 
-App Review Information에 시드된 계정 입력:
-- 일반 사용자: 회원가입 후 자동 — 신규 이메일 입력 안내
-- 보살 사장: `inmuk@bosal.test` / `bosal1234` 또는 `chaeyoung@bosal.test` / `bosal1234`
+App Review Information에 다음 정보 입력:
+- 일반 사용자: 신규 이메일 회원가입 안내 (또는 운영자가 사전 생성한 심사용 계정)
+- 보살 사장: 운영자가 어드민 웹 초대 코드 흐름으로 사전 생성한 심사 전용 계정 1건. 이메일/비번은 `.env` 또는 비밀 메모로 관리하고 App Review 폼에만 입력 (코드/문서에는 박지 말 것).
 
 ### Export Compliance
 
@@ -183,9 +183,10 @@ flutter build appbundle --release
 
 ### admin 계정 부트스트랩
 
-1. Supabase Dashboard → Auth → Users → `bill@wadidu.com`로 신규 사용자 생성 (또는 별도 admin 이메일)
-2. SQL Editor에서 `update profiles set role='admin' where id='<user_id>';`
-3. 어드민 웹 로그인 시도
+1. `backend/supabase/.env.example` 을 `.env` 로 복사하고 `ADMIN_EMAIL` 채움 (.env 는 git ignore).
+2. Supabase Dashboard → Auth → Users 에서 `ADMIN_EMAIL` 이메일로 신규 사용자 생성 (비번은 본인이 임의 설정).
+3. `bash backend/supabase/scripts/print_bootstrap_admin_sql.sh` 실행해 SQL 출력 → SQL Editor 에 붙여넣고 실행.
+4. 어드민 웹 로그인 시도.
 
 ---
 

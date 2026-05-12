@@ -87,14 +87,7 @@ supabase db diff                       # 로컬 ↔ 리모트 비교
 | 일반 사용자 | `a` / `1234` |
 | 보살 사장 | `b` / `1234` |
 
-`DATA_SOURCE=supabase` 모드 + 마이그레이션 적용 후 (실 DB):
-
-| 보살 | 이메일 | 비번 |
-|---|---|---|
-| 인묵보살 (전통/사업운, 논현) | `inmuk@bosal.test` | `bosal1234` |
-| 채영보살 (현대/연애운, 강남) | `chaeyoung@bosal.test` | `bosal1234` |
-
-자격증명 변수는 [`apps/mobile/.env.example`](apps/mobile/.env.example) 참고.
+`DATA_SOURCE=supabase` 모드: 운영 보살 계정은 어드민 웹의 초대 코드 흐름(`/bosals/new`)으로 생성. admin 부트스트랩은 [`backend/supabase/.env.example`](backend/supabase/.env.example) 의 `ADMIN_EMAIL` 변수 + [`docs/RELEASE_CHECKLIST.md`](docs/RELEASE_CHECKLIST.md) 절차 참고.
 
 ---
 

@@ -65,6 +65,13 @@
 ### Phase 7 — E2E 검증 가이드 (commit `c83092e`)
 - [x] [`docs/E2E_VERIFICATION.md`](docs/E2E_VERIFICATION.md) — 사이드별 골든 패스 / 보안 검증 / 분석 흐름 / G5 게이트 체크리스트
 
+### Phase 7.5 — 푸시 전 보안 정리 (GitHub 외부 푸시 직전)
+- [x] **S-1** admin 부트스트랩 이메일을 `backend/supabase/.env` (`ADMIN_EMAIL`) 외부화 — 마이그레이션 [001600](backend/supabase/migrations/20260424001600_bootstrap_admin.sql)·[001800](backend/supabase/migrations/20260424001800_admin_email_update.sql) no-op, helper [`backend/supabase/scripts/print_bootstrap_admin_sql.sh`](backend/supabase/scripts/print_bootstrap_admin_sql.sh) 추가
+- [x] **S-2** 데모 보살 시드 ([20260424002200](backend/supabase/migrations/20260424002200_seed_inmuk_chaeyoung_bosals.sql)) no-op — 운영 보살은 어드민 초대 코드 흐름으로 생성
+- [x] **S-3** 평문 비번 / 데모 이메일 / 본인 이메일 전 문서에서 제거 (CLAUDE.md, README.md, apps/mobile/README.md, docs/INTEGRATION.md, docs/PRD.md, docs/RELEASE_CHECKLIST.md, docs/E2E_VERIFICATION.md)
+- [x] **S-4** `apps/mobile/.env.example` 에서 `BOSAL_*_EMAIL/PASSWORD` 제거
+- [x] **S-5** untracked `과업명세서.md` 디스크에서 삭제 (계약서 별첨1과 중복)
+
 ---
 
 ## 🟡 진행 중 (In Progress)
@@ -93,7 +100,7 @@
 | D2 | 지도 포함 | 기본값 포함 진행 |
 | D4 | 약관·개인정보 본문 | placeholder MD 두고 사내 작성 병행 |
 | D5 | 회원 탈퇴 정책 | 기본값 anonymize 진행 |
-| D6 | 인묵·채영 시드 | 기본값 dev only 분기 (P8) |
+| D6 | 인묵·채영 시드 | ✅ 제거 (코드/문서) — 운영 보살은 어드민 초대 코드 흐름 |
 | D7 | 결제 MVP | 기본값 미포함 |
 | D8 | 신고 정책 | 기본값 즉시 비공개 + 검토 후 복구 |
 
@@ -104,7 +111,7 @@
 | App Store Connect / Play Console | Day 5 (P6-2) | ⏳ |
 | 앱 아이콘 final 디자인 | Day 5 (P6-1) | ⏳ |
 | 약관/개인정보 본문 | Day 5 (P6 직전) | ⏳ |
-| Supabase admin 비번 (`bill@wadidu.com`) | Day 3 (P3-2) | ⏳ |
+| Supabase admin 계정 비번 (`backend/supabase/.env` 의 `ADMIN_EMAIL`) | Day 3 (P3-2) | ⏳ |
 
 ---
 

@@ -114,10 +114,8 @@ cp .env.example .env
 | `SUPABASE_ANON_KEY` | Supabase anon public key |
 | `TEST_USER_USERNAME` / `TEST_USER_PASSWORD` | mock 모드 일반 사용자 (기본 `a` / `1234`) |
 | `TEST_BOSAL_USERNAME` / `TEST_BOSAL_PASSWORD` | mock 모드 보살 사장 (기본 `b` / `1234`) |
-| `BOSAL_INMUK_EMAIL` / `BOSAL_INMUK_PASSWORD` | supabase 모드 데모 보살 (인묵, `inmuk@bosal.test` / `bosal1234`) |
-| `BOSAL_CHAEYOUNG_EMAIL` / `BOSAL_CHAEYOUNG_PASSWORD` | supabase 모드 데모 보살 (채영, `chaeyoung@bosal.test` / `bosal1234`) |
 
-> 데모 보살 자격증명은 [`backend/supabase/migrations/20260424002200_seed_inmuk_chaeyoung_bosals.sql`](../../backend/supabase/migrations/20260424002200_seed_inmuk_chaeyoung_bosals.sql) 시드와 동기화. 마이그레이션이 적용된 환경에서만 로그인 가능.
+> supabase 모드 보살 사장 계정은 어드민 웹의 초대 코드 흐름으로 생성한다. 마이그레이션엔 운영 자격증명을 넣지 않는다.
 
 ### 4. 실행
 
@@ -155,7 +153,7 @@ flutter build web
 ## 개발 메모
 
 - **첫 진입 시 mock 데이터**: 시뮬레이터에서 빠르게 흐름 테스트하려면 `.env`에서 `DATA_SOURCE=mock`. Supabase 가입·계정 필요 없음.
-- **Supabase 모드**: 시드된 데모 보살(`inmuk@bosal.test`, `chaeyoung@bosal.test`)로 보살 사장 흐름 검증 가능. 일반 사용자는 회원가입 화면(`/signup`)에서 새 계정 생성.
+- **Supabase 모드**: 보살 사장 흐름은 어드민 웹에서 발급한 초대 코드로 가입 후 `/bosal-onboarding` 진입해 검증. 일반 사용자는 회원가입 화면(`/signup`)에서 새 계정 생성.
 - **알림·예약 Realtime**: Supabase Realtime publication에 등록된 `notifications` / `reservations` 만 stream으로 자동 갱신. 다른 테이블은 polling 필요.
 - **빈 상태 / 로딩 / 에러 가드**: 모든 AsyncValue 호출은 `.when(data:..., loading:..., error:...)` 또는 maybeWhen으로 보호. 새 화면 추가 시 동일 패턴 유지.
 

@@ -165,16 +165,13 @@ SUPABASE_SERVICE_ROLE_KEY=<service_role_key>
 
 ---
 
-## 9. 데모 데이터
+## 9. 보살 계정 생성
 
-마이그레이션 [`20260424002200_seed_inmuk_chaeyoung_bosals.sql`](../backend/supabase/migrations/20260424002200_seed_inmuk_chaeyoung_bosals.sql) 적용 시 자동 시드:
+운영 보살 계정은 시드 마이그레이션이 아니라 어드민 웹의 초대 코드 흐름으로 생성한다.
 
-| 보살 | 이메일 | 비번 | 권역 | 스타일 | 광고 의향 |
-|---|---|---|---|---|---|
-| 인묵보살 | `inmuk@bosal.test` | `bosal1234` | 논현 | 직설(cool) | interested |
-| 채영보살 | `chaeyoung@bosal.test` | `bosal1234` | 강남역 | 공감(empathetic) | none |
-
-운영시간·카테고리·특징·가격은 시드 SQL 참고.
+1. 어드민 웹 `/bosals/new` 에서 보살 신규 생성 → `create_bosal_with_invite` RPC 가 초대 코드 발급.
+2. 운영자가 코드를 보살에게 전달 (이메일·메신저 등).
+3. 보살은 모바일 앱에서 일반 회원가입 후 `/bosal-onboarding` 진입 → 코드 claim → 온보딩 폼 완성 → publish.
 
 ---
 

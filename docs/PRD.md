@@ -135,9 +135,7 @@ Supabase Auth 로그인 (admin role)
 
 - **카테고리**: 메인 7개(연애·취업·재물·건강·인간관계·타로·사업) + 기타 4개(신년운세·궁합·꿈해몽·작명).
 - **지역**: 전국 16개 시도, sub_regions 130여 개 (좌표 포함).
-- **데모 보살** (`backend/supabase/migrations/20260424002200_seed_inmuk_chaeyoung_bosals.sql`):
-  - 인묵보살 (`inmuk@bosal.test` / `bosal1234`) — 사업운/금전운 특화, 논현, 직설형
-  - 채영보살 (`chaeyoung@bosal.test` / `bosal1234`) — 연애/심리상담, 강남역, 공감형
+- **보살 계정**: 시드 미포함. 어드민 웹의 초대 코드 흐름으로 운영 시점에 생성.
 
 ## 8. 신뢰 / 안전 설계
 

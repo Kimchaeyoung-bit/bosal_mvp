@@ -26,10 +26,10 @@ supabase db push
 
 ### 0-2. admin 계정 부트스트랩
 
-```sql
--- Supabase SQL Editor
--- bill@wadidu.com (또는 다른 admin 이메일) 가입 후
-update public.profiles set role = 'admin' where id = '<auth_user_id>';
+```bash
+# backend/supabase/.env 의 ADMIN_EMAIL 로 사용자 생성 후
+bash backend/supabase/scripts/print_bootstrap_admin_sql.sh
+# 출력된 SQL 을 Supabase SQL Editor 에 붙여넣어 실행
 ```
 
 ### 0-3. 모바일 빌드

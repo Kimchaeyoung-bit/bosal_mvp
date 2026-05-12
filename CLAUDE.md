@@ -52,9 +52,9 @@ PRD: [docs/PRD.md](docs/PRD.md).
 
 ## 보안
 
-- `.env`는 `apps/mobile/`에 위치, git ignore. `.env.example`만 commit.
-- 시크릿(SUPABASE_ANON_KEY 등) 하드코딩 금지.
-- 평문 비밀번호가 마이그레이션에 들어가는 경우 dev 데모용임을 명시.
+- `.env`는 모바일은 `apps/mobile/`, 운영자 부트스트랩 변수는 `backend/supabase/`에 위치, 둘 다 git ignore. `.env.example`만 commit.
+- 시크릿(SUPABASE_ANON_KEY, ADMIN_EMAIL 등) 하드코딩 금지.
+- 평문 비밀번호·실 이메일을 마이그레이션에 박지 않는다. 운영 보살 계정은 어드민 초대 코드 흐름으로 생성.
 
 ## 결정 / 가정
 
@@ -80,7 +80,7 @@ git log --oneline -10
 
 ## 외부 어드민 연동
 
-`profiles.role = 'admin'` 사용자만 admin RPC 사용 가능. RLS · RPC가 모두 `is_admin()` 헬퍼로 검증. 부트스트랩 admin: `bill@wadidu.com` (마이그레이션 [001600](backend/supabase/migrations/20260424001600_bootstrap_admin.sql)·[001800](backend/supabase/migrations/20260424001800_admin_email_update.sql)). 비번은 사용자가 직접 설정.
+`profiles.role = 'admin'` 사용자만 admin RPC 사용 가능. RLS · RPC가 모두 `is_admin()` 헬퍼로 검증. admin 부트스트랩은 [`backend/supabase/.env`](backend/supabase/.env.example) 의 `ADMIN_EMAIL` 변수 기준으로 운영자가 Supabase SQL Editor 에서 직접 승격한다 (`backend/supabase/scripts/print_bootstrap_admin_sql.sh` 출력 활용). 마이그레이션 [001600](backend/supabase/migrations/20260424001600_bootstrap_admin.sql)·[001800](backend/supabase/migrations/20260424001800_admin_email_update.sql) 은 no-op.
 
 ---
 
