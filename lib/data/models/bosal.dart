@@ -21,6 +21,10 @@ class Bosal {
   final double? latitude;
   final double? longitude;
   final String? phoneNumber;
+  final String? address;
+  final List<String> operatingDays;
+  final String? operatingHours;
+  final bool isAdEnabled;
 
   const Bosal({
     required this.id,
@@ -45,5 +49,9 @@ class Bosal {
     this.latitude,
     this.longitude,
     this.phoneNumber,
+    this.address,
+    this.operatingDays = const [],
+    this.operatingHours,
+    this.isAdEnabled = false,
   });
 }
