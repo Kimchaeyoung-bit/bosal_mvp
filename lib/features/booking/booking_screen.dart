@@ -285,14 +285,13 @@ class _BookingCard extends StatelessWidget {
                 height: 48,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: AppColors.primarySoft,
+                  color: Colors.white,
                   border: Border.all(color: AppColors.border),
                 ),
-                child: Center(
-                  child: Text(
-                    bosal.name[0],
-                    style: AppTextStyles.bodyBold,
-                  ),
+                padding: const EdgeInsets.all(6),
+                child: Image.asset(
+                  'assets/images/logo_real.png',
+                  fit: BoxFit.contain,
                 ),
               ),
               const SizedBox(width: 12),

@@ -330,16 +330,14 @@ class _SelectedBosalBanner extends StatelessWidget {
             Container(
               width: 44,
               height: 44,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 shape: BoxShape.circle,
-                color: AppColors.primary,
+                color: Colors.white,
               ),
-              child: Center(
-                child: Text(
-                  bosal.name[0],
-                  style: AppTextStyles.bodyBold
-                      .copyWith(color: AppColors.white, fontSize: 16),
-                ),
+              padding: const EdgeInsets.all(6),
+              child: Image.asset(
+                'assets/images/logo_real.png',
+                fit: BoxFit.contain,
               ),
             ),
             const SizedBox(width: 12),
@@ -427,21 +425,17 @@ class _BosalListTile extends StatelessWidget {
               width: 52,
               height: 52,
               decoration: BoxDecoration(
+                color: Colors.white,
                 shape: BoxShape.circle,
-                color: isSelected ? AppColors.primary : AppColors.bg,
                 border: Border.all(
                   color: isSelected ? AppColors.primary : AppColors.border,
                   width: isSelected ? 2 : 1,
                 ),
               ),
-              child: Center(
-                child: Text(
-                  bosal.name[0],
-                  style: AppTextStyles.bodyBold.copyWith(
-                    color: isSelected ? AppColors.white : AppColors.text,
-                    fontSize: 18,
-                  ),
-                ),
+              padding: const EdgeInsets.all(6),
+              child: Image.asset(
+                'assets/images/logo_real.png',
+                fit: BoxFit.contain,
               ),
             ),
             const SizedBox(width: 14),

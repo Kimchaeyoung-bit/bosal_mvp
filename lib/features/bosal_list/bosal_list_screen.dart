@@ -163,19 +163,15 @@ class BosalListScreen extends ConsumerWidget {
                                   Container(
                                     width: 72,
                                     height: 72,
-                                    decoration: BoxDecoration(
-                                      gradient: const LinearGradient(
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomRight,
-                                        colors: [
-                                          AppColors.primarySoft,
-                                          Color(0xFFE5D7F5),
-                                        ],
-                                      ),
+                                    decoration: const BoxDecoration(
+                                      color: Colors.white,
                                       shape: BoxShape.circle,
                                     ),
-                                    child: const Icon(Icons.person_rounded,
-                                        color: AppColors.primary, size: 36),
+                                    padding: const EdgeInsets.all(8),
+                                    child: Image.asset(
+                                      'assets/images/logo_real.png',
+                                      fit: BoxFit.contain,
+                                    ),
                                   ),
                                   Positioned(
                                     right: 0,

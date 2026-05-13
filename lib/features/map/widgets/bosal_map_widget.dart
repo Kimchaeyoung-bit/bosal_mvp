@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart' hide Path;
 import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_text_styles.dart';
 import '../../../data/models/bosal.dart';
 
 class BosalMapWidget extends StatelessWidget {
@@ -65,9 +64,6 @@ class _AvatarMarker extends StatelessWidget {
 
   const _AvatarMarker({required this.bosal, required this.isSelected});
 
-  String get _avatarUrl =>
-      'https://i.pravatar.cc/100?u=bosal_${bosal.id}';
-
   @override
   Widget build(BuildContext context) {
     final size = isSelected ? 44.0 : 36.0;
@@ -79,6 +75,7 @@ class _AvatarMarker extends StatelessWidget {
           width: size,
           height: size,
           decoration: BoxDecoration(
+            color: Colors.white,
             shape: BoxShape.circle,
             border: Border.all(
               color: isSelected ? AppColors.primary : AppColors.border,
@@ -95,15 +92,14 @@ class _AvatarMarker extends StatelessWidget {
             ],
           ),
           child: ClipOval(
-            child: Image.network(
-              _avatarUrl,
-              width: size,
-              height: size,
-              fit: BoxFit.cover,
-              loadingBuilder: (context, child, progress) =>
-                  progress == null ? child : _InitialsFallback(bosal: bosal, isSelected: isSelected, size: size),
-              errorBuilder: (context, error, stackTrace) =>
-                  _InitialsFallback(bosal: bosal, isSelected: isSelected, size: size),
+            child: Padding(
+              padding: const EdgeInsets.all(4),
+              child: Image.asset(
+                'assets/images/logo_real.png',
+                width: size,
+                height: size,
+                fit: BoxFit.contain,
+              ),
             ),
           ),
         ),
@@ -119,40 +115,6 @@ class _AvatarMarker extends StatelessWidget {
   }
 }
 
-class _InitialsFallback extends StatelessWidget {
-  final Bosal bosal;
-  final bool isSelected;
-  final double size;
-
-  const _InitialsFallback({
-    required this.bosal,
-    required this.isSelected,
-    required this.size,
-  });
-
-  String get _initials {
-    final parts = bosal.name.replaceAll(' 보살', '').replaceAll(' 도령', '');
-    return parts.isNotEmpty ? parts[0] : '보';
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: size,
-      height: size,
-      color: isSelected ? AppColors.primarySoft : AppColors.surface,
-      child: Center(
-        child: Text(
-          _initials,
-          style: AppTextStyles.bodyBold.copyWith(
-            color: isSelected ? AppColors.primary : AppColors.text,
-            fontSize: isSelected ? 20 : 16,
-          ),
-        ),
-      ),
-    );
-  }
-}
 
 class _TailPainter extends CustomPainter {
   final Color color;

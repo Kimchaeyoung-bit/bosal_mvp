@@ -76,14 +76,7 @@ class BosalDetailScreen extends ConsumerWidget {
                                 width: 112,
                                 height: 112,
                                 decoration: BoxDecoration(
-                                  gradient: const LinearGradient(
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                    colors: [
-                                      AppColors.primarySoft,
-                                      Color(0xFFDDC8F0),
-                                    ],
-                                  ),
+                                  color: Colors.white,
                                   shape: BoxShape.circle,
                                   border: Border.all(
                                       color: AppColors.white, width: 4),
@@ -96,8 +89,11 @@ class BosalDetailScreen extends ConsumerWidget {
                                     ),
                                   ],
                                 ),
-                                child: const Icon(Icons.person_rounded,
-                                    color: AppColors.primary, size: 56),
+                                padding: const EdgeInsets.all(12),
+                                child: Image.asset(
+                                  'assets/images/logo_real.png',
+                                  fit: BoxFit.contain,
+                                ),
                               ),
                               Positioned(
                                 right: 2,
