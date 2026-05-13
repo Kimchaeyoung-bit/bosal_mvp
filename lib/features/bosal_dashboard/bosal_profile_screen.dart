@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
 import '../../shared/widgets/app_shadow.dart';
@@ -81,11 +80,14 @@ class _BosalProfileScreenState extends ConsumerState<BosalProfileScreen> {
                       width: 80,
                       height: 80,
                       decoration: const BoxDecoration(
-                        color: AppColors.primarySoft,
+                        color: Colors.white,
                         shape: BoxShape.circle,
                       ),
-                      child: const Icon(Icons.person_rounded,
-                          color: AppColors.primary, size: 40),
+                      padding: const EdgeInsets.all(10),
+                      child: Image.asset(
+                        'assets/images/logo_real.png',
+                        fit: BoxFit.contain,
+                      ),
                     ),
                     const SizedBox(height: 14),
                     Text(myBosal?.name ?? '', style: AppTextStyles.largeName),
@@ -162,11 +164,6 @@ class _BosalProfileScreenState extends ConsumerState<BosalProfileScreen> {
               _ProfileSection(
                 title: '상담 스타일',
                 value: myBosal.consultStyle,
-                onEdit: () => _showEditSnack(context),
-              ),
-              _ProfileSection(
-                title: '상담료',
-                value: '${NumberFormat('#,###').format(myBosal.discountedPrice)}원  (정가 ${NumberFormat('#,###').format(myBosal.originalPrice)}원)',
                 onEdit: () => _showEditSnack(context),
               ),
             ],

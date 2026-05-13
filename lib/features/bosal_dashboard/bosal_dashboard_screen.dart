@@ -34,7 +34,6 @@ class BosalDashboardScreen extends ConsumerWidget {
     final completedBookings =
         myBookings.where((b) => b.status == BookingStatus.completed).toList();
 
-    final monthlyRevenue = completedBookings.fold<int>(0, (sum, b) => sum + b.price);
 
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -130,14 +129,6 @@ class BosalDashboardScreen extends ConsumerWidget {
                     label: '확정',
                     value: '${confirmedBookings.length}건',
                     color: const Color(0xFF2ECC71),
-                  ),
-                  const SizedBox(width: 10),
-                  _StatCard(
-                    icon: Icons.monetization_on_outlined,
-                    label: '이번달 수익',
-                    value: '${NumberFormat('#,###').format(monthlyRevenue)}원',
-                    color: AppColors.primary,
-                    small: true,
                   ),
                 ],
               ),
@@ -329,10 +320,6 @@ class _QuickActionCard extends StatelessWidget {
                     ),
                   ],
                 ),
-              ),
-              Text(
-                '${NumberFormat('#,###').format(booking.price)}원',
-                style: AppTextStyles.smallBold,
               ),
             ],
           ),
