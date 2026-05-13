@@ -28,59 +28,64 @@ class HomeScreen extends ConsumerWidget {
             fit: BoxFit.fill,
           ),
         ),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const _GreetingHeader(),
-              const SizedBox(height: 10),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: _RegionSearchCard(
-                  onRegionTap: () => context.push('/region-select?redirect=map'),
-                  onSearchTap: () => context.push('/search'),
-                ),
-              ),
-              const SizedBox(height: 12),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: TopActionsRow(
-                  onNearbyTap: () => context.go('/region-tab'),
-                  onBosalTap: (id) => context.push('/bosal/$id'),
-                ),
-              ),
-              const SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Container(
-                  padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
-                  decoration: BoxDecoration(
-                    color: AppColors.surface.withValues(alpha: 0.75),
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: appShadow,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('관심 카테고리', style: AppTextStyles.sectionTitle.copyWith(fontSize: 14)),
-                      const SizedBox(height: 10),
-                      CategoryGrid(
-                        onCategoryTap: (category) {
-                          ref.read(selectedCategoryProvider.notifier).state = category;
-                          context.push('/bosal-list?category=${category.id}');
-                        },
-                      ),
-                    ],
+        child: RefreshIndicator(
+          onRefresh: () async {
+            ref.invalidate(unreadCountProvider);
+          },
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const _GreetingHeader(),
+                const SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: _RegionSearchCard(
+                    onRegionTap: () => context.push('/region-select?redirect=map'),
+                    onSearchTap: () => context.push('/search'),
                   ),
                 ),
-              ),
-              const SizedBox(height: 16),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: AdBannerPlaceholder(),
-              ),
-              const SizedBox(height: 28),
-            ],
+                const SizedBox(height: 12),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: TopActionsRow(
+                    onNearbyTap: () => context.go('/region-tab'),
+                    onBosalTap: (id) => context.push('/bosal/$id'),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Container(
+                    padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
+                    decoration: BoxDecoration(
+                      color: AppColors.surface.withValues(alpha: 0.75),
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: appShadow,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('관심 카테고리', style: AppTextStyles.sectionTitle.copyWith(fontSize: 14)),
+                        const SizedBox(height: 10),
+                        CategoryGrid(
+                          onCategoryTap: (category) {
+                            ref.read(selectedCategoryProvider.notifier).state = category;
+                            context.push('/bosal-list?category=${category.id}');
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: AdBannerPlaceholder(),
+                ),
+                const SizedBox(height: 28),
+              ],
+            ),
           ),
         ),
       ),
