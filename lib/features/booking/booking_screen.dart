@@ -349,20 +349,6 @@ class _BookingCard extends StatelessWidget {
               Text(booking.consultType, style: AppTextStyles.small),
             ],
           ),
-          const SizedBox(height: 6),
-          Row(
-            children: [
-              const Icon(Icons.monetization_on_outlined,
-                  size: 14, color: AppColors.textSub),
-              const SizedBox(width: 6),
-              Text(
-                '${_formatPrice(booking.price)}원',
-                style: AppTextStyles.smallBold
-                    .copyWith(color: AppColors.text),
-              ),
-            ],
-          ),
-
           const SizedBox(height: 16),
 
           // 액션 버튼
@@ -466,12 +452,6 @@ class _BookingCard extends StatelessWidget {
     return '${date.year}.${date.month.toString().padLeft(2, '0')}.${date.day.toString().padLeft(2, '0')}($week) $hour $h시';
   }
 
-  String _formatPrice(int price) {
-    return price.toString().replaceAllMapped(
-          RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-          (m) => '${m[1]},',
-        );
-  }
 }
 
 class _StatusInfo {

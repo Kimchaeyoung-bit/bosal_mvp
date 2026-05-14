@@ -202,10 +202,6 @@ class _BookingList extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Text(
-                    '${NumberFormat('#,###').format(booking.price)}원',
-                    style: AppTextStyles.bodyBold,
-                  ),
                 ],
               ),
               if (showActions) ...[

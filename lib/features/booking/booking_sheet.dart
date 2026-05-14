@@ -8,18 +8,17 @@ import '../../providers/booking_provider.dart';
 // 시간대 옵션
 class _TimeSlot {
   final String label;
-  final int price;
   final int hour;
   final int minute;
-  _TimeSlot(this.label, this.price, this.hour, this.minute);
+  _TimeSlot(this.label, this.hour, this.minute);
 }
 
 final _timeSlots = [
-  _TimeSlot('오전 10:00', 400, 10, 0),
-  _TimeSlot('오후 1:00', 430, 13, 0),
-  _TimeSlot('오후 3:00', 500, 15, 0),
-  _TimeSlot('오후 5:30', 500, 17, 30),
-  _TimeSlot('오후 8:00', 800, 20, 0),
+  _TimeSlot('오전 10:00', 10, 0),
+  _TimeSlot('오후 1:00', 13, 0),
+  _TimeSlot('오후 3:00', 15, 0),
+  _TimeSlot('오후 5:30', 17, 30),
+  _TimeSlot('오후 8:00', 20, 0),
 ];
 
 void showBookingSheet(BuildContext context, Bosal bosal) {
@@ -161,30 +160,16 @@ class _BookingSheetState extends ConsumerState<_BookingSheet> {
                                 : AppColors.border,
                           ),
                         ),
-                        child: Column(
-                          children: [
-                            Text(
-                              slot.label,
-                              style: AppTextStyles.caption.copyWith(
-                                color: isSelected
-                                    ? AppColors.white
-                                    : isDisabled
-                                        ? AppColors.textSub
-                                        : AppColors.text,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            const SizedBox(height: 2),
-                            Text(
-                              '₩${slot.price}',
-                              style: AppTextStyles.caption.copyWith(
-                                color: isSelected
-                                    ? AppColors.white.withValues(alpha: 0.8)
-                                    : AppColors.textSub,
-                                fontSize: 10,
-                              ),
-                            ),
-                          ],
+                        child: Text(
+                          slot.label,
+                          style: AppTextStyles.caption.copyWith(
+                            color: isSelected
+                                ? AppColors.white
+                                : isDisabled
+                                    ? AppColors.textSub
+                                    : AppColors.text,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
                     ),
@@ -249,7 +234,6 @@ class _BookingSheetState extends ConsumerState<_BookingSheet> {
           bosalId: widget.bosal.id,
           consultDate: consultDate,
           consultType: '대면 상담',
-          price: widget.bosal.firstVisitPrice,
         );
 
     Navigator.pop(context);

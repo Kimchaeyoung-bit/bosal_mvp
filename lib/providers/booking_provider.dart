@@ -8,7 +8,6 @@ final mockBookings = [
     requestedAt: DateTime(2026, 4, 10, 14, 30),
     consultDate: DateTime(2026, 4, 15, 14, 0),
     consultType: '대면 상담',
-    price: 40000,
     status: BookingStatus.confirmed,
   ),
   Booking(
@@ -17,7 +16,6 @@ final mockBookings = [
     requestedAt: DateTime(2026, 4, 11, 10, 0),
     consultDate: DateTime(2026, 4, 18, 11, 0),
     consultType: '대면 상담',
-    price: 35000,
     status: BookingStatus.pending,
   ),
   Booking(
@@ -26,7 +24,6 @@ final mockBookings = [
     requestedAt: DateTime(2026, 3, 20, 9, 0),
     consultDate: DateTime(2026, 3, 25, 15, 0),
     consultType: '대면 상담',
-    price: 45000,
     status: BookingStatus.completed,
   ),
   Booking(
@@ -35,7 +32,6 @@ final mockBookings = [
     requestedAt: DateTime(2026, 3, 1, 13, 0),
     consultDate: DateTime(2026, 3, 5, 13, 0),
     consultType: '대면 상담',
-    price: 38000,
     status: BookingStatus.cancelled,
   ),
 ];
@@ -52,7 +48,6 @@ class BookingsNotifier extends StateNotifier<List<Booking>> {
     required String bosalId,
     required DateTime consultDate,
     required String consultType,
-    required int price,
   }) {
     final newId = 'b${DateTime.now().millisecondsSinceEpoch}';
     state = [
@@ -62,7 +57,6 @@ class BookingsNotifier extends StateNotifier<List<Booking>> {
         requestedAt: DateTime.now(),
         consultDate: consultDate,
         consultType: consultType,
-        price: price,
         status: BookingStatus.pending,
       ),
       ...state,
@@ -82,7 +76,6 @@ class BookingsNotifier extends StateNotifier<List<Booking>> {
           requestedAt: b.requestedAt,
           consultDate: b.consultDate,
           consultType: b.consultType,
-          price: b.price,
           status: newStatus,
         );
       }

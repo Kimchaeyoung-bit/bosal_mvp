@@ -140,13 +140,6 @@ class PopularBosalList extends ConsumerWidget {
                             ],
                           ),
                           const Spacer(),
-                          Text(
-                            '${_formatPrice(bosal.firstVisitPrice)}원~',
-                            style: AppTextStyles.caption.copyWith(
-                              color: AppColors.text,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
                         ],
                       ),
                     ),
@@ -160,10 +153,4 @@ class PopularBosalList extends ConsumerWidget {
     );
   }
 
-  String _formatPrice(int price) {
-    return price.toString().replaceAllMapped(
-          RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-          (m) => '${m[1]},',
-        );
-  }
 }

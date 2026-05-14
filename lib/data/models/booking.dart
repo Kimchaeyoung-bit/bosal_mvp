@@ -6,7 +6,6 @@ class Booking {
   final DateTime requestedAt;
   final DateTime? consultDate;
   final String consultType;
-  final int price;
   final BookingStatus status;
 
   const Booking({
@@ -15,7 +14,6 @@ class Booking {
     required this.requestedAt,
     this.consultDate,
     required this.consultType,
-    required this.price,
     required this.status,
   });
 }
