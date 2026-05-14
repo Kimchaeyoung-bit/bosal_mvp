@@ -8,7 +8,7 @@ class AdBannerPlaceholder extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(16),
       child: Image.asset(
-        'assets/images/ad_banner.png',
+        'assets/images/ad_banner2.png',
         width: double.infinity,
         fit: BoxFit.fitWidth,
 
